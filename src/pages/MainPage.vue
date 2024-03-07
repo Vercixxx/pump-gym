@@ -4,20 +4,18 @@
         <!-- Header -->
         <v-container class="mb-5">
 
-            <v-app-bar color="grey" class="px-5">
+            <v-app-bar color="purple-lighten-4" class="px-5">
                 <v-row>
-                    <v-col cols="2" class="text-h3">
-
+                    <v-col cols="2" class="text-h3 font-weight-black" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
                         Pump Gym
-
                     </v-col>
 
 
-                    <v-col cols="8" align="center" justify="center">
+                    <v-col cols="6" align="center" justify="center">
 
                         <v-menu transition="slide-y-transition" v-for="button in menuButtons" :key="button.id">
                             <template v-slot:activator="{ props }">
-                                <v-btn color="black" v-bind="props" class="text-h5 pa-3 ma-2">
+                                <v-btn color="black" v-bind="props" class="text-h5 pa-3 ma-2 font-weight-black" >
                                     {{ button.title }}
                                 </v-btn>
                             </template>
@@ -31,10 +29,12 @@
                     </v-col>
 
 
-                    <v-col cols="2" align="right">
-                        <v-btn text>Login</v-btn>
-                        <v-btn text>Register</v-btn>
+                    <v-col cols="4" align="end" justify="center">
+                        <v-btn large class="rounded-pill" color="success" variant="elevated"
+                            text="Buy subscription"></v-btn>
+                        <v-btn class="rounded-pill" color="primary" variant="elevated" text="Client panel"></v-btn>
                     </v-col>
+
                 </v-row>
 
 
@@ -49,18 +49,52 @@
             <v-row>
 
                 <!-- First row -->
-                <v-col cols="12" style="height: 40vh; min-width: 100%;" class="bg-white">
+                <v-col cols="12" style="height: 50vh; min-width: 100%;" class="bg-white">
                     <v-parallax
                         src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
                         class="ma-0 pa-0">
-                        <div class="d-flex flex-column fill-height justify-center align-center text-white">
-                            <h1 class="text-h4 font-weight-thin mb-4">
-                                Hey!
-                            </h1>
-                            <h4 class="subheading">
-                                Content Content Content Content Content Content Content Content
-                            </h4>
-                        </div>
+                        <v-row>
+                            <v-col cols="6" class="py-10 ps-10">
+                                <div class="text-white text-h5 font-weight-black mb-0 text-no-wrap pa-4 rounded-xl"
+                                    style="background-color: rgba(0, 0, 0, 0.6);">
+
+                                    Welcome to Pump Gym!
+
+                                    <div class="subheading text-wrap font-weight-thin">
+                                        Do you dream of health, strength, and perfect fitness? If so, you've found the
+                                        perfect
+                                        place! Our gym not only offers top-quality equipment but also an inspiring
+                                        environment
+                                        that motivates action.
+
+                                        Our experienced instructors are here to help you achieve your fitness goals,
+                                        whether
+                                        you're just starting your fitness journey or you're an experienced athlete.
+                                        Whether you
+                                        want to build muscle, lose weight, or improve your endurance, we're ready to
+                                        support you
+                                        every step of the way.
+
+                                        Come to our gym and join the community of people who actively care for their
+                                        health and
+                                        well-being. Together, we'll achieve more!
+
+                                        Don't wait any longer - start your journey to a better version of yourself
+                                        today!
+                                    </div>
+                                </div>
+                            </v-col>
+
+
+
+                            <v-col cols="6" align="center" justify="center" class="d-flex justify-center align-center">
+                                <v-btn large class="rounded-pill text-h3 font-weight-black" color="green" variant="outlined" text="Join now"
+                                    style="background-color: rgba(0, 0, 0, 0.4);" height="30%" width="35%"></v-btn>
+                            </v-col>
+
+
+                        </v-row>
+
                     </v-parallax>
                 </v-col>
                 <!-- First row -->
@@ -160,10 +194,13 @@
 
 
         <!-- Footer -->
-        <v-footer color="grey" app>
+
+        <v-footer color="grey">
             <v-row>
                 <v-col align=center>
-                    FOOTER
+                    <span class="font-weight-thin mb-4">
+                        Pump Gym &copy; {{ new Date().getFullYear() }}
+                    </span>
                 </v-col>
             </v-row>
         </v-footer>
@@ -181,7 +218,7 @@ export default {
             menuButtons: [
                 {
                     id: 1,
-                    title: 'Trainings',
+                    title: 'Activities',
                     icon: 'mdi-dumbbell',
                     options: [
                         {
@@ -201,6 +238,63 @@ export default {
                 {
                     id: 2,
                     title: 'Our Trainers',
+                    icon: 'mdi-dumbbell',
+                    options: [
+                        {
+                            id: 1,
+                            title: 'b'
+                        },
+                        {
+                            id: 2,
+                            title: 'c'
+                        },
+                        {
+                            id: 3,
+                            title: 'd'
+                        },
+                    ],
+                },
+                {
+                    id: 3,
+                    title: 'Work for us',
+                    icon: 'mdi-dumbbell',
+                    options: [
+                        {
+                            id: 1,
+                            title: 'b'
+                        },
+                        {
+                            id: 2,
+                            title: 'c'
+                        },
+                        {
+                            id: 3,
+                            title: 'd'
+                        },
+                    ],
+                },
+                {
+                    id: 4,
+                    title: 'Contact us',
+                    icon: 'mdi-dumbbell',
+                    options: [
+                        {
+                            id: 1,
+                            title: 'b'
+                        },
+                        {
+                            id: 2,
+                            title: 'c'
+                        },
+                        {
+                            id: 3,
+                            title: 'd'
+                        },
+                    ],
+                },
+                {
+                    id: 5,
+                    title: 'Schedule',
                     icon: 'mdi-dumbbell',
                     options: [
                         {
