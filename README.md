@@ -1,7 +1,28 @@
-# Vue 3 + Vite
+## Prerequisites
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Before you begin, ensure you have met the following requirements:
 
-## Recommended IDE Setup
+* You have installed the latest version of [Node.js and npm](https://nodejs.org/en/download/)
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Installing and Running the Project
+
+To install the project dependencies, follow these steps:
+
+1. Open your terminal.
+2. Navigate to the project directory.
+3. Run the following command to install the project dependencies:
+
+```bash
+npm install
+```
+
+## To run the project, follow these steps:
+
+### In the terminal, make sure you are in the project directory.
+### Run the following command to start the project:
+
+```bash
+npm run dev
+```
+
+The project should now be running at http://localhost:8080/ (or another port if 8080 is already in use).
