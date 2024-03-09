@@ -1,111 +1,72 @@
 <template>
-    <v-app>
-
-        <!-- Header -->
-        <v-container class="mb-5">
-
-            <v-app-bar color="purple-lighten-4" class="px-5">
-                <v-row>
-                    <v-col cols="2" class="text-h3 font-weight-black" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
-                        Pump Gym
-                    </v-col>
-
-
-                    <v-col cols="6" align="center" justify="center">
-
-                        <v-menu transition="slide-y-transition" v-for="button in menuButtons" :key="button.id">
-                            <template v-slot:activator="{ props }">
-                                <v-btn color="black" v-bind="props" class="text-h5 pa-3 ma-2 font-weight-black" >
-                                    {{ button.title }}
-                                </v-btn>
-                            </template>
-                            <v-list>
-                                <v-list-item v-for="option in button.options" :key="option.id">
-                                    <v-list-item-title> {{ option.title }} </v-list-item-title>
-                                </v-list-item>
-                            </v-list>
-                        </v-menu>
-
-                    </v-col>
-
-
-                    <v-col cols="4" align="end" justify="center">
-                        <v-btn large class="rounded-pill" color="success" variant="elevated"
-                            text="Buy subscription"></v-btn>
-                        <v-btn class="rounded-pill" color="primary" variant="elevated" text="Client panel"></v-btn>
-                    </v-col>
-
-                </v-row>
-
-
-            </v-app-bar>
-        </v-container>
-        <!-- Header -->
-
-
+    <div>
 
         <!-- Body -->
-        <v-container fluid class="ma-0">
-            <v-row>
 
-                <!-- First row -->
-                <v-col cols="12" style="height: 50vh; min-width: 100%;" class="bg-white">
-                    <v-parallax
-                        src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
-                        class="ma-0 pa-0">
-                        <v-row>
-                            <v-col cols="6" class="py-10 ps-10">
-                                <div class="text-white text-h5 font-weight-black mb-0 text-no-wrap pa-4 rounded-xl"
-                                    style="background-color: rgba(0, 0, 0, 0.6);">
 
-                                    Welcome to Pump Gym!
+        <v-row>
 
-                                    <div class="subheading text-wrap font-weight-thin">
-                                        Do you dream of health, strength, and perfect fitness? If so, you've found the
-                                        perfect
-                                        place! Our gym not only offers top-quality equipment but also an inspiring
-                                        environment
-                                        that motivates action.
+            <!-- First row -->
+            <v-col cols="12" style="height: 50vh;" class="bg-white">
+                <v-parallax
+                    src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
+                    class="ma-0 pa-0">
+                    <v-row>
+                        <v-col cols="6" class="py-10 ps-10">
+                            <div class="text-white text-h5 font-weight-black mb-0 text-no-wrap pa-4 rounded-xl"
+                                style="background-color: rgba(0, 0, 0, 0.6);">
 
-                                        Our experienced instructors are here to help you achieve your fitness goals,
-                                        whether
-                                        you're just starting your fitness journey or you're an experienced athlete.
-                                        Whether you
-                                        want to build muscle, lose weight, or improve your endurance, we're ready to
-                                        support you
-                                        every step of the way.
+                                Welcome to Pump Gym!
 
-                                        Come to our gym and join the community of people who actively care for their
-                                        health and
-                                        well-being. Together, we'll achieve more!
+                                <div class="subheading text-wrap font-weight-thin text-justify">
+                                    Do you dream of health, strength, and perfect fitness? If so, you've found
+                                    the
+                                    perfect
+                                    place! Our gym not only offers top-quality equipment but also an inspiring
+                                    environment
+                                    that motivates action.
 
-                                        Don't wait any longer - start your journey to a better version of yourself
-                                        today!
-                                    </div>
+                                    Our experienced instructors are here to help you achieve your fitness goals,
+                                    whether
+                                    you're just starting your fitness journey or you're an experienced athlete.
+                                    Whether you
+                                    want to build muscle, lose weight, or improve your endurance, we're ready to
+                                    support you
+                                    every step of the way.
+
+                                    Come to our gym and join the community of people who actively care for their
+                                    health and
+                                    well-being. Together, we'll achieve more!
+
+                                    Don't wait any longer - start your journey to a better version of yourself
+                                    today!
                                 </div>
-                            </v-col>
+                            </div>
+                        </v-col>
 
 
 
-                            <v-col cols="6" align="center" justify="center" class="d-flex justify-center align-center">
-                                <v-btn large class="rounded-pill text-h3 font-weight-black" color="green" variant="outlined" text="Join now"
-                                    style="background-color: rgba(0, 0, 0, 0.4);" height="30%" width="35%"></v-btn>
-                            </v-col>
+                        <v-col cols="6" align="center" justify="center" class="d-flex justify-center align-center">
+                            <v-btn large class="rounded-pill text-h3 font-weight-black" color="green" variant="outlined"
+                                text="Join now" style="background-color: rgba(0, 0, 0, 0.4);" height="30%"
+                                width="35%"></v-btn>
+                        </v-col>
 
 
-                        </v-row>
+                    </v-row>
 
-                    </v-parallax>
-                </v-col>
-                <!-- First row -->
+                </v-parallax>
+            </v-col>
+            <!-- First row -->
 
-                <!-- Spacer -->
-                <v-col cols="12" style="height: 15vh;"></v-col>
-                <!-- Spacer -->
+            <!-- Spacer -->
+            <v-col cols="12" style="height: 15vh;"></v-col>
+            <!-- Spacer -->
 
-                <!-- Second row -->
-                <v-col cols="12" style="height: 40vh;">
+            <!-- Second row -->
+            <v-col cols="12" style="height: 40vh;">
 
+                <span v-if="!$vuetify.display.mobile">
                     <v-row>
                         <v-col cols="12" align="center" justify="center">
                             <h1 class="text-h4 font-weight-thin mb-4">
@@ -158,43 +119,119 @@
                             </v-avatar>
                         </v-col>
                     </v-row>
-                </v-col>
-                <!-- Second row-->
+                </span>
 
-                <!-- Spacer -->
-                <v-col cols="12" style="height: 20vh;"></v-col>
-                <!-- Spacer -->
+                <span v-else>
+                    <v-carousel height="400" hide-delimiter-background show-arrows>
+
+                        <template v-slot:prev="{ props }">
+                            <v-btn color="success" variant="elevated" @click="props.onClick" icon="mdi-arrow-left">
+                            </v-btn>
+                        </template>
+
+                        <template v-slot:next="{ props }">
+                            <v-btn color="info" variant="elevated" @click="props.onClick"
+                                icon="mdi-arrow-right"></v-btn>
+                        </template>
 
 
-                <!-- Third row -->
-                <v-col cols="12" style="height: 40vh; min-width: 100%;" class="bg-white">
-                    <v-parallax
-                        src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
-                        class="ma-0 pa-0">
-                        <div class="d-flex flex-column fill-height justify-center align-center text-white">
-                            <h1 class="text-h4 font-weight-thin mb-4">
-                                Hey!
-                            </h1>
-                            <h4 class="subheading">
-                                Content Content Content Content Content Content Content Content
-                            </h4>
-                        </div>
-                    </v-parallax>
-                </v-col>
-                <!-- Third row -->
 
-                <!-- Spacer -->
-                <v-col cols="12" style="height: 20vh;"></v-col>
-                <!-- Spacer -->
+                        <v-carousel-item>
+                            <v-sheet height="100%">
+                                <div class="d-flex fill-height justify-center align-center">
+                                    <v-avatar size="300">
+                                        <v-parallax
+                                            src="https://images.adsttc.com/media/images/5014/3b01/28ba/0d5b/4900/0409/newsletter/stringio.jpg?1361422898"
+                                            class="ma-0 pa-0" type="button">
+                                            <div
+                                                class="d-flex flex-column fill-height justify-center align-center text-white">
+                                                <span class="font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
+                                                    style="background-color: rgba(0, 0, 0, 0.6);">
+                                                    Katowice, Mr. Rainbow Street 12a
+                                                </span>
+                                            </div>
+                                        </v-parallax>
+                                    </v-avatar>
+                                </div>
+                            </v-sheet>
+                        </v-carousel-item>
+                        <v-carousel-item>
+                            <v-sheet height="100%">
+                                <div class="d-flex fill-height justify-center align-center">
+                                    <v-avatar size="300">
+                                        <v-parallax
+                                            src="https://3dcorner.co/wp-content/uploads/2018/10/visualization-exterior-photorealistic-modern-architecture-night-fitness-gym-3dcorner_180904.jpg"
+                                            class="ma-0 pa-0" type="button">
+                                            <div
+                                                class="d-flex flex-column fill-height justify-center align-center text-white">
+                                                <span class="font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
+                                                    style="background-color: rgba(0, 0, 0, 0.6);">
+                                                    Warsaw, Meowmoew Street 7
+                                                </span>
+                                            </div>
+                                        </v-parallax>
+                                    </v-avatar>
+                                </div>
+                            </v-sheet>
+                        </v-carousel-item>
+                        <v-carousel-item>
+                            <v-sheet height="100%">
+                                <div class="d-flex fill-height justify-center align-center">
+                                    <v-avatar size="300">
+                                        <v-parallax
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj-q7L2jjf7SLyD3mHGbYJVgM16EA0h7B35A&usqp=CAU"
+                                            class="ma-0 pa-0" type="button">
+                                            <div
+                                                class="d-flex flex-column fill-height justify-center align-center text-white">
+                                                <span class="font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
+                                                    style="background-color: rgba(0, 0, 0, 0.6);">
+                                                    Wrocław, Factors Street 3
+                                                </span>
+                                            </div>
+                                        </v-parallax>
+                                    </v-avatar>
+                                </div>
+                            </v-sheet>
+                        </v-carousel-item>
+                    </v-carousel>
+                </span>
+            </v-col>
+            <!-- Second row-->
 
-            </v-row>
-        </v-container>
+            <!-- Spacer -->
+            <v-col cols="12" style="height: 20dvh;"></v-col>
+            <!-- Spacer -->
+
+
+            <!-- Third row -->
+            <v-col cols="12" style="height: 40dvh; min-width: 100%;" class="bg-white">
+                <v-parallax
+                    src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
+                    class="ma-0 pa-0">
+                    <div class="d-flex flex-column fill-height justify-center align-center text-white">
+                        <h1 class="text-h4 font-weight-thin mb-4">
+                            Hey!
+                        </h1>
+                        <h4 class="subheading pa-3">
+                            Content Content Content Content Content Content Content Content
+                        </h4>
+                    </div>
+                </v-parallax>
+            </v-col>
+            <!-- Third row -->
+
+            <!-- Spacer -->
+            <v-col cols="12" style="height: 20vh;"></v-col>
+            <!-- Spacer -->
+
+        </v-row>
+
+
         <!-- Body -->
 
 
 
         <!-- Footer -->
-
         <v-footer color="grey">
             <v-row>
                 <v-col align=center>
@@ -206,7 +243,7 @@
         </v-footer>
         <!-- Footer -->
 
-    </v-app>
+    </div>
 </template>
 
 <script>

@@ -1,0 +1,118 @@
+<template>
+
+    <v-dialog v-model="showLoginDialog" persistent width="600">
+        <v-card class="rounded-xl pa-4 bg-brown-lighten-5">
+            <v-card-title>
+
+                <v-row>
+                    <v-col cols="2"></v-col>
+                    <v-col cols="8" class="headline text-h4" align=center>
+                        Login
+                    </v-col>
+                    <v-col cols="2" align="end">
+                        <v-btn icon="mdi-close" variant="plain" @click="closeLoginDialog"></v-btn>
+                    </v-col>
+                </v-row>
+            </v-card-title>
+
+            <v-card-text>
+                <v-form v-model="form">
+
+                    <!-- Login -->
+                    <v-text-field v-model="loginInput" label="Email or Id" class="mb-7" variant="underlined"
+                        prepend-icon="mdi-account-tie" autocomplete="username"
+                        :rules="rules.usernameRules"></v-text-field>
+                    <!-- Login -->
+
+
+
+                    <!-- Password -->
+                    <v-text-field v-model="password" label="Password" variant="underlined"
+                        :type="passwordVisible ? 'text' : 'password'" prepend-icon="mdi-key"
+                        :append-inner-icon="passwordVisible ? 'mdi-eye' : ' mdi-eye-off'"
+                        @click:append-inner="passwordVisible = !passwordVisible"
+                        autocomplete="current-password"></v-text-field>
+                    <!-- Password -->
+
+                    <!-- Password recovery -->
+                    <div class="text-subtitle-1 text-medium-emphasis d-flex align-end justify-space-between">
+                        <span></span>
+
+                        <v-btn variant="plain" size="x-small" @click="passwordRecoverDialog = true"
+                            class="text-cyan-darken-1 font-weight-bold" prepend-icon="mdi-restore">
+                            Forgot password?
+                        </v-btn>
+                    </div>
+                    <!-- Password recovery -->
+                </v-form>
+            </v-card-text>
+
+
+            <v-row class="mb-1 mt-2">
+                <v-col cols="12">
+                    <span>
+                        <v-tooltip v-if="!form" activator="parent" location="top" no-overflow>
+                            Fill required fields
+                        </v-tooltip>
+                        <span>
+                            <v-btn block color="green-darken-2" @click="login()" :loading="loading"
+                                :disabled="!form">Login</v-btn>
+                        </span>
+                    </span>
+                </v-col>
+            </v-row>
+
+
+        </v-card>
+    </v-dialog>
+
+</template>
+
+
+<script>
+import { mapState, mapActions } from 'vuex'
+
+export default {
+    name: 'LoginComponent',
+
+    data() {
+        return {
+            form: false,
+            loading: false,
+            loginInput: '',
+            password: '',
+            passwordVisible: false,
+
+            rules: {
+                usernameRules: [
+                    v => !!v || 'Email or Id',
+                    v => (v.length >= 6) || 'Email or Id must containt at least 6 characters',
+                    v => (v.length <= 70) || 'Email or Id must too large',
+                    v => /^[a-zA-Z0-9@.]+$/.test(v) || 'Only letters and numbers are allowed',
+                ],
+
+                passwordRules: [
+                    v => !!v || 'Password is required',
+                    v => (v.length >= 4) || 'Password must containt at least 4 characters',
+                    v => (v.length <= 70) || 'Password too large',
+                ],
+            },
+        }
+    },
+
+    computed: {
+        ...mapState(['showLoginDialog'])
+    },
+
+    methods: {
+        ...mapActions(['openLoginDialog', 'closeLoginDialog']),
+
+        async login() {
+            this.loading = true;
+
+            this.loading = false;
+        },
+    },
+
+}
+</script>
