@@ -10,7 +10,7 @@
           <v-col cols="3" justify="space-around">
 
             <v-btn size="large" class="rounded-pill me-5" color="success" variant="elevated"
-              text="Buy subscription"></v-btn>
+              text="Buy subscription" @click="goTo('/subscriptions')"></v-btn>
             <v-btn size="large" class="rounded-pill" color="primary" variant="outlined" text="Client panel"
               @click="openDialog"></v-btn>
 
@@ -107,7 +107,7 @@ export default {
         },
         {
           id: 3,
-          title: 'Work for us',
+          title: 'Work with us',
           icon: 'mdi-account-group',
           route: '/work',
         },

@@ -5,8 +5,9 @@ import LoginPage from '../pages/LoginPage.vue'
 import MainPage from '../pages/MainPage.vue'
 import ActivitiesPage from '../pages/Activities.vue'
 import TrainersPage from '../pages/Trainers.vue'
-import WorkForUsPage from '../pages/WorkForUs.vue'
+import WorkWithUsPage from '../pages/WorkWithUs.vue'
 import SchedulePage from '../pages/Schedule.vue'
+import SubscriptionsPage from '../pages/Subscriptions.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -28,13 +29,18 @@ const router = createRouter({
     },
     {
       path: '/work',
-      name: 'WorkForUs',
-      component: WorkForUsPage
+      name: 'WorkWithUs',
+      component: WorkWithUsPage
     },
     {
       path: '/schedule',
       name: 'Schedule',
       component: SchedulePage
+    },
+    {
+      path: '/subscriptions',
+      name: 'Subscriptions',
+      component: SubscriptionsPage
     },
   ]
 })

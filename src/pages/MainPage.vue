@@ -49,7 +49,7 @@
                         <v-col cols="6" align="center" justify="center" class="d-flex justify-center align-center">
                             <v-btn large class="rounded-pill text-h3 font-weight-black" color="green" variant="outlined"
                                 text="Join now" style="background-color: rgba(0, 0, 0, 0.4);" height="30%"
-                                width="35%"></v-btn>
+                                width="35%" @click="goTo('/subscriptions')"></v-btn>
                         </v-col>
 
 
@@ -350,6 +350,12 @@ export default {
                 },
             ]
         }
+    },
+
+    methods: {
+        goTo(route) {
+            this.$router.push(route);
+        },
     }
 }
 </script>
