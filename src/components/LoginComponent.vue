@@ -20,8 +20,7 @@
 
                     <!-- Login -->
                     <v-text-field v-model="loginInput" label="Email or Id" class="mb-7" variant="underlined"
-                        prepend-icon="mdi-account-tie" autocomplete="username"
-                        :rules="rules.usernameRules"></v-text-field>
+                        prepend-icon="mdi-account-tie" autocomplete="username" :rules="rules.emailRules"></v-text-field>
                     <!-- Login -->
 
 
@@ -62,7 +61,6 @@
                 </v-col>
             </v-row>
 
-
         </v-card>
     </v-dialog>
 
@@ -71,6 +69,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { auth } from '../firebase'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+
 
 export default {
     name: 'LoginComponent',
@@ -84,10 +85,10 @@ export default {
             passwordVisible: false,
 
             rules: {
-                usernameRules: [
-                    v => !!v || 'Email or Id',
-                    v => (v.length >= 6) || 'Email or Id must containt at least 6 characters',
-                    v => (v.length <= 70) || 'Email or Id must too large',
+                emailRules: [
+                    v => !!v || 'Email',
+                    v => (v.length >= 6) || 'Email must containt at least 6 characters',
+                    v => (v.length <= 70) || 'Email must too large',
                     v => /^[a-zA-Z0-9@.]+$/.test(v) || 'Only letters and numbers are allowed',
                 ],
 
@@ -97,21 +98,47 @@ export default {
                     v => (v.length <= 70) || 'Password too large',
                 ],
             },
+
+
         }
     },
+
+
 
     computed: {
         ...mapState(['showLoginDialog'])
     },
 
     methods: {
-        ...mapActions(['openLoginDialog', 'closeLoginDialog']),
+        ...mapActions(['openLoginDialog', 'closeLoginDialog', 'setLoggedUser', 'triggerAlert']),
 
         async login() {
             this.loading = true;
+            try {
+                const email = this.loginInput.trim();
+                const password = this.password.trim();
+
+                const user = await signInWithEmailAndPassword(auth, email, password);
+                this.setLoggedUser(user);
+                this.closeLoginDialog();
+            } catch (error) {
+                if (error.code === 'auth/invalid-credential') {
+                    this.triggerAlert({
+                        message: 'Wrong email or password',
+                        type: 'error'
+                    })
+                } else {
+                    this.triggerAlert({
+                        message: 'An error occurred',
+                        type: 'error'
+                    })
+                }
+
+            }
 
             this.loading = false;
         },
+
     },
 
 }
