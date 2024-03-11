@@ -13,6 +13,8 @@ export default createStore({
       message: '',
       type: '',
     },
+
+    facilities:null,
   },
   mutations: {
     setShowLoginDialog(state, value) {
@@ -34,6 +36,12 @@ export default createStore({
     clearLoggedUser(state) {
       state.loggedUser = null;
     },
+
+    // Facilities
+    setFacilities(state, facilities) {
+      state.facilities = facilities;
+    },
+    // Facilities
 
 
   },
@@ -68,7 +76,13 @@ export default createStore({
 
     clearLoggedUser({ commit }) {
       commit('clearLoggedUser');
-    }
+    },
+
+    // Facilities
+    setFacilities({ commit }, facilities) {
+      commit('setFacilities', facilities);
+    },
+    // Facilities
 
   },
   getters: {
@@ -79,6 +93,9 @@ export default createStore({
     alertData: state => state.alertData,
 
     loggedUser: state => state.loggedUser,
+
+    // Facilities
+    getFacilities: state => state.facilities,
 
   }
 })

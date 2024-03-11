@@ -48,8 +48,8 @@
 
                         <v-col cols="6" align="center" justify="center" class="d-flex justify-center align-center">
                             <v-btn large class="rounded-pill text-h3 font-weight-black" color="green" variant="outlined"
-                                text="Join now" style="background-color: rgba(0, 0, 0, 0.4);" height="30%"
-                                width="35%" @click="goTo('/subscriptions')"></v-btn>
+                                text="Join now" style="background-color: rgba(0, 0, 0, 0.4);" height="30%" width="35%"
+                                @click="goTo('/subscriptions')"></v-btn>
                         </v-col>
 
 
@@ -59,8 +59,9 @@
             </v-col>
             <!-- First row -->
 
+
             <!-- Spacer -->
-            <v-col cols="12" style="height: 15vh;"></v-col>
+            <v-col cols="12" style="height: 5vh;"></v-col>
             <!-- Spacer -->
 
             <!-- Second row -->
@@ -75,50 +76,28 @@
                         </v-col>
                     </v-row>
 
-                    <v-row justify="space-evenly">
-                        <v-col cols="3">
-                            <v-avatar size="400">
-                                <v-parallax
-                                    src="https://images.adsttc.com/media/images/5014/3b01/28ba/0d5b/4900/0409/newsletter/stringio.jpg?1361422898"
-                                    class="ma-0 pa-0" type="button">
-                                    <div class="d-flex flex-column fill-height justify-center align-center text-white">
-                                        <h1 class="text-h5 font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
-                                            style="background-color: rgba(0, 0, 0, 0.6);">
-                                            Katowice, Mr. Rainbow Street 12a
-                                        </h1>
-                                    </div>
-                                </v-parallax>
-                            </v-avatar>
-                        </v-col>
-                        <v-col cols="3">
-                            <v-avatar size="400">
-                                <v-parallax
-                                    src="https://3dcorner.co/wp-content/uploads/2018/10/visualization-exterior-photorealistic-modern-architecture-night-fitness-gym-3dcorner_180904.jpg"
-                                    class="ma-0 pa-0" type="button">
-                                    <div class="d-flex flex-column fill-height justify-center align-center text-white">
-                                        <h1 class="text-h5 font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
-                                            style="background-color: rgba(0, 0, 0, 0.6);">
-                                            Warsaw, Meowmoew Street 7
-                                        </h1>
-                                    </div>
-                                </v-parallax>
-                            </v-avatar>
-                        </v-col>
-                        <v-col cols="3">
-                            <v-avatar size="400">
-                                <v-parallax
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj-q7L2jjf7SLyD3mHGbYJVgM16EA0h7B35A&usqp=CAU"
-                                    class="ma-0 pa-0" type="button">
-                                    <div class="d-flex flex-column fill-height justify-center align-center text-white">
-                                        <h1 class="text-h5 font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
-                                            style="background-color: rgba(0, 0, 0, 0.6);">
-                                            Wrocław, Factors Street 3
-                                        </h1>
-                                    </div>
-                                </v-parallax>
-                            </v-avatar>
-                        </v-col>
-                    </v-row>
+
+                    <v-carousel progress="success" hide-delimiters v-model="model" class="pt-10">
+                        <v-carousel-item v-for="(chunk, index) in chunkedFacilities" :key="index">
+                            <v-row>
+                                <v-col cols="4" v-for="facility in chunk" :key="facility.name" align="center">
+                                    <v-avatar size="400">
+                                        <v-parallax :src="facility.Image" class="ma-0 pa-0" type="button">
+                                            <div
+                                                class="d-flex flex-column fill-height justify-center align-center text-white">
+                                                <h1 class="text-h5 font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
+                                                    style="background-color: rgba(0, 0, 0, 0.6);">
+                                                    {{ facility.Name }}, <br> {{ facility.City + ', ' + facility.Street
+                                    + ' ' + facility.Home }}
+                                                </h1>
+                                            </div>
+                                        </v-parallax>
+                                    </v-avatar>
+                                </v-col>
+                            </v-row>
+                        </v-carousel-item>
+                    </v-carousel>
+
                 </span>
 
                 <span v-else>
@@ -199,7 +178,7 @@
             <!-- Second row-->
 
             <!-- Spacer -->
-            <v-col cols="12" style="height: 20dvh;"></v-col>
+            <v-col cols="12" style="height: 30dvh;"></v-col>
             <!-- Spacer -->
 
 
@@ -247,11 +226,17 @@
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters } from 'vuex'
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../firebase.js'
+
 export default {
     name: 'LoginPage',
 
     data() {
         return {
+
+            model: 0,
             menuButtons: [
                 {
                     id: 1,
@@ -352,10 +337,48 @@ export default {
         }
     },
 
+    computed: {
+        ...mapGetters(['getFacilities']),
+
+        chunkedFacilities() {
+            let i, j, chunk = 3;
+            let facilities = this.getFacilities;
+            let result = [];
+
+            if (facilities) {
+                for (i = 0, j = facilities.length; i < j; i += chunk) {
+                    result.push(facilities.slice(i, i + chunk));
+                }
+            }
+
+            return result;
+        }
+    },
+
     methods: {
+        ...mapActions(['setFacilities', 'triggerAlert']),
+
         goTo(route) {
             this.$router.push(route);
         },
+
+        async fetchFacilities() {
+            try {
+                const q = await getDocs(collection(db, "Facilities"));
+                const facilities = q.docs.map((doc) => doc.data());
+                this.setFacilities(facilities);
+            } catch (error) {
+                this.triggerAlert({
+                    message: 'An error occurred',
+                    type: 'error'
+                })
+            }
+        },
+
+    },
+
+    mounted() {
+        this.fetchFacilities();
     }
 }
 </script>
