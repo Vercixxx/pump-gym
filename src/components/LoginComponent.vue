@@ -19,8 +19,8 @@
                 <v-form v-model="form">
 
                     <!-- Login -->
-                    <v-text-field v-model="loginInput" label="Email or Id" class="mb-7" variant="underlined"
-                        prepend-icon="mdi-account-tie" autocomplete="username" :rules="rules.emailRules"></v-text-field>
+                    <v-text-field v-model="loginInput" label="Email" class="mb-7" variant="underlined"
+                        prepend-icon="mdi-email" autocomplete="username" :rules="rules.emailRules"></v-text-field>
                     <!-- Login -->
 
 
@@ -37,8 +37,8 @@
                     <div class="text-subtitle-1 text-medium-emphasis d-flex align-end justify-space-between">
                         <span></span>
 
-                        <v-btn variant="plain" size="x-small" @click="passwordRecoverDialog = true"
-                            class="text-cyan-darken-1 font-weight-bold" prepend-icon="mdi-restore">
+                        <v-btn variant="plain" size="small" @click="passwordRecoverDialog = true"
+                            class="text-cyan-darken-4 font-weight-bold" prepend-icon="mdi-restore">
                             Forgot password?
                         </v-btn>
                     </div>
@@ -68,7 +68,7 @@
 
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import { auth } from '../firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 
@@ -88,8 +88,9 @@ export default {
                 emailRules: [
                     v => !!v || 'Email',
                     v => (v.length >= 6) || 'Email must containt at least 6 characters',
-                    v => (v.length <= 70) || 'Email must too large',
-                    v => /^[a-zA-Z0-9@.]+$/.test(v) || 'Only letters and numbers are allowed',
+                    v => (v.length <= 70) || 'Email too large',
+                    v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Invalid email format (example@ex.ex)',
+                    
                 ],
 
                 passwordRules: [
@@ -106,7 +107,7 @@ export default {
 
 
     computed: {
-        ...mapState(['showLoginDialog'])
+        ...mapGetters(['showLoginDialog'])
     },
 
     methods: {

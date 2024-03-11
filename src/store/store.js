@@ -4,6 +4,8 @@ export default createStore({
   state: {
     showLoginDialog: false,
 
+    showContactUsDialog: false,
+
     loggedUser: null,
 
     alertData: {
@@ -17,6 +19,10 @@ export default createStore({
       state.showLoginDialog = value;
     },
 
+    setShowContactUsDialog(state, value) {
+      state.showContactUsDialog = value;
+    },
+
     setAlertData(state, data) {
       state.alertData = data;
     },
@@ -27,11 +33,21 @@ export default createStore({
 
     clearLoggedUser(state) {
       state.loggedUser = null;
-    }
+    },
+
+
   },
   actions: {
     openLoginDialog({ commit }) {
       commit('setShowLoginDialog', true);
+    },
+
+    openContactUsDialog({ commit }) {
+      commit('setShowContactUsDialog', true);
+    },
+
+    closeContactUsDialog({ commit }) {
+      commit('setShowContactUsDialog', false);
     },
 
     closeLoginDialog({ commit }) {
@@ -57,6 +73,8 @@ export default createStore({
   },
   getters: {
     showLoginDialog: state => state.showLoginDialog,
+
+    showContactUsDialog: state => state.showContactUsDialog,
 
     alertData: state => state.alertData,
 

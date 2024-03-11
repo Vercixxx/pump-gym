@@ -17,6 +17,7 @@
       <!-- Dialogs -->
       <LoginComponent />
       <SnackBarAlert />
+      <ContactUsDialog />
       <!-- Dialogs -->
 
 
@@ -28,6 +29,7 @@
 import LoginComponent from './components/LoginComponent.vue'
 import SnackBarAlert from './components/SnackBarAlert.vue'
 import AppBar from './components/AppBar.vue'
+import ContactUsDialog from './components/ContactUsDialog.vue'
 
 export default {
   name: 'App',
@@ -36,6 +38,7 @@ export default {
     LoginComponent,
     SnackBarAlert,
     AppBar,
+    ContactUsDialog,
   },
 
 

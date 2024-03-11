@@ -58,7 +58,7 @@
                 </v-parallax>
             </v-col>
             <!-- First row -->
-            {{ loggedUser }}asd
+
             <!-- Spacer -->
             <v-col cols="12" style="height: 15vh;"></v-col>
             <!-- Spacer -->
@@ -247,7 +247,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 export default {
     name: 'LoginPage',
 
@@ -351,10 +350,6 @@ export default {
                 },
             ]
         }
-    },
-
-    computed: {
-        ...mapGetters(['loggedUser'])
     },
 
     methods: {

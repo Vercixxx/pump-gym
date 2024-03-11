@@ -40,7 +40,7 @@
                     {{ button.title }}
                 </v-btn>
 
-                <v-btn size="large" class="font-weight-black mt-1" color="black" prepend-icon="mdi-phone">
+                <v-btn size="large" class="font-weight-black mt-1" color="black" prepend-icon="mdi-phone" @click="openContactUsDialog">
                     Contact
                 </v-btn>
 
@@ -116,7 +116,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(['openLoginDialog', 'triggerAlert', 'clearLoggedUser']),
+        ...mapActions(['openLoginDialog', 'openContactUsDialog' , 'triggerAlert', 'clearLoggedUser']),
         ...mapGetters(['loggedUser']),
 
         openDialog() {
