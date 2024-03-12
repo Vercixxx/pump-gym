@@ -8,6 +8,7 @@ import TrainersPage from '../pages/Trainers.vue'
 import WorkWithUsPage from '../pages/WorkWithUs.vue'
 import SchedulePage from '../pages/Schedule.vue'
 import SubscriptionsPage from '../pages/Subscriptions.vue'
+import ClientPage from '../pages/ClientPage.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -41,6 +42,11 @@ const router = createRouter({
       path: '/subscriptions',
       name: 'Subscriptions',
       component: SubscriptionsPage
+    },
+    {
+      path: '/dashboard',
+      name: 'ClientPage',
+      component: ClientPage
     },
   ]
 })

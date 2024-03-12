@@ -8,27 +8,31 @@
                 </v-col>
             </v-row>
             <v-row class="mb-10" align="center" justify="center">
-                <v-col cols="12" sm="4" v-for="subscription in specialSubscriptions" :key="subscription.id"
+                <v-col cols="12" sm="6" v-for="subscription in specialSubscriptions" :key="subscription.id"
                     align="center">
-                    <v-card :color="subscription.color" elevation="16" variant="elevated">
-                        <v-card-title align="center">
-                            {{ subscription.name }}
-                        </v-card-title>
+                    <v-card class="mx-auto" height="500" elevation="16" variant="elevated"
+                        image="src/images/student_subscripton.jpeg">
+                        <v-card>
 
-                        <v-card-subtitle>
-                            <span class="font-weight-bold">
-                                Price - {{ subscription.price }}
-                            </span> ({{ subscription.type }})
-                        </v-card-subtitle>
+                            <v-card-title align="center">
+                                {{ subscription.name }}
+                            </v-card-title>
 
-                        <v-card-text>{{ subscription.description }}</v-card-text>
+                            <v-card-subtitle>
+                                <span class="font-weight-bold">
+                                    Price - {{ subscription.price }}
+                                </span> ({{ subscription.type }})
+                            </v-card-subtitle>
 
-                        <v-row class="ma-5">
-                            <v-col>
-                                <v-btn block color="success">Buy {{ subscription.name }} plan ({{ subscription.price
-                                    }}zł)</v-btn>
-                            </v-col>
-                        </v-row>
+                            <v-card-text>{{ subscription.description }}</v-card-text>
+
+                            <v-row class="ma-5">
+                                <v-col>
+                                    <v-btn block color="success">Buy {{ subscription.name }} plan ({{ subscription.price
+                                        }}zł)</v-btn>
+                                </v-col>
+                            </v-row>
+                        </v-card>
                     </v-card>
                 </v-col>
             </v-row>

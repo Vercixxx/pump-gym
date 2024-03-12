@@ -14,7 +14,9 @@
 
                 <span v-else>
 
-                    {{ loggedUser.user.email }}
+
+                    <v-btn size="large" @click="goTo('/dashboard')" append-icon="mdi-home-circle" text="My dashboard"
+                        color="success" variant="tonal" class="me-3"></v-btn>
 
                     <v-btn size="large" class="rounded-pill" color="red" variant="elevated" text="Sign out"
                         append-icon="mdi-logout" @click="signOut()"></v-btn>
@@ -26,6 +28,10 @@
 
             <v-col cols="3" align="center" justify="center" class="text-h3 font-weight-black"
                 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);" @click="goTo('/')" role="button">
+
+                <v-avatar size="50" class="me-2" image="src/images/logo.png">
+                </v-avatar>
+
                 <span style="letter-spacing: 5px;">
                     Pump Gym
                 </span>
@@ -40,7 +46,8 @@
                     {{ button.title }}
                 </v-btn>
 
-                <v-btn size="large" class="font-weight-black mt-1" color="black" prepend-icon="mdi-phone" @click="openContactUsDialog">
+                <v-btn size="large" class="font-weight-black mt-1" color="black" prepend-icon="mdi-phone"
+                    @click="openContactUsDialog">
                     Contact
                 </v-btn>
 
@@ -64,6 +71,9 @@
         </template>
 
         <v-app-bar-title>Pump gym</v-app-bar-title>
+
+        <v-avatar size="50" class="me-2" image="src/images/logo.png">
+                </v-avatar>
     </v-app-bar>
     <!-- Mobile -->
 </template>
@@ -116,7 +126,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(['openLoginDialog', 'openContactUsDialog' , 'triggerAlert', 'clearLoggedUser']),
+        ...mapActions(['openLoginDialog', 'openContactUsDialog', 'triggerAlert', 'clearLoggedUser']),
         ...mapGetters(['loggedUser']),
 
         openDialog() {
@@ -135,6 +145,7 @@ export default {
                     message: 'You have been signed out',
                     type: 'success'
                 });
+                this.goTo('/');
             } catch (error) {
                 this.triggerAlert({
                     message: 'An error occurred while signing out',

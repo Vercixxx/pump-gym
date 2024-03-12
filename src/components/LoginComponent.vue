@@ -122,6 +122,8 @@ export default {
                 const user = await signInWithEmailAndPassword(auth, email, password);
                 this.setLoggedUser(user);
                 this.closeLoginDialog();
+                this.$router.push('/dashboard');
+
             } catch (error) {
                 if (error.code === 'auth/invalid-credential') {
                     this.triggerAlert({
