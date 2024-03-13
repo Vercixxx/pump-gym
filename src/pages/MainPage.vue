@@ -73,7 +73,8 @@
                     <span v-if="!$vuetify.display.mobile">
 
                         <v-row>
-                            <v-col cols="12" align="center" jusify="center" class="text-h4 font-weight-black"  style="background-color: rgba(255, 255, 255, 0.6);">
+                            <v-col cols="12" align="center" jusify="center" class="text-h4 font-weight-black"
+                                style="background-color: rgba(255, 255, 255, 0.6);">
                                 Our clubs
                             </v-col>
                         </v-row>
@@ -130,7 +131,7 @@
                                                         style="background-color: rgba(0, 0, 0, 0.6);">
                                                         {{ facility.Name }}, <br> {{ facility.City + ', ' +
                         facility.Street
-                        + ' ' + facility.Home }}
+                                                        + ' ' + facility.Home }}
                                                     </span>
                                                 </div>
                                             </v-parallax>
@@ -331,10 +332,23 @@ export default {
 
         async fetchFacilities() {
             try {
-                const q = await getDocs(collection(db, "Facilities"));
-                const facilities = q.docs.map((doc) => doc.data());
+                const facilitiesQuerySnapshot = await getDocs(collection(db, "Facilities"));
+                const facilities = [];
+
+                for (let doc of facilitiesQuerySnapshot.docs) {
+                    const facility = doc.data();
+                    facility.id = doc.id;
+
+                    const staffQuerySnapshot = await getDocs(collection(doc.ref, "Staff"));
+                    facility.staff = staffQuerySnapshot.docs.map(doc => doc.data());
+
+                    facilities.push(facility);
+                }
+
                 this.setFacilities(facilities);
+
             } catch (error) {
+                console.error("Error getting documents: ", error);
                 this.triggerAlert({
                     message: 'An error occurred',
                     type: 'error'
@@ -344,8 +358,10 @@ export default {
 
     },
 
-    mounted() {
+    created() {
         this.fetchFacilities();
-    }
+    },
+
+
 }
 </script>
