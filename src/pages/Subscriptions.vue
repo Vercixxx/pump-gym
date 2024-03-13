@@ -11,7 +11,7 @@
             <v-row class="mb-10" align="center" justify="center">
                 <v-col cols="12" sm="6" v-for="subscription in specialSubscriptions" :key="subscription.id"
                     align="center" justify="center">
-                    <v-card class="mx-auto" height="500" elevation="16" variant="elevated" :image="subscription.image">
+                    <v-card class="mx-auto v-card-hover" height="500" elevation="16" variant="elevated" :image="subscription.image">
 
                         <v-card style="background-color: rgba(250, 250, 250, 0.9);" height="420"
                             class="ma-10 d-flex flex-column">
@@ -53,7 +53,7 @@
             </v-row>
             <v-row>
                 <v-col cols="12" sm="3" v-for="subscription in subscriptions" :key="subscription.id">
-                    <v-card class="mx-auto" height="500" elevation="16" variant="elevated" :image="subscription.image">
+                    <v-card class="mx-auto v-card-hover" height="500" elevation="16" variant="elevated" :image="subscription.image">
 
 
                         <v-card style="background-color: rgba(250, 250, 250, 0.9);" height="420"
@@ -120,6 +120,7 @@ export default {
                     color: 'green-lighten-2',
                     type: '1 months',
                     description: 'Basic subscription',
+                    image: 'src/images/open_background.jpeg'
                 },
                 {
                     id: 4,
@@ -128,6 +129,7 @@ export default {
                     color: 'red-lighten-3',
                     type: '1 month',
                     description: 'Basic subscription',
+                    image: 'src/images/open_12_background.jpeg'
                 },
 
             ],
@@ -160,3 +162,33 @@ export default {
 
 }
 </script>
+
+
+<style scoped>
+.v-card-hover {
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+}
+
+.v-card-hover:hover {
+    transform: scale(1.2);
+    z-index: 1;
+}
+
+.v-card-hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: -1;
+}
+
+.v-card-hover:hover::before {
+    opacity: 1;
+}
+</style>
