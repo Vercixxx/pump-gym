@@ -1,6 +1,6 @@
 <template>
     <!-- Desktop -->
-    <v-app-bar v-if="!$vuetify.display.mobile" color="" class="px-5">
+    <v-app-bar v-if="!$vuetify.display.mobile" color="" class="px-5" elevation="0">
         <v-row>
 
             <v-col cols="3" justify="space-around">
