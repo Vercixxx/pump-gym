@@ -1,6 +1,6 @@
 <template>
 
-    <v-dialog v-model="showLoginDialog" persistent width="600">
+    <v-dialog v-model="showLoginDialog" persistent width="600"  style="background-color: rgba(100, 100, 100, 0.6);">
         <v-card class="rounded-xl pa-4 bg-brown-lighten-5">
             <v-card-title>
 
@@ -45,6 +45,17 @@
                     <!-- Password recovery -->
                 </v-form>
             </v-card-text>
+
+
+            <v-row class="mb-4">
+                <v-col cols="12" align="center">
+                    <v-divider></v-divider>
+                    <v-btn variant="text" class="font-weight-thin text-disabled" @click="signUp" role="button">
+                        Dont have an account? Sign up now!
+                    </v-btn>
+
+                </v-col>
+            </v-row>
 
 
             <v-row class="mb-1 mt-2">
@@ -111,7 +122,12 @@ export default {
     },
 
     methods: {
-        ...mapActions(['openLoginDialog', 'closeLoginDialog', 'setLoggedUser', 'triggerAlert']),
+        ...mapActions(['openLoginDialog', 'closeLoginDialog', 'openSignUpDialog', 'setLoggedUser', 'triggerAlert']),
+
+        signUp() {
+            this.closeLoginDialog();
+            this.openSignUpDialog();
+        },
 
         async login() {
             this.loading = true;
