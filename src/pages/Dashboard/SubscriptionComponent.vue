@@ -2,6 +2,9 @@
     <div>
 
         <h1>Subscription</h1>
+
+
+        <v-btn color="primary" @click="goTo('/subscriptions')" variant="tonal">Buy subscription</v-btn>
     </div>
 
 </template>
@@ -19,7 +22,9 @@ export default {
 
     },
     methods: {
-
+        goTo(route) {
+            this.$router.push(route);
+        },
     }
 }
 </script>

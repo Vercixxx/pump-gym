@@ -48,11 +48,11 @@
                                 <v-row>
                                     <v-col cols="12" md="6" v-for="field in basicFields" :key="name">
                                         <v-text-field v-model="field.value" :label="field.label" :rules="field.rules"
-                                            :prepend-inner-icon="field.icon"></v-text-field>
+                                            :prepend-inner-icon="field.icon" variant="underlined"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" md="6">
                                         <v-select v-model="sexValue" label="Sex" :items=sexOptions
-                                            prepend-inner-icon="mdi-family-tree" :rules="requiredRule"></v-select>
+                                            prepend-inner-icon="mdi-family-tree" :rules="requiredRule" variant="underlined"></v-select>
                                     </v-col>
                                 </v-row>
 
@@ -72,7 +72,7 @@
                                             :prepend-inner-icon="field.icon" :type="field.visible ? 'text' : 'password'"
                                             :append-inner-icon="field.visible ? 'mdi-eye' : ' mdi-eye-off'"
                                             @click:append-inner="field.visible = !field.visible"
-                                            autocomplete="current-password" :disabled="loading"></v-text-field>
+                                            autocomplete="current-password" :disabled="loading" variant="underlined"></v-text-field>
                                     </v-col>
                                 </v-row>
 
@@ -277,7 +277,7 @@ export default {
                     sex: this.sexValue,
                 });
 
-                this.setLoggedUser(response.user);
+                await this.setLoggedUser(response.user);
                 this.$router.push('/subscriptions');
 
                 this.triggerAlert({

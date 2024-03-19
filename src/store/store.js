@@ -17,6 +17,11 @@ export default createStore({
     },
 
     facilities: null,
+
+    subscriptions: {
+      regular: {},
+      special: {},
+    },
   },
   mutations: {
     setShowLoginDialog(state, value) {
@@ -48,6 +53,14 @@ export default createStore({
       state.facilities = facilities;
     },
     // Facilities
+
+
+    // Subscriptions
+    setSubscriptions(state, regularSubscriptions, specialSubscriptions) {
+      state.subscriptions.regular = regularSubscriptions;
+      state.subscriptions.special = specialSubscriptions;
+    },
+    // Subscriptions
 
 
   },
@@ -98,6 +111,13 @@ export default createStore({
     },
     // Facilities
 
+
+    // Subscriptions
+    setSubscriptions({ commit }, regularSubscriptions, specialSubscriptions) {
+      commit('setSubscriptions', regularSubscriptions, specialSubscriptions);
+    },
+    // Subscriptions
+
   },
   getters: {
     showLoginDialog: state => state.showLoginDialog,
@@ -112,6 +132,10 @@ export default createStore({
 
     // Facilities
     getFacilities: state => state.facilities,
+
+    // Subscriptions
+    getRegularSubscriptions: state => state.subscriptions.regular,
+    getSpecialSubscriptions: state => state.subscriptions.special,
 
   }
 })
