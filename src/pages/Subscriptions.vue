@@ -4,7 +4,7 @@
             src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
             class="ma-0 pa-0">
             <v-container>
-                <v-btn @click="fetchSubscriptions('Regular')">Fetch</v-btn>
+{{ regularSubscriptions }}
                 <v-row>
                     <v-col cols="12" align=center>
                         <h2 style="background-color: rgba(250, 250, 250, 0.9);" class="rounded-s py-4">Special
@@ -76,7 +76,6 @@
                         <v-card class="mx-auto v-card-hover" height="500" elevation="16" variant="elevated"
                             :image="subscription.image">
 
-
                             <v-card style="background-color: rgba(250, 250, 250, 0.9);" height="420"
                                 class="ma-10 d-flex flex-column">
                                 <v-card-title align="center" class="font-weight-bold">
@@ -97,8 +96,8 @@
                                     <v-col>
                                         <v-btn block color="success" @click="openLoginDialog">Buy {{ subscription.name
                                             }} plan ({{
-                    subscription.price
-                }}zł)</v-btn>
+                                            subscription.price
+                                        }}zł)</v-btn>
                                     </v-col>
                                 </v-row>
                                 <!-- User not logged in -->
@@ -108,9 +107,9 @@
                                 <v-row v-else class="ma-5" align="end" justify="end">
                                     <v-col>
                                         <v-btn block color="success" @click="showBuyDialog(subscription)">Select {{
-                    subscription.name }} plan ({{
-                    subscription.price
-                }}zł)</v-btn>
+                                        subscription.name }} plan ({{
+                                        subscription.price
+                                    }}zł)</v-btn>
                                     </v-col>
                                 </v-row>
                                 <!-- User logged in -->
@@ -179,7 +178,7 @@ export default {
 
     data() {
         return {
-
+            loading: true,
             dialogBuy: false,
             selectedSubscription: null,
             regularSubscriptionsNames: ['Basic', 'Basic - 12', 'Open', 'Open - 12'],
@@ -251,8 +250,8 @@ export default {
         ...mapGetters(['loggedUser'])
     },
 
-    mouted() {
-        // this.fetchSubscriptions();
+    mounted() {
+        this.fetchSubscriptions();
     },
 
     methods: {
@@ -264,17 +263,24 @@ export default {
         },
 
 
-        async fetchSubscriptions(type) {
+        async fetchRegularSubscription(name) {
             try {
-                const querySnapshot = await getDocs(collection(db, "Subscriptions", "Regular", "Basic"));
+                const querySnapshot = await getDocs(collection(db, "Subscriptions", "Regular", name));
                 querySnapshot.forEach((doc) => {
                     console.log(doc.data());
                     this.regularSubscriptions.push(doc.data());
                 });
 
             } catch (error) {
-                console.error(`Error getting ${type} document:`, error);
+                console.error(`Error getting ${name} document:`, error);
             }
+        },
+
+        async fetchSubscriptions(){
+            for (let name of this.regularSubscriptionsNames) {
+                this.fetchRegularSubscription(name);
+            }
+            this.loading = false;
         },
 
     },

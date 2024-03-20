@@ -50,7 +50,7 @@
             <v-row class="mb-4">
                 <v-col cols="12" align="center">
                     <v-divider></v-divider>
-                    <v-btn variant="text" class="font-weight-thin text-disabled" @click="signUp" role="button">
+                    <v-btn class="mt-4" variant="tonal"  @click="signUp" role="button">
                         Dont have an account? Sign up now!
                     </v-btn>
 
