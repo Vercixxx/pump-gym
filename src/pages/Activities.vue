@@ -6,15 +6,15 @@
             class="ma-0 pa-0" style="min-height: 100dvh;">
 
             <!-- Carousel -->
-            <v-row >
+            <v-row>
                 <v-col cols="0" sm="2"></v-col>
                 <v-col cols="12" sm="8">
                     <v-carousel height="500" show-arrows="hover" cycle hide-delimiter-background>
                         <v-carousel-item v-for="zone in zones" :key="zone.name">
-                            <v-sheet height="100%"  style="background-color: rgba(255, 255, 255, 0);">
-                                <div class="d-flex fill-height justify-center align-center" >
+                            <v-sheet height="100%" style="background-color: rgba(255, 255, 255, 0);">
+                                <div class="d-flex fill-height justify-center align-center">
 
-                                    <v-row style="background-color: rgba(255, 255, 255, 0.6);" class=" rounded-xl"> 
+                                    <v-row style="background-color: rgba(255, 255, 255, 0.6);" class=" rounded-xl">
                                         <v-col cols="12" align=center class="text-h5 font-weight-black pa-2">
                                             {{ zone.name }}
                                             <v-icon size="30">{{ zone.icon }}</v-icon>
@@ -40,15 +40,28 @@
             </v-row>
             <!-- Carousel -->
 
-        </v-parallax>
 
+
+
+
+            <!-- Footer -->
+            <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
+            <!-- Footer -->
+
+
+        </v-parallax>
     </div>
 </template>
 
 <script>
+import FooterComponent from '../components/Footer.vue'
+
 export default {
     name: 'Activities',
 
+    components: {
+        FooterComponent
+    },
 
     data() {
         return {

@@ -101,6 +101,10 @@
                 </v-col>
             </v-row>
 
+            
+            <!-- Footer -->
+            <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
+            <!-- Footer -->
 
         </v-parallax>
     </div>
@@ -110,12 +114,15 @@
 import { Qalendar } from "qalendar";
 import { mapState, mapActions, mapGetters } from 'vuex'
 
+import FooterComponent from '../components/Footer.vue'
+
 
 export default {
     name: 'Schedule',
 
     components: {
         Qalendar,
+        FooterComponent,
     },
 
     data() {

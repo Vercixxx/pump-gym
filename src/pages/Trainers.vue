@@ -12,7 +12,6 @@
 
                     <span v-if="!$vuetify.display.mobile">
 
-
                         <v-row>
                             <v-col cols="12" align="center" jusify="center" class="text-h4 font-weight-black"
                                 style="background-color: rgba(255, 255, 255, 0.6);">
@@ -20,12 +19,31 @@
                             </v-col>
                         </v-row>
 
-                        <v-carousel progress="success" hide-delimiters v-model="model" class="pt-10"
+
+                        <!-- Skeleton loader -->
+                        <v-carousel v-if="chunkedFacilities.length == 0" progress="success" hide-delimiters v-model="model" class="pt-10"
+                            style="background-color: rgba(255, 255, 255, 0.6);" >
+                            <v-carousel-item >
+                                <v-row>
+                                    <v-col cols="4" v-for="i in 3">
+                                        <v-skeleton-loader type="image" min-height="400" style="background-color: rgba(255, 255, 255, 0.6);"></v-skeleton-loader>
+                                    </v-col>
+                                </v-row>
+                                <!-- Skeleton loader -->
+                            </v-carousel-item>
+                        </v-carousel>
+
+
+                        <v-carousel v-else progress="success" hide-delimiters v-model="model" class="pt-10"
                             style="background-color: rgba(255, 255, 255, 0.6);">
+
+
                             <v-carousel-item v-for="(chunk, index) in chunkedFacilities" :key="index">
                                 <v-row>
                                     <v-col cols="4" v-for="facility in chunk" :key="facility.name" align="center"
                                         @click="selectObject(facility.Name)">
+
+
                                         <v-avatar size="400">
                                             <v-parallax :src="facility.Image" class="ma-0 pa-0" type="button">
                                                 <div
@@ -107,6 +125,11 @@
                 </v-col>
             </v-row>
 
+
+            <!-- Footer -->
+            <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
+            <!-- Footer -->
+
         </v-parallax>
     </div>
 </template>
@@ -114,9 +137,14 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 
+import FooterComponent from '../components/Footer.vue'
 
 export default {
     name: 'Trainers',
+
+    components: {
+        FooterComponent
+    },
 
     data() {
         return {
