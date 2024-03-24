@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // my sites
-import LoginPage from '../pages/LoginPage.vue'
 import MainPage from '../pages/MainPage.vue'
 import ActivitiesPage from '../pages/Activities.vue'
 import TrainersPage from '../pages/Trainers.vue'
-import WorkWithUsPage from '../pages/WorkWithUs.vue'
 import SchedulePage from '../pages/Schedule.vue'
 import SubscriptionsPage from '../pages/Subscriptions.vue'
 import ClientPage from '../pages/ClientPage.vue'
@@ -27,11 +25,6 @@ const router = createRouter({
       path: '/trainers',
       name: 'Trainers',
       component: TrainersPage
-    },
-    {
-      path: '/work',
-      name: 'WorkWithUs',
-      component: WorkWithUsPage
     },
     {
       path: '/schedule',

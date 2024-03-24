@@ -46,6 +46,11 @@
                     {{ button.title }}
                 </v-btn>
 
+                <v-btn size="large" class="font-weight-black mt-1" color="black" prepend-icon="mdi-account-group"
+                    @click="openWorkWithUsDialog">
+                    Work with us
+                </v-btn>
+
                 <v-btn size="large" class="font-weight-black mt-1" color="black" prepend-icon="mdi-phone"
                     @click="openContactUsDialog">
                     Contact
@@ -105,12 +110,6 @@ export default {
                     route: '/trainers',
                 },
                 {
-                    id: 3,
-                    title: 'Work with us',
-                    icon: 'mdi-account-group',
-                    route: '/work',
-                },
-                {
                     id: 4,
                     title: 'Schedule',
                     icon: 'mdi-calendar',
@@ -126,7 +125,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(['openLoginDialog', 'openContactUsDialog', 'triggerAlert', 'clearLoggedUser']),
+        ...mapActions(['openLoginDialog', 'openContactUsDialog', 'triggerAlert', 'clearLoggedUser', 'openWorkWithUsDialog']),
         ...mapGetters(['loggedUser']),
 
         openDialog() {

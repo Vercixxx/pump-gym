@@ -10,7 +10,6 @@
       <!-- Body -->
       <v-main>
         <router-view />
-
       </v-main>
       <!-- Body -->
 
@@ -20,6 +19,7 @@
       <SignUpComponent />
       <SnackBarAlert />
       <ContactUsDialog />
+      <WorkWithUsDialog />
       <!-- Dialogs -->
 
 
@@ -33,6 +33,7 @@ import SignUpComponent from './components/SignUp.vue'
 import SnackBarAlert from './components/SnackBarAlert.vue'
 import AppBar from './components/AppBar.vue'
 import ContactUsDialog from './components/ContactUsDialog.vue'
+import WorkWithUsDialog from './components/WorkWithUsDialog.vue'
 
 export default {
   name: 'App',
@@ -43,6 +44,7 @@ export default {
     AppBar,
     ContactUsDialog,
     SignUpComponent,
+    WorkWithUsDialog
   },
 
 

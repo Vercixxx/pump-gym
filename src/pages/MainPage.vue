@@ -51,15 +51,6 @@
                             </v-avatar>
                         </v-col>
 
-
-                        <!-- <v-col cols="12" sm="6" align="center" justify="center"
-                            class="d-flex justify-center align-center">
-                            <v-btn large class="rounded-pill text-h3 font-weight-black" color="green" variant="outlined"
-                                text="Join now" style="background-color: rgba(0, 0, 0, 0.4);" height="30%" width="35%"
-                                @click="goTo('/subscriptions')"></v-btn>
-                        </v-col> -->
-
-
                     </v-row>
 
 
@@ -150,8 +141,8 @@
 
 
                 <!-- Third row -->
-                <v-col cols="12" style="height: 40dvh; min-width: 100%;">
-                    <!-- <v-parallax
+                <!-- <v-col cols="12" style="height: 40dvh; min-width: 100%;">
+                    <v-parallax
                         src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
                         class="ma-0 pa-0">
                         <div class="d-flex flex-column fill-height justify-center align-center text-white">
@@ -162,8 +153,8 @@
                                 Content Content Content Content Content Content Content Content
                             </h4>
                         </div>
-                    </v-parallax> -->
-                </v-col>
+                    </v-parallax>
+                </v-col> -->
                 <!-- Third row -->
 
                 <!-- Spacer -->
@@ -178,7 +169,7 @@
 
 
             <!-- Footer -->
-            <v-footer color="grey">
+            <v-footer style="background-color: rgba(255, 255, 255, 0.5);" >
                 <v-row>
                     <v-col align=center>
                         <span class="font-weight-thin mb-4">
@@ -228,25 +219,6 @@ export default {
                 {
                     id: 2,
                     title: 'Our Trainers',
-                    icon: 'mdi-dumbbell',
-                    options: [
-                        {
-                            id: 1,
-                            title: 'b'
-                        },
-                        {
-                            id: 2,
-                            title: 'c'
-                        },
-                        {
-                            id: 3,
-                            title: 'd'
-                        },
-                    ],
-                },
-                {
-                    id: 3,
-                    title: 'Work for us',
                     icon: 'mdi-dumbbell',
                     options: [
                         {

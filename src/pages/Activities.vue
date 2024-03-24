@@ -3,23 +3,23 @@
 
         <v-parallax
             src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
-            class="ma-0 pa-0">
+            class="ma-0 pa-0" style="min-height: 100dvh;">
 
             <!-- Carousel -->
-            <v-row>
-                <v-col cols="12" align="center">
-
-                    <v-carousel height="500" style="width: 60%;" show-arrows="hover" cycle hide-delimiter-background>
+            <v-row >
+                <v-col cols="0" sm="2"></v-col>
+                <v-col cols="12" sm="8">
+                    <v-carousel height="500" show-arrows="hover" cycle hide-delimiter-background>
                         <v-carousel-item v-for="zone in zones" :key="zone.name">
-                            <v-sheet height="100%" style="background-color: rgba(255, 255, 255, 0.6);">
-                                <div class="d-flex fill-height justify-center align-center">
+                            <v-sheet height="100%"  style="background-color: rgba(255, 255, 255, 0);">
+                                <div class="d-flex fill-height justify-center align-center" >
 
-                                    <v-row>
-                                        <v-col cols="12" align=center class="text-h4">
+                                    <v-row style="background-color: rgba(255, 255, 255, 0.6);" class=" rounded-xl"> 
+                                        <v-col cols="12" align=center class="text-h5 font-weight-black pa-2">
                                             {{ zone.name }}
                                             <v-icon size="30">{{ zone.icon }}</v-icon>
                                         </v-col>
-                                        <v-col cols="12" align=center class="text-h6">
+                                        <v-col cols="12" align=center class="font-weight-medium">
                                             {{ zone.description }}
                                         </v-col>
                                         <v-list style="background-color: rgba(255, 255, 255, 0);">
@@ -36,6 +36,7 @@
                         </v-carousel-item>
                     </v-carousel>
                 </v-col>
+                <v-col cols="0" sm="2"></v-col>
             </v-row>
             <!-- Carousel -->
 

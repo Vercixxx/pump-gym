@@ -8,6 +8,8 @@ export default createStore({
 
     showContactUsDialog: false,
 
+    showWorkWithUsDialog: false,
+
     loggedUser: null,
 
     alertData: {
@@ -35,6 +37,12 @@ export default createStore({
     setShowContactUsDialog(state, value) {
       state.showContactUsDialog = value;
     },
+
+    // Work with us
+    setShowWorkWithUsDialog(state, value) {
+      state.showWorkWithUsDialog = value;
+    },
+    // Work with us
 
     setAlertData(state, data) {
       state.alertData = data;
@@ -89,6 +97,15 @@ export default createStore({
       commit('setShowContactUsDialog', false);
     },
 
+    // Work with us
+    openWorkWithUsDialog({ commit }) {
+      commit('setShowWorkWithUsDialog', true);
+    },
+    closeWorkWithUsDialog({ commit }) {
+      commit('setShowWorkWithUsDialog', false);
+    },
+    // Work with us
+
     triggerAlert({ commit }, payload) {
       commit('setAlertData', {
         show: true,
@@ -125,6 +142,10 @@ export default createStore({
     showSignUpDialog: state => state.showSignUpDialog,
 
     showContactUsDialog: state => state.showContactUsDialog,
+
+    // Work with us
+    showWorkWithUsDialog: state => state.showWorkWithUsDialog,
+    // Work with us
 
     alertData: state => state.alertData,
 

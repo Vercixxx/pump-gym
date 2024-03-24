@@ -1,7 +1,7 @@
 <template>
 
     <v-row>
-        <v-col cols="auto">
+        <v-col cols="auto">0
 
             <v-layout>
                 <v-navigation-drawer absolute permanent>

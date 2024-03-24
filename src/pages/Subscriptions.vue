@@ -4,7 +4,7 @@
             src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
             class="ma-0 pa-0">
             <v-container>
-{{ regularSubscriptions }}
+
                 <v-row>
                     <v-col cols="12" align=center>
                         <h2 style="background-color: rgba(250, 250, 250, 0.9);" class="rounded-s py-4">Special
@@ -182,67 +182,9 @@ export default {
             dialogBuy: false,
             selectedSubscription: null,
             regularSubscriptionsNames: ['Basic', 'Basic - 12', 'Open', 'Open - 12'],
-            regularSubscriptions: [
-                // {
-                //     id: 1,
-                //     name: 'Basic',
-                //     price: 50,
-                //     color: 'blue-grey-lighten-3',
-                //     type: 'monthly, for 12 months',
-                //     description: 'Basic subscription',
-                //     image: 'src/images/basic_background.jpeg'
-                // },
-                // {
-                //     id: 2,
-                //     name: 'Basic 12',
-                //     price: 50,
-                //     color: 'deep-purple-lighten-4',
-                //     type: '1 month',
-                //     description: 'Basic subscription',
-                //     image: 'src/images/basic_12_background.jpeg'
-                // },
-                // {
-                //     id: 3,
-                //     name: 'Open',
-                //     price: 50,
-                //     color: 'green-lighten-2',
-                //     type: '1 months',
-                //     description: 'Basic subscription',
-                //     image: 'src/images/open_background.jpeg'
-                // },
-                // {
-                //     id: 4,
-                //     name: 'Open 12',
-                //     price: 50,
-                //     color: 'red-lighten-3',
-                //     type: '1 month',
-                //     description: 'Basic subscription',
-                //     image: 'src/images/open_12_background.jpeg'
-                // },
-
-            ],
-
-            specialSubscriptions: [
-                {
-                    id: 5,
-                    name: 'Student',
-                    price: 50,
-                    color: 'red-lighten-3',
-                    type: '1 month',
-                    description: 'Basic subscription',
-                    image: 'src/images/student_subscripton.jpeg'
-                },
-                {
-                    id: 6,
-                    name: 'Disabled person',
-                    price: 50,
-                    color: 'red-lighten-3',
-                    type: '1 month',
-                    description: 'Basic subscription',
-                    image: 'src/images/disabled_background.jpeg'
-                },
-
-            ],
+            specialSubscriptionsNames: ['Student', 'Disabled person'],
+            regularSubscriptions: [],
+            specialSubscriptions: [],
         }
     },
 
@@ -263,12 +205,12 @@ export default {
         },
 
 
-        async fetchRegularSubscription(name) {
+        async fetchSubscriptionByTypeName(type, name, outputArray) {
             try {
-                const querySnapshot = await getDocs(collection(db, "Subscriptions", "Regular", name));
+                const querySnapshot = await getDocs(collection(db, "Subscriptions", type, name));
                 querySnapshot.forEach((doc) => {
-                    console.log(doc.data());
-                    this.regularSubscriptions.push(doc.data());
+                    console.log(doc.id, " => ", doc.data());
+                    outputArray.push(doc.data());
                 });
 
             } catch (error) {
@@ -278,7 +220,10 @@ export default {
 
         async fetchSubscriptions(){
             for (let name of this.regularSubscriptionsNames) {
-                this.fetchRegularSubscription(name);
+                this.fetchSubscriptionByTypeName('Regular', name, this.regularSubscriptions);
+            }
+            for (let name of this.specialSubscriptionsNames) {
+                this.fetchSubscriptionByTypeName('Special', name, this.specialSubscriptions);
             }
             this.loading = false;
         },
@@ -298,7 +243,7 @@ export default {
 }
 
 .v-card-hover:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     z-index: 1;
 }
 
