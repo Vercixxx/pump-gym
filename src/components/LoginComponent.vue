@@ -81,7 +81,7 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { auth } from '../firebase'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth'
 
 
 export default {
@@ -135,12 +135,16 @@ export default {
                 const email = this.loginInput.trim();
                 const password = this.password.trim();
 
-                const user = await signInWithEmailAndPassword(auth, email, password);
+                await setPersistence(auth, browserSessionPersistence);
+
+                const user = await signInWithEmailAndPassword(auth, email, password) ;
+                
                 this.setLoggedUser(user);
                 this.closeLoginDialog();
                 this.$router.push('/dashboard');
 
             } catch (error) {
+                console.log(error)
                 if (error.code === 'auth/invalid-credential') {
                     this.triggerAlert({
                         message: 'Wrong email or password',

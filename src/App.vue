@@ -35,6 +35,10 @@ import AppBar from './components/AppBar.vue'
 import ContactUsDialog from './components/ContactUsDialog.vue'
 import WorkWithUsDialog from './components/WorkWithUsDialog.vue'
 
+// Storage
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase.js";
+
 export default {
   name: 'App',
 
@@ -47,7 +51,15 @@ export default {
     WorkWithUsDialog
   },
 
-
+  created() {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.$store.commit('setLoggedUser', user);
+      } else {
+        this.$store.commit('setLoggedUser', null);
+      }
+    });
+  },
 
   data() {
     return {

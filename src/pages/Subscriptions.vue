@@ -40,8 +40,8 @@
                                     <v-col>
                                         <v-btn block color="success" @click="openLoginDialog">Buy {{ subscription.name
                                             }} plan ({{
-                    subscription.price
-                }}zł)</v-btn>
+                        subscription.price
+                    }}zł)</v-btn>
                                     </v-col>
                                 </v-row>
                                 <!-- User not logged in -->
@@ -51,9 +51,9 @@
                                 <v-row v-else class="ma-5" align="end" justify="end">
                                     <v-col>
                                         <v-btn block color="success" @click="showBuyDialog(subscription)">Select {{
-                    subscription.name }} plan ({{
-                    subscription.price
-                }}zł)</v-btn>
+                        subscription.name }} plan ({{
+                        subscription.price
+                    }}zł)</v-btn>
                                     </v-col>
                                 </v-row>
                                 <!-- User logged in -->
@@ -96,8 +96,8 @@
                                     <v-col>
                                         <v-btn block color="success" @click="openLoginDialog">Buy {{ subscription.name
                                             }} plan ({{
-                                            subscription.price
-                                        }}zł)</v-btn>
+                        subscription.price
+                    }}zł)</v-btn>
                                     </v-col>
                                 </v-row>
                                 <!-- User not logged in -->
@@ -107,9 +107,9 @@
                                 <v-row v-else class="ma-5" align="end" justify="end">
                                     <v-col>
                                         <v-btn block color="success" @click="showBuyDialog(subscription)">Select {{
-                                        subscription.name }} plan ({{
-                                        subscription.price
-                                    }}zł)</v-btn>
+                        subscription.name }} plan ({{
+                        subscription.price
+                    }}zł)</v-btn>
                                     </v-col>
                                 </v-row>
                                 <!-- User logged in -->
@@ -125,31 +125,68 @@
             <!-- Dialog buy -->
             <v-dialog v-model="dialogBuy" persistent max-width="850 "
                 style="background-color: rgba(100, 100, 100, 0.9);">
-                <v-card>
-                    <v-card-title>
+                <v-card :image="selectedSubscription.image">
+                    <v-card-title  style="background-color: rgba(250, 250, 250, 0.8);">
                         <v-row>
 
-                            <v-col cols="2"></v-col>
-                            <v-col cols="8" class="headline text-h4" align=center>
-                                Buy "{{ selectedSubscription.name }}" subscription
+                            <v-col cols="1"></v-col>
+                            <v-col cols="10" class="headline text-h4" align=center>
+                                Purchase details
                             </v-col>
-                            <v-col cols="2" align="end">
+                            <v-col cols="1" align="end">
                                 <v-btn icon="mdi-close" variant="plain" @click="dialogBuy = false"></v-btn>
                             </v-col>
                         </v-row>
                     </v-card-title>
 
-                    <v-card-text>
+                    <v-card-text style="background-color: rgba(250, 250, 250, 0.8);">
 
-                        <v-card :image="selectedSubscription.image">
+                        <v-card  elevation="0" style="background-color: rgba(250, 250, 250, 0);">
 
-                            <v-card-text style="background-color: rgba(250, 250, 250, 0.8);">
-                                asd
-                                {{ selectedSubscription }}
+                            <v-card-text>
+
+                                <!-- Choosen subscription -->
+                                <v-row>
+                                    <v-col cols="auto" class="font-weight-black">
+                                        Choosen subscription
+                                    </v-col>
+
+                                    <v-col align="start">
+                                        {{ selectedSubscription.name }}
+                                    </v-col>
+                                </v-row>
+                                <!-- Choosen subscription -->
+
+                                <!-- Subscription period -->
+                                <v-row>
+                                    <v-col cols="auto" class="font-weight-black">
+                                        Subscription period
+                                    </v-col>
+
+                                    <v-col align="start">
+                                        <span v-if="selectedSubscription.period == 1">1 month</span>
+                                        <span v-else>
+                                            {{ selectedSubscription.period }} months
+                                        </span>
+                                    </v-col>
+                                </v-row>
+                                <!-- Subscription period -->
+
+                                <!-- Price -->
+                                <v-row>
+                                    <v-col cols="auto" class="font-weight-black">
+                                        Price
+                                    </v-col>
+
+                                    <v-col align="start">
+                                        {{ selectedSubscription.price }} zł
+                                    </v-col>
+                                </v-row>
+                                <!-- Price -->
                             </v-card-text>
 
-                            <v-card-actions style="background-color: rgba(250, 250, 250, 0.8);">
-                                <v-btn color="success" block @click="dialogBuy = false" variant="elevated">Buy ({{
+                            <v-card-actions >
+                                <v-btn color="success" block size="large" @click="dialogBuy = false" variant="elevated">Buy ({{
                                     selectedSubscription.price }} zł)</v-btn>
                             </v-card-actions>
 
@@ -209,7 +246,6 @@ export default {
             try {
                 const querySnapshot = await getDocs(collection(db, "Subscriptions", type, name));
                 querySnapshot.forEach((doc) => {
-                    console.log(doc.id, " => ", doc.data());
                     outputArray.push(doc.data());
                 });
 
@@ -218,7 +254,7 @@ export default {
             }
         },
 
-        async fetchSubscriptions(){
+        async fetchSubscriptions() {
             for (let name of this.regularSubscriptionsNames) {
                 this.fetchSubscriptionByTypeName('Regular', name, this.regularSubscriptions);
             }
