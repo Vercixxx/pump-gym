@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-3">
         <v-parallax
             src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
             class="ma-0 pa-0">
@@ -85,6 +85,14 @@
             <!-- Facility selection -->
 
 
+            <ejs-schedule :selectedDate='selectedDate' :eventSettings='eventSettings'>
+
+                <e-views>
+                    <e-view option='Day'></e-view>
+                    <e-view option='Week'></e-view>
+                </e-views>
+            </ejs-schedule>
+
             <v-row v-if="selectedFacility">
                 <v-col cols="12">
                     <div class="qalendar-container is-light-mode text-white"
@@ -101,7 +109,7 @@
                 </v-col>
             </v-row>
 
-            
+
             <!-- Footer -->
             <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
             <!-- Footer -->
@@ -114,8 +122,12 @@
 import { Qalendar } from "qalendar";
 import { mapState, mapActions, mapGetters } from 'vuex'
 
+import { Day, Week, WorkWeek, Month, Agenda } from '@syncfusion/ej2-vue-schedule';
+import { Internationalization } from '@syncfusion/ej2-base';
+
 import FooterComponent from '../components/Footer.vue'
 
+var instance = new Internationalization();
 
 export default {
     name: 'Schedule',
@@ -145,6 +157,18 @@ export default {
                     end: 23,
                 },
             },
+
+
+            eventSettings: {
+                dataSource: [{
+                    Id: 1,
+                    Subject: 'Meeting',
+                    StartTime: new Date(2023, 1, 15, 10, 0),
+                    EndTime: new Date(2023, 1, 15, 12, 30)
+                }]
+            },
+            selectedDate: new Date(2023, 1, 15)
+
         }
     },
 
@@ -172,6 +196,12 @@ export default {
         },
 
 
+    },
+
+
+
+    provide: {
+        schedule: [Day, Week, Agenda]
     },
 }
 </script>

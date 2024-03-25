@@ -21,12 +21,13 @@
 
 
                         <!-- Skeleton loader -->
-                        <v-carousel v-if="chunkedFacilities.length == 0" progress="success" hide-delimiters v-model="model" class="pt-10"
-                            style="background-color: rgba(255, 255, 255, 0.6);" >
-                            <v-carousel-item >
+                        <v-carousel v-if="chunkedFacilities.length == 0" progress="success" hide-delimiters
+                            v-model="model" class="pt-10" style="background-color: rgba(255, 255, 255, 0.6);">
+                            <v-carousel-item>
                                 <v-row>
                                     <v-col cols="4" v-for="i in 3">
-                                        <v-skeleton-loader type="image" min-height="400" style="background-color: rgba(255, 255, 255, 0.6);"></v-skeleton-loader>
+                                        <v-skeleton-loader type="image" min-height="400"
+                                            style="background-color: rgba(255, 255, 255, 0.6);"></v-skeleton-loader>
                                     </v-col>
                                 </v-row>
                                 <!-- Skeleton loader -->
@@ -102,7 +103,9 @@
                     </span>
                 </v-col>
             </v-row>
+        
 
+            <!-- Actual workers -->
             <v-row v-if="selectedFacility" style="background-color: rgba(255, 255, 255, 0.6);">
                 <v-col align="center">
                     <v-timeline direction="horizontal" side="end" class="overflow-x-auto">
@@ -124,7 +127,7 @@
                     </v-timeline>
                 </v-col>
             </v-row>
-
+            <!-- Actual workers -->
 
             <!-- Footer -->
             <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
@@ -136,6 +139,7 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
+
 
 import FooterComponent from '../components/Footer.vue'
 
@@ -150,6 +154,7 @@ export default {
         return {
             model: 0,
             selectedFacility: null,
+
         }
     },
 
@@ -185,7 +190,6 @@ export default {
 
 
     },
-
 
 }
 </script>

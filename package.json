@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "@syncfusion/ej2-vue-base": "^25.1.35",
+    "@syncfusion/ej2-vue-schedule": "^25.1.35",
     "firebase": "^10.8.1",
     "qalendar": "^3.8.1",
     "vue": "^3.4.21",

@@ -1,7 +1,7 @@
 <template>
 
     <v-dialog v-model="showSignUpDialog" persistent width="800" style="background-color: rgba(100, 100, 100, 0.6);">
-        <v-card class="rounded-xl pa-4 bg-brown-lighten-5" :loading="loading">
+        <v-card class="rounded-xl pa-4" :loading="loading">
 
             <template v-slot:loader="{ isActive }">
                 <v-progress-linear :active="isActive" color="success" height="5" indeterminate></v-progress-linear>
@@ -286,9 +286,8 @@ export default {
                 })
 
             } catch (error) {
-                console.log(error);
                 this.triggerAlert({
-                    message: 'An error occurred',
+                    message: `Error - ${error.code}`,
                     type: 'error'
                 })
             }
@@ -296,35 +295,6 @@ export default {
             this.loading = false;
             this.closeSignUpDialog();
         }
-
-        // async login() {
-        //     this.loading = true;
-        //     try {
-        //         const email = this.loginInput.trim();
-        //         const password = this.password.trim();
-
-        //         const user = await signInWithEmailAndPassword(auth, email, password);
-        //         this.setLoggedUser(user);
-        //         this.closeLoginDialog();
-        //         this.$router.push('/dashboard');
-
-        //     } catch (error) {
-        //         if (error.code === 'auth/invalid-credential') {
-        //             this.triggerAlert({
-        //                 message: 'Wrong email or password',
-        //                 type: 'error'
-        //             })
-        //         } else {
-        //             this.triggerAlert({
-        //                 message: 'An error occurred',
-        //                 type: 'error'
-        //             })
-        //         }
-
-        //     }
-
-        //     this.loading = false;
-        // },
 
     },
 

@@ -1,7 +1,7 @@
 <template>
 
     <v-dialog v-model="showLoginDialog" persistent width="600"  style="background-color: rgba(100, 100, 100, 0.6);">
-        <v-card class="rounded-xl pa-4 bg-brown-lighten-5">
+        <v-card class="rounded-xl pa-4">
             <v-card-title>
 
                 <v-row>
@@ -19,14 +19,14 @@
                 <v-form v-model="form">
 
                     <!-- Login -->
-                    <v-text-field v-model="loginInput" label="Email" class="mb-7" variant="underlined"
+                    <v-text-field v-model="loginInput" label="Email" class="mb-7" variant="outlined"
                         prepend-icon="mdi-email" autocomplete="username" :rules="rules.emailRules"></v-text-field>
                     <!-- Login -->
 
 
 
                     <!-- Password -->
-                    <v-text-field v-model="password" label="Password" variant="underlined"
+                    <v-text-field v-model="password" label="Password" variant="outlined"
                         :type="passwordVisible ? 'text' : 'password'" prepend-icon="mdi-key"
                         :append-inner-icon="passwordVisible ? 'mdi-eye' : ' mdi-eye-off'"
                         @click:append-inner="passwordVisible = !passwordVisible"
