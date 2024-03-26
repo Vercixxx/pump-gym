@@ -107,9 +107,9 @@
                                 <v-row v-else class="ma-5" align="end" justify="end">
                                     <v-col>
                                         <v-btn block color="success" @click="showBuyDialog(subscription)">Select {{
-                        subscription.name }} plan ({{
-                        subscription.price
-                    }}zł)</v-btn>
+                                            subscription.name }} plan ({{
+                                            subscription.price
+                                            }}zł)</v-btn>
                                     </v-col>
                                 </v-row>
                                 <!-- User logged in -->
@@ -122,82 +122,6 @@
             </v-container>
 
 
-            <!-- Dialog buy -->
-            <v-dialog v-model="dialogBuy" persistent max-width="850 "
-                style="background-color: rgba(100, 100, 100, 0.9);">
-                <v-card :image="selectedSubscription.image">
-                    <v-card-title  style="background-color: rgba(250, 250, 250, 0.8);">
-                        <v-row>
-
-                            <v-col cols="1"></v-col>
-                            <v-col cols="10" class="headline text-h4" align=center>
-                                Purchase details
-                            </v-col>
-                            <v-col cols="1" align="end">
-                                <v-btn icon="mdi-close" variant="plain" @click="dialogBuy = false"></v-btn>
-                            </v-col>
-                        </v-row>
-                    </v-card-title>
-
-                    <v-card-text style="background-color: rgba(250, 250, 250, 0.8);">
-
-                        <v-card  elevation="0" style="background-color: rgba(250, 250, 250, 0);">
-
-                            <v-card-text>
-
-                                <!-- Choosen subscription -->
-                                <v-row>
-                                    <v-col cols="auto" class="font-weight-black">
-                                        Choosen subscription
-                                    </v-col>
-
-                                    <v-col align="start">
-                                        {{ selectedSubscription.name }}
-                                    </v-col>
-                                </v-row>
-                                <!-- Choosen subscription -->
-
-                                <!-- Subscription period -->
-                                <v-row>
-                                    <v-col cols="auto" class="font-weight-black">
-                                        Subscription period
-                                    </v-col>
-
-                                    <v-col align="start">
-                                        <span v-if="selectedSubscription.period == 1">1 month</span>
-                                        <span v-else>
-                                            {{ selectedSubscription.period }} months
-                                        </span>
-                                    </v-col>
-                                </v-row>
-                                <!-- Subscription period -->
-
-                                <!-- Price -->
-                                <v-row>
-                                    <v-col cols="auto" class="font-weight-black">
-                                        Price
-                                    </v-col>
-
-                                    <v-col align="start">
-                                        {{ selectedSubscription.price }} zł
-                                    </v-col>
-                                </v-row>
-                                <!-- Price -->
-                            </v-card-text>
-
-                            <v-card-actions >
-                                <v-btn color="success" block size="large" @click="dialogBuy = false" variant="elevated">Buy ({{
-                                    selectedSubscription.price }} zł)</v-btn>
-                            </v-card-actions>
-
-                        </v-card>
-
-
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
-            <!-- Dialog buy -->
-
 
 
         </v-parallax>
@@ -207,8 +131,10 @@
 
 <script>
 import { collection, getDocs, getDoc, doc } from "firebase/firestore";
-import { db } from '../firebase.js'
-import { mapActions, mapGetters } from 'vuex'
+import { db } from '../firebase.js';
+import { mapActions, mapGetters } from 'vuex';
+
+import { usePiniaStorage } from '../store/pinia.js';
 
 export default {
     name: 'Subscriptions',
@@ -237,8 +163,8 @@ export default {
         ...mapActions(['openLoginDialog', 'closeLoginDialog', 'openSignUpDialog', 'triggerAlert', 'setRegularSubscription', 'setSpecialSubscription']),
 
         showBuyDialog(subscription) {
-            this.selectedSubscription = subscription;
-            this.dialogBuy = true;
+            const store = usePiniaStorage();
+            store.invokeBuyDialog(subscription);
         },
 
 

@@ -20,6 +20,7 @@
       <SnackBarAlert />
       <ContactUsDialog />
       <WorkWithUsDialog />
+      <BuySubscriptionDialog/>
       <!-- Dialogs -->
 
 
@@ -34,6 +35,7 @@ import SnackBarAlert from './components/SnackBarAlert.vue'
 import AppBar from './components/AppBar.vue'
 import ContactUsDialog from './components/ContactUsDialog.vue'
 import WorkWithUsDialog from './components/WorkWithUsDialog.vue'
+import BuySubscriptionDialog from './components/BuySubscriptionDialog.vue'
 
 // Storage
 import { onAuthStateChanged } from "firebase/auth";
@@ -48,7 +50,8 @@ export default {
     AppBar,
     ContactUsDialog,
     SignUpComponent,
-    WorkWithUsDialog
+    WorkWithUsDialog,
+    BuySubscriptionDialog
   },
 
   created() {

@@ -3,6 +3,11 @@ import App from './App.vue'
 import router from './router/router.js'
 import store from './store/store.js'
 
+// Pinia 
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+// Pinia 
+
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
@@ -20,6 +25,7 @@ const vuetify = createVuetify({
 
 createApp(App)
   .use(store)
+  .use(pinia)
   .use(router)
   .use(vuetify)
   .use(SchedulePlugin)
