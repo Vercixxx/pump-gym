@@ -6,7 +6,12 @@
             <v-layout>
                 <v-navigation-drawer absolute permanent>
                     <v-list>
-                        <v-list-item :subtitle="loggedUser.user.email">
+                        <v-list-item>
+                            <template v-slot:title>
+                                <span v-if="loggedUser">
+                                    {{ loggedUser.email }}
+                                </span>
+                            </template>
                             <template v-slot:prepend>
                                 <v-icon icon="mdi-face-man-profile"></v-icon>
                             </template>
@@ -40,51 +45,52 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-
-// Components
-import ProfileComponent from './Dashboard/ProfileComponent.vue'
-import SubscriptionComponent from './Dashboard/SubscriptionComponent.vue'
-import ParametersComponent from './Dashboard/ParametersComponent.vue'
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+import ProfileComponent from './Dashboard/ProfileComponent.vue';
+import SubscriptionComponent from './Dashboard/SubscriptionComponent.vue';
+import ParametersComponent from './Dashboard/ParametersComponent.vue';
 
 export default {
     name: 'ClientPage',
+    setup() {
+        // User data from the store
+        const store = useStore();
+        const loggedUser = computed(() => store.getters.loggedUser);
+        // User data from the store
 
-    data() {
-        return {
+        const selectedComponent = ref(ProfileComponent);
 
-            selectedComponent: ProfileComponent,
+        // Menu items
+        const items = ref([
+            {
+                title: 'Profile',
+                component: ProfileComponent,
+                icon: 'mdi-account',
+            },
+            {
+                title: 'Subscription',
+                component: SubscriptionComponent,
+                icon: 'mdi-cash-sync',
+            },
+            {
+                title: 'My parameters',
+                component: ParametersComponent,
+                icon: 'mdi-weight-kilogram',
+            },
+        ]);
 
-            items: [
-                {
-                    title: 'Profile',
-                    component: ProfileComponent,
-                    icon: 'mdi-account',
-                },
-                {
-                    title: 'Subscription',
-                    component: SubscriptionComponent,
-                    icon: 'mdi-cash-sync',
-                },
-                {
-                    title: 'My parameters',
-                    component: ParametersComponent,
-                    icon: 'mdi-weight-kilogram',
-                },
-            ]
+        function switchToComponent(component) {
+            selectedComponent.value = component;
         }
+        // Menu items
+
+        return {
+            loggedUser,
+            selectedComponent,
+            items,
+            switchToComponent,
+        };
     },
-
-    computed: {
-        ...mapGetters(['loggedUser'])
-    },
-
-    methods: {
-        swtichToComponent(component) {
-            this.selectedComponent = component;
-        },
-    },
-
-}
-
+};
 </script>

@@ -1,12 +1,12 @@
 <template>
     <!-- Snackbar -->
-    <v-snackbar v-model="alert" location="top" :timeout="time" :color="snackContent.type" style="position: fixed; top: 8vh;" rounded="pill"
-        variant="elevated">
+    <v-snackbar v-model="alertData.show" location="top" :timeout="time" :color="alertData.type"
+        style="position: fixed; top: 8vh;" rounded="pill" variant="elevated">
 
-        <v-progress-linear v-model="value" :buffer-value="bufferValue" rounded color="white"></v-progress-linear>
+        <v-progress-linear v-model="progressValue" :buffer-value="bufferValue" rounded color="white"></v-progress-linear>
 
         <span class="font-weight-bold">
-            {{ snackContent.message }}
+            {{ alertData.message }}
         </span>
 
         <template v-slot:actions>
@@ -20,53 +20,34 @@
 </template>
 
 <script>
+import { ref, computed, watch } from 'vue';
+import { usePiniaStorage } from '../store/pinia.js'; // adjust the path to your pinia.js file
+
 export default {
     name: 'SnackBarAlert',
+    setup() {
+        const store = usePiniaStorage();
 
-    data() {
-        return {
-            alert: false,
-            snackContent: {},
-            time: 5000,
+        const alertData = computed(() => store.alert);
+        const time = ref(5000);
 
-            value: 0,
-            bufferValue: 0,
-            interval: 0,
-            
+        function closeAlert() {
+            store.closeAlert();
         };
-    },
 
-    computed: {
-        alertData() {
-            return this.$store.state.alertData;
-        },
-    },
-
-    watch: {
-        alertData(newData) {
-            if (newData.show) {
-                this.alert = true;
-                this.snackContent = newData;
-                this.startBuffer()
+        watch(alertData, (newData) => {
+            if (newData && newData.show) {
             }
-        },
-    },
+        }, { immediate: true });
 
 
-    methods: {
-        closeAlert() {
-            this.value = 0
-            this.bufferValue = 0
-            this.alert = false;
-            clearInterval(this.interval)
-        },
 
-        startBuffer() {
-            this.interval = setInterval(() => {
-                this.value += 1.85
-                this.bufferValue +=  1.85
-            }, 90)
-        },
+
+        return {
+            alertData,
+            time,
+            closeAlert,
+        };
     },
 };
 </script>

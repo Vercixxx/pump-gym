@@ -1,6 +1,6 @@
 <template>
 
-    <v-dialog v-model="showLoginDialog" persistent width="600"  style="background-color: rgba(100, 100, 100, 0.6);">
+    <v-dialog v-model="loginDialog" persistent width="600" style="background-color: rgba(100, 100, 100, 0.6);">
         <v-card class="rounded-xl pa-4">
             <v-card-title>
 
@@ -50,7 +50,7 @@
             <v-row class="mb-4">
                 <v-col cols="12" align="center">
                     <v-divider></v-divider>
-                    <v-btn class="mt-4" variant="tonal"  @click="signUp" role="button">
+                    <v-btn class="mt-4" variant="tonal" @click="signUp" role="button">
                         Dont have an account? Sign up now!
                     </v-btn>
 
@@ -77,92 +77,113 @@
 
 </template>
 
-
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
-import { auth } from '../firebase'
-import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth'
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+import { usePiniaStorage } from '../store/pinia';
 
+// Firebase
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../firebase.js';
 
 export default {
     name: 'LoginComponent',
+    setup(_, { root }) {
+        const store = useStore();
 
-    data() {
-        return {
-            form: false,
-            loading: false,
-            loginInput: '',
-            password: '',
-            passwordVisible: false,
+        const form = ref(false);
+        const loading = ref(false);
+        const loginInput = ref('');
+        const password = ref('');
+        const passwordVisible = ref(false);
 
-            rules: {
-                emailRules: [
-                    v => !!v || 'Email',
-                    v => (v.length >= 6) || 'Email must containt at least 6 characters',
-                    v => (v.length <= 70) || 'Email too large',
-                    v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Invalid email format (example@ex.ex)',
-                    
-                ],
+        const rules = ref({
+            emailRules: [
+                v => !!v || 'Email',
+                v => (v.length >= 6) || 'Email must containt at least 6 characters',
+                v => (v.length <= 70) || 'Email too large',
+                v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Invalid email format (example@ex.ex)',
+            ],
+            passwordRules: [
+                v => !!v || 'Password is required',
+                v => (v.length >= 4) || 'Password must containt at least 4 characters',
+                v => (v.length <= 70) || 'Password too large',
+            ],
+        });
 
-                passwordRules: [
-                    v => !!v || 'Password is required',
-                    v => (v.length >= 4) || 'Password must containt at least 4 characters',
-                    v => (v.length <= 70) || 'Password too large',
-                ],
-            },
+        // const showLoginDialog = computed(() => store.getters.showLoginDialog);
+
+        const signUp = () => {
+            // store.dispatch('closeLoginDialog');
+            store.dispatch('openSignUpDialog');
+        };
 
 
+        // Pinia storage / get user data
+        const piniaStorage = usePiniaStorage();
+
+        const loginDialog = computed(() => piniaStorage.loginDialog);
+
+        function closeLoginDialog() {
+            piniaStorage.closeLoginDialog()
         }
-    },
 
-
-
-    computed: {
-        ...mapGetters(['showLoginDialog'])
-    },
-
-    methods: {
-        ...mapActions(['openLoginDialog', 'closeLoginDialog', 'openSignUpDialog', 'setLoggedUser', 'triggerAlert']),
-
-        signUp() {
-            this.closeLoginDialog();
-            this.openSignUpDialog();
-        },
-
-        async login() {
-            this.loading = true;
+        const login = async () => {
+            loading.value = true;
             try {
-                const email = this.loginInput.trim();
-                const password = this.password.trim();
+                const email = loginInput.value.trim();
+                const passwordValue = password.value.trim();
 
                 await setPersistence(auth, browserSessionPersistence);
 
-                const user = await signInWithEmailAndPassword(auth, email, password) ;
-                
-                this.setLoggedUser(user);
-                this.closeLoginDialog();
-                this.$router.push('/dashboard');
+                const user = await signInWithEmailAndPassword(auth, email, passwordValue);
+
+                // Get the user data from the database
+                const userDocRef = doc(db, "users", user.user.uid);
+                const userDocSnap = await getDoc(userDocRef);
+                const userDetailData = userDocSnap.data();
+
+                // Set the user data in the store
+                piniaStorage.setUserData({ ...user, ...userDetailData });
+
+                closeLoginDialog();
 
             } catch (error) {
-                console.log(error)
+                console.log(error);
                 if (error.code === 'auth/invalid-credential') {
-                    this.triggerAlert({
+                    store.dispatch('triggerAlert', {
                         message: 'Wrong email or password',
                         type: 'error'
-                    })
+                    });
                 } else {
-                    this.triggerAlert({
+                    store.dispatch('triggerAlert', {
                         message: 'An error occurred',
                         type: 'error'
-                    })
+                    });
                 }
-
             }
 
-            this.loading = false;
-        },
+            loading.value = false;
+        };
+        // Pinia storage / get user data
 
+
+
+        return {
+            loginDialog,
+            closeLoginDialog,
+            form,
+            loading,
+            loginInput,
+            password,
+            passwordVisible,
+            rules,
+            // showLoginDialog,
+            signUp,
+            login,
+        };
     },
-
-}
+};
 </script>

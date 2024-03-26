@@ -9,7 +9,7 @@
                     <v-btn size="large" class="rounded-pill me-5" color="success" variant="elevated"
                         text="Buy subscription" @click="goTo('/subscriptions')"></v-btn>
                     <v-btn size="large" class="rounded-pill" color="primary" variant="outlined" text="Client panel"
-                        @click="openDialog"></v-btn>
+                        @click="invokeLoginDialog"></v-btn>
                 </span>
 
                 <span v-else>
@@ -19,7 +19,7 @@
                         color="success" variant="tonal" class="me-3"></v-btn>
 
                     <v-btn size="large" class="rounded-pill" color="red" variant="elevated" text="Sign out"
-                        append-icon="mdi-logout" @click="signOut()"></v-btn>
+                        append-icon="mdi-logout" @click="signOutUser()"></v-btn>
                 </span>
 
 
@@ -78,80 +78,80 @@
         <v-app-bar-title>Pump gym</v-app-bar-title>
 
         <v-avatar size="50" class="me-2" image="src/images/logo.png">
-                </v-avatar>
+        </v-avatar>
     </v-app-bar>
     <!-- Mobile -->
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-
-import { auth } from '../firebase.js'
-import { signOut } from 'firebase/auth'
-
+import { ref, computed } from 'vue';
+import { usePiniaStorage } from '../store/pinia.js'; // adjust the path to your pinia.js file
+import { auth } from '../firebase.js';
+import { signOut } from 'firebase/auth';
 
 export default {
     name: 'AppBar',
+    setup(_, { root }) {
+        const store = usePiniaStorage();
 
+        const menuButtons = ref([
+            {
+                id: 1,
+                title: 'Activities',
+                icon: 'mdi-dumbbell',
+                route: '/activities',
+            },
+            {
+                id: 2,
+                title: 'Our Trainers',
+                icon: 'mdi-weight-lifter',
+                route: '/trainers',
+            },
+            {
+                id: 4,
+                title: 'Schedule',
+                icon: 'mdi-calendar',
+                route: '/schedule',
+            },
+        ]);
 
-    data() {
-        return {
-            menuButtons: [
-                {
-                    id: 1,
-                    title: 'Activities',
-                    icon: 'mdi-dumbbell',
-                    route: '/activities',
-                },
-                {
-                    id: 2,
-                    title: 'Our Trainers',
-                    icon: 'mdi-weight-lifter',
-                    route: '/trainers',
-                },
-                {
-                    id: 4,
-                    title: 'Schedule',
-                    icon: 'mdi-calendar',
-                    route: '/schedule',
-                },
+        const loggedUser = computed(() => store.userData);
 
-            ]
-        }
-    },
+        const invokeLoginDialog = () => {
+            store.openLoginDialog();
+        };
 
-    computed: {
-        ...mapGetters(['loggedUser'])
-    },
+        const goTo = (route) => {
+            root.$router.push(route);
+        };
 
-    methods: {
-        ...mapActions(['openLoginDialog', 'openContactUsDialog', 'triggerAlert', 'clearLoggedUser', 'openWorkWithUsDialog']),
-        ...mapGetters(['loggedUser']),
-
-        openDialog() {
-            this.openLoginDialog();
-        },
-
-        goTo(route) {
-            this.$router.push(route);
-        },
-
-        async signOut() {
+        const signOutUser = async () => {
             try {
-                const response = await signOut(auth);
-                this.clearLoggedUser();
-                this.triggerAlert({
-                    message: 'You have been signed out',
-                    type: 'success'
-                });
-                this.goTo('/');
+                await signOut(auth);
+
+                store.emptyUserData();
+
+                store.showAlert('You have been signed out', 'success');
+                // store.triggerAlert({
+                //     message: 'You have been signed out',
+                //     type: 'success'
+                // });
+                goTo('/');
             } catch (error) {
-                this.triggerAlert({
-                    message: 'An error occurred while signing out',
-                    type: 'error'
-                });
+                // store.triggerAlert({
+                //     message: 'An error occurred while signing out',
+                //     type: 'error'
+                // });
             }
-        }
-    }
-}
+        };
+
+        return {
+            menuButtons,
+            loggedUser,
+            invokeLoginDialog,
+            goTo,
+            signOutUser,
+        };
+    },
+};
 </script>
