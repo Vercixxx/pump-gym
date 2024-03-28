@@ -119,84 +119,120 @@
 </template>
 
 <script>
-import { Qalendar } from "qalendar";
-import { mapState, mapActions, mapGetters } from 'vuex'
-
+import { usePiniaStorage } from '../store/pinia';
+import { ref, computed } from 'vue';
 import { Day, Week, WorkWeek, Month, Agenda } from '@syncfusion/ej2-vue-schedule';
-import { Internationalization } from '@syncfusion/ej2-base';
 
 import FooterComponent from '../components/Footer.vue'
 
-var instance = new Internationalization();
 
 export default {
     name: 'Schedule',
 
     components: {
-        Qalendar,
         FooterComponent,
     },
 
-    data() {
-        return {
-            model: 0,
-            selectedFacility: null,
 
-            config: {
-                defaultMode: 'week',
-                disableModes: ['day', 'month'],
-                showCurrentTime: true,
-                locale: 'pl-PL',
-                isSilent: true,
-                eventDialog: {
-                    isCustom: true,
-                },
+    setup() {
 
-                dayBoundaries: {
-                    start: 6,
-                    end: 23,
-                },
+        // Data
+        const model = ref(0);
+        const selectedFacility = ref(null);
+
+        const eventSettings = [
+            {
+                Id: 1,
+                Subject: 'Meeting',
+                StartTime: new Date(2023, 1, 15, 10, 0),
+                EndTime: new Date(2023, 1, 15, 12, 30)
             },
+        ];
+        // Data
 
 
-            eventSettings: {
-                dataSource: [{
-                    Id: 1,
-                    Subject: 'Meeting',
-                    StartTime: new Date(2023, 1, 15, 10, 0),
-                    EndTime: new Date(2023, 1, 15, 12, 30)
-                }]
-            },
-            selectedDate: new Date(2023, 1, 15)
+        // Pinia
+        const store = usePiniaStorage();
+        const facilities = computed(() => store.facilities);
+        // Pinia
 
-        }
-    },
 
-    computed: {
-        ...mapGetters(['getFacilities']),
-
-        chunkedFacilities() {
+        // Facilities
+        const chunkedFacilities = computed(() => {
             let i, j, chunk = 3;
-            let facilities = this.getFacilities;
+            let facilitiesArray = facilities.value;
             let result = [];
 
-            if (facilities) {
-                for (i = 0, j = facilities.length; i < j; i += chunk) {
-                    result.push(facilities.slice(i, i + chunk));
+            if (facilitiesArray) {
+                for (i = 0, j = facilitiesArray.length; i < j; i += chunk) {
+                    result.push(facilitiesArray.slice(i, i + chunk));
                 }
             }
 
             return result;
-        },
+        });
+
+
+        function selectObject(facilityName) {
+            selectedFacility.value = facilityName;
+        }
+        // Facilities
+
+
+
+        return {
+            model,
+            selectedFacility,
+            chunkedFacilities,
+            selectObject,
+            eventSettings,
+        }
     },
 
-    methods: {
-        selectObject(facility) {
-            this.selectedFacility = facility;
-        },
+
+    // data() {
+    //     return {
+    //         model: 0,
+    //         selectedFacility: null,
+
+    //         eventSettings: {
+    //             dataSource: [{
+    //                 Id: 1,
+    //                 Subject: 'Meeting',
+    //                 StartTime: new Date(2023, 1, 15, 10, 0),
+    //                 EndTime: new Date(2023, 1, 15, 12, 30)
+    //             }]
+    //         },
+    //         selectedDate: new Date(2023, 1, 15)
+
+    //     }
+    // },
+
+    // computed: {
+    //     ...mapGetters(['getFacilities']),
+
+    //     chunkedFacilities() {
+    //         let i, j, chunk = 3;
+    //         let facilities = this.getFacilities;
+    //         let result = [];
+
+    //         if (facilities) {
+    //             for (i = 0, j = facilities.length; i < j; i += chunk) {
+    //                 result.push(facilities.slice(i, i + chunk));
+    //             }
+    //         }
+
+    //         return result;
+    //     },
+    // },
+
+    // methods: {
+    //     selectObject(facility) {
+    //         this.selectedFacility = facility;
+    //     },
 
 
-    },
+    // },
 
 
 

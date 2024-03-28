@@ -1,47 +1,54 @@
 <template>
+    <v-parallax
+        src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
+        class="ma-0 pa-0">
+        <v-row>
 
-    <v-row>
-        <v-col cols="auto">0
+            <v-col cols="2">
 
-            <v-layout>
-                <v-navigation-drawer absolute permanent>
-                    <v-list>
-                        <v-list-item>
-                            <template v-slot:title>
-                                <span v-if="loggedUser">
-                                    {{ loggedUser.email }}
-                                </span>
-                            </template>
-                            <template v-slot:prepend>
-                                <v-icon icon="mdi-face-man-profile"></v-icon>
-                            </template>
-                        </v-list-item>
-                    </v-list>
+                <v-layout>
+                    <v-row>
+                        <v-col cols="12">
 
-                    <v-divider></v-divider>
+                            <v-list style="background-color: rgba(250, 250, 250, 0.5);">
+                                <v-list-item>
+                                    <template v-slot:title>
+                                        <span v-if="loggedUser">
+                                            {{ loggedUser.email }}
+                                        </span>
+                                    </template>
+                                    <template v-slot:prepend>
+                                        <v-icon icon="mdi-face-man-profile"></v-icon>
+                                    </template>
+                                </v-list-item>
+                            </v-list>
 
-                    <v-list :lines="false" nav>
-                        <v-list-item v-for="(item, i) in items" :key="i" :value="item" color="primary"
-                            @click="swtichToComponent(item.component)">
-                            <template v-slot:prepend>
-                                <v-icon :icon="item.icon"></v-icon>
-                            </template>
+                            <v-divider></v-divider>
 
-                            <v-list-item-title v-text="item.title"></v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-navigation-drawer>
+                            <v-list style="background-color: rgba(250, 250, 250, 0.5);">
+                                <v-list-item v-for="(item, i) in items" :key="i" :value="item" color="primary"
+                                    @click="switchToComponent(item.component)">
+                                    <template v-slot:prepend>
+                                        <v-icon :icon="item.icon"></v-icon>
+                                    </template>
 
-                <v-main style="min-height: 80dvh;"></v-main>
-            </v-layout>
+                                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                                </v-list-item>
+                            </v-list>
+                        </v-col>
+                    </v-row>
 
-        </v-col>
+                    <!-- <v-main style="min-height: 80dvh;"></v-main> -->
+                </v-layout>
 
-        <v-col>
-            <component :is="selectedComponent"></component>
-        </v-col>
-    </v-row>
+            </v-col>
 
+            <v-col cols="9">
+                <component :is="selectedComponent"></component>
+            </v-col>
+        </v-row>
+
+    </v-parallax>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="showWorkWithUsDialog" persistent width="600">
+    <v-dialog v-model="workWithUsDialog" persistent width="600">
         <v-card class="rounded-xl pa-4 bg-brown-lighten-5">
             <v-card-title class="font-weight-black">
                 <v-row>
@@ -23,7 +23,7 @@
 
 
                     <!-- Facility -->
-                    <v-select v-model="selectedFacility" :items="getFacilities" item-title="Name" item-value="Name"
+                    <v-select v-model="selectedFacility" :items="facilities" item-title="Name" item-value="Name"
                         label="Choose facility" variant="outlined" :rules="requiredRule" :disabled="loading"
                         class="mb-5"></v-select>
                     <!-- Facility -->
@@ -66,134 +66,137 @@
     </v-dialog>
 </template>
 
-<script>
-import { mapState, mapActions, mapGetters } from 'vuex'
 
+
+<script>
+import { ref, computed } from 'vue';
+import { usePiniaStorage } from '../store/pinia.js';
 import { collection, setDoc, doc } from "firebase/firestore";
 import { db, storage } from '../firebase.js'
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref as firebaseRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default {
     name: 'WorkWithUsDialog',
+    setup() {
 
-    computed: {
-        ...mapGetters(['showWorkWithUsDialog', 'getFacilities'])
-    },
+        const form = ref(false);
+        const loading = ref(false);
+        const selectedFacility = ref(null);
+        const message = ref('');
 
-
-    data() {
-        return {
-            form: false,
-
-            selectedFacility: null,
-            message: '',
-
-            file: [],
-            fileUrl: null,
-            fileRules: [
-                value => {
-                    return !value || !value.length || value[0].size < 3000000 || 'Avatar size should be less than 3 MB!'
-                },
-            ],
-
-            loading: false,
-
-            requiredRule: [
-                v => !!v || 'Field required'
-            ],
-
-            fields: [
-                {
-                    name: 'name',
-                    label: 'Name',
-                    value: '',
-                    rules: [
-                        v => !!v || 'Name is required'
-                    ]
-                },
-                {
-                    name: 'email',
-                    label: 'Email',
-                    value: '',
-                    rules: [
-                        v => !!v || 'Email is required',
-                        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
-                    ]
-                },
-                {
-                    name: 'phone',
-                    label: 'Phone',
-                    value: '',
-                    rules: [
-                        v => !!v || 'Phone is required',
-                        v => (v && v.length >= 9 && v.length <= 15) || 'Phone must be valid'
-                    ]
-                },
-            ]
-        }
-    },
+        // File
+        const file = ref([]);
+        const fileUrl = ref(null);
+        // File
 
 
-    methods: {
-        ...mapActions(['triggerAlert', 'closeWorkWithUsDialog']),
+        // Pinia
+        const store = usePiniaStorage();
+        const workWithUsDialog = computed(() => store.workWithUsDialog);
+        const facilities = computed(() => store.facilities);
 
-        async sendApplication() {
-            this.loading = true;
+        const closeWorkWithUsDialog = () => {
+            store.closeWorkWithUsDialog();
+        };
+
+        const triggerAlert = (alertData) => {
+            store.triggerAlert(alertData);
+        };
+        // Pinia
+
+
+        // Fields
+        const fields = ref([
+            {
+                name: 'name',
+                label: 'Name',
+                value: '',
+                rules: [
+                    v => !!v || 'Name is required'
+                ]
+            },
+            {
+                name: 'email',
+                label: 'Email',
+                value: '',
+                rules: [
+                    v => !!v || 'Email is required',
+                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+                ]
+            },
+            {
+                name: 'phone',
+                label: 'Phone',
+                value: '',
+                rules: [
+                    v => !!v || 'Phone is required',
+                    v => (v && v.length >= 9 && v.length <= 15) || 'Phone must be valid'
+                ]
+            },
+        ]);
+        // Fields
+
+
+
+        const sendApplication = async () => {
+            loading.value = true;
 
             try {
-
-                if (this.file) {
-                    const file = this.file[0];
-                    const fileRef = ref(storage, 'Applications/' + this.fields.find(field => field.name === 'email').value + '/' + file.name);
-                    await uploadBytes(fileRef, file);
-
-                    this.fileUrl = await getDownloadURL(fileRef);
-                };
-
-
+                if (file.value.length > 0) {
+                    const fileRef = firebaseRef(storage, 'Applications/' + fields.value.find(field => field.name === 'email').value + '/' + file.value[0].name);
+                    await uploadBytes(fileRef, file.value[0]);
+                    fileUrl.value = await getDownloadURL(fileRef);
+                }
 
                 const data = {
-                    name: this.fields.find(field => field.name === 'name').value,
-                    email: this.fields.find(field => field.name === 'email').value,
-                    phone: this.fields.find(field => field.name === 'phone').value,
-                    facility: this.selectedFacility,
-                    message: this.message,
-                    fileUrl: this.fileUrl
-
+                    name: fields.value.find(field => field.name === 'name').value,
+                    email: fields.value.find(field => field.name === 'email').value,
+                    phone: fields.value.find(field => field.name === 'phone').value,
+                    facility: selectedFacility.value,
+                    message: message.value,
+                    fileUrl: fileUrl.value
                 };
 
-                const reponse = await setDoc(doc(collection(db, 'Applications'), data.email), {
-                    name: data.name,
-                    email: data.email,
-                    phone: data.phone,
-                    facility: data.facility,
-                    message: data.message,
-                    fileUrl: data.fileUrl
-                });
+                await setDoc(doc(collection(db, 'Applications'), data.email), data);
 
-                this.triggerAlert({
+
+                triggerAlert({
                     message: 'Application sent successfully!',
                     type: 'success'
                 });
 
             } catch (error) {
-                console.error('Error occured while sending application', error);
-                this.triggerAlert({
-                    message: 'Error occured while sending application, please try again later',
+                console.error('Error occurred while sending application', error);
+                triggerAlert({
+                    message: 'Error occurred while sending application, please try again later',
                     type: 'error'
                 });
-
             }
 
-            this.loading = false;
-            this.closeWorkWithUsDialog();
-        },
+            loading.value = false;
+            closeWorkWithUsDialog();
+        };
 
+        const exitDialog = () => {
+            fields.value.forEach(field => field.value = '');
+            closeWorkWithUsDialog();
+        };
 
-        exitDialog() {
-            this.fields.forEach(field => field.value = '');
-            this.closeWorkWithUsDialog;
-        }
+        return {
+            form,
+            selectedFacility,
+            message,
+            file,
+            fileUrl,
+            loading,
+            workWithUsDialog,
+            facilities,
+            fields,
+            closeWorkWithUsDialog,
+            triggerAlert,
+            sendApplication,
+            exitDialog,
+        };
     },
-}
+};
 </script>

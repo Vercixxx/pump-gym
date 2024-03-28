@@ -176,134 +176,125 @@
     </div>
 </template>
 
+
+
+
+
+
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { ref, computed } from 'vue';
+import { usePiniaStorage } from '../store/pinia.js'; // adjust the path to your pinia.js file
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js'
-
 import FooterComponent from '../components/Footer.vue'
 
 export default {
     name: 'LoginPage',
-
     components: {
         FooterComponent
     },
+    setup() {
 
-    data() {
-        return {
 
-            model: 0,
-            menuButtons: [
-                {
-                    id: 1,
-                    title: 'Activities',
-                    icon: 'mdi-dumbbell',
-                    options: [
-                        {
-                            id: 1,
-                            title: 'a'
-                        },
-                        {
-                            id: 2,
-                            title: 'b'
-                        },
-                        {
-                            id: 3,
-                            title: 'c'
-                        },
-                    ],
-                },
-                {
-                    id: 2,
-                    title: 'Our Trainers',
-                    icon: 'mdi-dumbbell',
-                    options: [
-                        {
-                            id: 1,
-                            title: 'b'
-                        },
-                        {
-                            id: 2,
-                            title: 'c'
-                        },
-                        {
-                            id: 3,
-                            title: 'd'
-                        },
-                    ],
-                },
-                {
-                    id: 4,
-                    title: 'Contact us',
-                    icon: 'mdi-dumbbell',
-                    options: [
-                        {
-                            id: 1,
-                            title: 'b'
-                        },
-                        {
-                            id: 2,
-                            title: 'c'
-                        },
-                        {
-                            id: 3,
-                            title: 'd'
-                        },
-                    ],
-                },
-                {
-                    id: 5,
-                    title: 'Schedule',
-                    icon: 'mdi-dumbbell',
-                    options: [
-                        {
-                            id: 1,
-                            title: 'b'
-                        },
-                        {
-                            id: 2,
-                            title: 'c'
-                        },
-                        {
-                            id: 3,
-                            title: 'd'
-                        },
-                    ],
-                },
-            ]
-        }
-    },
+        const model = ref(0);
+        const menuButtons = ref([
+            {
+                id: 1,
+                title: 'Activities',
+                icon: 'mdi-dumbbell',
+                options: [
+                    {
+                        id: 1,
+                        title: 'a'
+                    },
+                    {
+                        id: 2,
+                        title: 'b'
+                    },
+                    {
+                        id: 3,
+                        title: 'c'
+                    },
+                ],
+            },
+            {
+                id: 2,
+                title: 'Our Trainers',
+                icon: 'mdi-dumbbell',
+                options: [
+                    {
+                        id: 1,
+                        title: 'b'
+                    },
+                    {
+                        id: 2,
+                        title: 'c'
+                    },
+                    {
+                        id: 3,
+                        title: 'd'
+                    },
+                ],
+            },
+            {
+                id: 4,
+                title: 'Contact us',
+                icon: 'mdi-dumbbell',
+                options: [
+                    {
+                        id: 1,
+                        title: 'b'
+                    },
+                    {
+                        id: 2,
+                        title: 'c'
+                    },
+                    {
+                        id: 3,
+                        title: 'd'
+                    },
+                ],
+            },
+            {
+                id: 5,
+                title: 'Schedule',
+                icon: 'mdi-dumbbell',
+                options: [
+                    {
+                        id: 1,
+                        title: 'b'
+                    },
+                    {
+                        id: 2,
+                        title: 'c'
+                    },
+                    {
+                        id: 3,
+                        title: 'd'
+                    },
+                ],
+            },
+        ]);
 
-    computed: {
-        ...mapGetters(['getFacilities']),
+        // Pinia
+        const store = usePiniaStorage();
+        const facilities = computed(() => store.facilities);
 
-        chunkedFacilities() {
-            let i, j, chunk = 3;
-            let facilities = this.getFacilities;
-            let result = [];
+        const setFacilities = (facilities) => {
+            store.setFacilities(facilities);
+        };
 
-            if (facilities) {
-                for (i = 0, j = facilities.length; i < j; i += chunk) {
-                    result.push(facilities.slice(i, i + chunk));
-                }
-            }
+        const triggerAlert = (alertData) => {
+            store.triggerAlert(alertData);
+        };
+        // Pinia
 
-            return result;
-        }
-    },
 
-    methods: {
-        ...mapActions(['setFacilities', 'triggerAlert']),
-
-        goTo(route) {
-            this.$router.push(route);
-        },
-
-        async fetchFacilities() {
+        // Facilities
+        const fetchFacilities = async () => {
             try {
                 const facilitiesQuerySnapshot = await getDocs(collection(db, "Facilities"));
-                const facilities = [];
+                const fetchedFacilities = [];
 
                 for (let doc of facilitiesQuerySnapshot.docs) {
                     const facility = doc.data();
@@ -312,26 +303,45 @@ export default {
                     const staffQuerySnapshot = await getDocs(collection(doc.ref, "Staff"));
                     facility.staff = staffQuerySnapshot.docs.map(doc => doc.data());
 
-                    facilities.push(facility);
+                    fetchedFacilities.push(facility);
                 }
 
-                this.setFacilities(facilities);
+                setFacilities(fetchedFacilities);
 
             } catch (error) {
-                console.error("Error getting documents: ", error);
-                this.triggerAlert({
+                triggerAlert({
                     message: 'An error occurred',
                     type: 'error'
-                })
+                });
             }
-        },
+        };
 
+        fetchFacilities();
+
+
+        const chunkedFacilities = computed(() => {
+            let i, j, chunk = 3;
+            let facilitiesArray = facilities.value;
+            let result = [];
+
+            if (facilitiesArray) {
+                for (i = 0, j = facilitiesArray.length; i < j; i += chunk) {
+                    result.push(facilitiesArray.slice(i, i + chunk));
+                }
+            }
+
+            return result;
+        });
+        // Facilities
+
+        return {
+            model,
+            menuButtons,
+            facilities,
+            fetchFacilities,
+            chunkedFacilities,
+        };
     },
-
-    created() {
-        this.fetchFacilities();
-    },
-
-
-}
+};
 </script>
+

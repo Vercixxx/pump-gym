@@ -15,6 +15,19 @@ export const usePiniaStorage = defineStore({
         loginDialog: false,
         // Login component
 
+        // WorkWithUs
+        workWithUsDialog: false,
+        // WorkWithUs
+
+        // Contact us dialog
+        contactUsDialog: false,
+        // Contact us dialog
+
+
+        // Facilities
+        facilities: null,
+        // Facilities
+
         // Alert
         alert: {
             show: false,
@@ -37,6 +50,7 @@ export const usePiniaStorage = defineStore({
         },
         // Buy dialog
 
+
         // User data
         setUserData(data) {
             this.userData = data;
@@ -45,6 +59,7 @@ export const usePiniaStorage = defineStore({
             this.userData = null;
         },
         // User data
+
 
         // Login component
         openLoginDialog() {
@@ -56,8 +71,35 @@ export const usePiniaStorage = defineStore({
         // Login component
 
 
+        // WorkWithUs
+        openWorkWithUsDialog() {
+            this.workWithUsDialog = true;
+        },
+        closeWorkWithUsDialog() {
+            this.workWithUsDialog = false;
+        },
+        // WorkWithUs
+
+
+        // Contact us dialog
+        openContactUsDialog() {
+            this.contactUsDialog = true;
+        },
+        closeContactUsDialog() {
+            this.contactUsDialog = false;
+        },
+        // Contact us dialog
+
+
+        // Facilities
+        setFacilities(data) {
+            this.facilities = data;
+        },
+        // Facilities
+
+
         // Alert
-        showAlert(message, type) {
+        showAlert(type, message) {
             this.alert.show = true;
             this.alert.message = message;
             this.alert.type = type;

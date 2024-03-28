@@ -113,7 +113,6 @@ export default {
             ],
         });
 
-        // const showLoginDialog = computed(() => store.getters.showLoginDialog);
 
         const signUp = () => {
             // store.dispatch('closeLoginDialog');

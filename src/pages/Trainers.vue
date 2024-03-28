@@ -80,7 +80,7 @@
 
 
 
-                            <v-carousel-item v-for="facility in getFacilities" :key="facility.name">
+                            <v-carousel-item v-for="facility in facilities" :key="facility.name">
                                 <v-sheet height="100%">
                                     <div class="d-flex fill-height justify-center align-center">
                                         <v-avatar size="300">
@@ -103,13 +103,12 @@
                     </span>
                 </v-col>
             </v-row>
-        
 
             <!-- Actual workers -->
             <v-row v-if="selectedFacility" style="background-color: rgba(255, 255, 255, 0.6);">
                 <v-col align="center">
                     <v-timeline direction="horizontal" side="end" class="overflow-x-auto">
-                        <v-timeline-item v-for="staffPersonel in staff" :key="staffPersonel.FirstName">
+                        <v-timeline-item v-for="staffPersonel in staff()" :key="staffPersonel.FirstName">
                             <template v-slot:opposite>
                                 <span class="font-weight-black text-h5">
                                     {{ staffPersonel.FirstName + ' ' + staffPersonel.LastName }}
@@ -138,58 +137,60 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
-
+import { ref, computed } from 'vue';
+import { usePiniaStorage } from '../store/pinia';
 
 import FooterComponent from '../components/Footer.vue'
 
 export default {
-    name: 'Trainers',
+    setup() {
 
-    components: {
-        FooterComponent
-    },
+        const model = ref(0);
+        const selectedFacility = ref(null);
 
-    data() {
-        return {
-            model: 0,
-            selectedFacility: null,
+        // Pinia
+        const store = usePiniaStorage();
+        const facilities = computed(() => store.facilities);
 
-        }
-    },
-
-    computed: {
-        ...mapGetters(['getFacilities']),
-
-        chunkedFacilities() {
+        // Facilities
+        const chunkedFacilities = computed(() => {
             let i, j, chunk = 3;
-            let facilities = this.getFacilities;
+            let facilitiesArray = facilities.value;
             let result = [];
 
-            if (facilities) {
-                for (i = 0, j = facilities.length; i < j; i += chunk) {
-                    result.push(facilities.slice(i, i + chunk));
+            if (facilitiesArray) {
+                for (i = 0, j = facilitiesArray.length; i < j; i += chunk) {
+                    result.push(facilitiesArray.slice(i, i + chunk));
                 }
             }
 
             return result;
-        },
+        });
 
-        staff() {
-            if (this.selectedFacility && this.getFacilities) {
-                return this.getFacilities.filter(facility => facility.Name === this.selectedFacility)[0]?.staff
+
+        function selectObject(facilityName) {
+            selectedFacility.value = facilityName;
+        }
+
+        function staff() {
+            if (selectedFacility.value && facilities.value) {
+                return facilities.value.filter(facility => facility.Name === selectedFacility.value)[0]?.staff
             }
-        },
+        }
+        // Facilities
+
+        return {
+            model,
+            selectedFacility,
+            chunkedFacilities,
+            selectObject,
+            staff,
+        }
 
     },
 
-    methods: {
-        selectObject(facility) {
-            this.selectedFacility = facility;
-        },
-
-
+    components: {
+        FooterComponent
     },
-
 }
 </script>

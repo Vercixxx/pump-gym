@@ -13,8 +13,6 @@
                 </span>
 
                 <span v-else>
-
-
                     <v-btn size="large" @click="goTo('/dashboard')" append-icon="mdi-home-circle" text="My dashboard"
                         color="success" variant="tonal" class="me-3"></v-btn>
 
@@ -85,14 +83,14 @@
 
 <script>
 import { ref, computed } from 'vue';
-import { usePiniaStorage } from '../store/pinia.js'; // adjust the path to your pinia.js file
+import { useRouter } from 'vue-router';
+import { usePiniaStorage } from '../store/pinia.js';
 import { auth } from '../firebase.js';
 import { signOut } from 'firebase/auth';
 
 export default {
     name: 'AppBar',
     setup(_, { root }) {
-        const store = usePiniaStorage();
 
         const menuButtons = ref([
             {
@@ -115,40 +113,50 @@ export default {
             },
         ]);
 
+
+        // Pinia
+        const store = usePiniaStorage();
         const loggedUser = computed(() => store.userData);
 
         const invokeLoginDialog = () => {
             store.openLoginDialog();
         };
 
-        const goTo = (route) => {
-            root.$router.push(route);
+        const openWorkWithUsDialog = () => {
+            store.openWorkWithUsDialog();
         };
 
+        const openContactUsDialog = () => {
+            store.openContactUsDialog();
+        };
+
+        // Pinia
+        const router = useRouter();
+        const goTo = (route) => {
+            router.push(route);
+        };
+
+        // Logout
         const signOutUser = async () => {
             try {
                 await signOut(auth);
 
                 store.emptyUserData();
 
-                store.showAlert('You have been signed out', 'success');
-                // store.triggerAlert({
-                //     message: 'You have been signed out',
-                //     type: 'success'
-                // });
+                store.showAlert('success', 'You have been signed out');
                 goTo('/');
             } catch (error) {
-                // store.triggerAlert({
-                //     message: 'An error occurred while signing out',
-                //     type: 'error'
-                // });
+                store.showAlert('error', error);
             }
         };
+        // Logout
 
         return {
             menuButtons,
             loggedUser,
             invokeLoginDialog,
+            openWorkWithUsDialog,
+            openContactUsDialog,
             goTo,
             signOutUser,
         };

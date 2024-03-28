@@ -129,72 +129,81 @@
     </div>
 </template>
 
-<script>
-import { collection, getDocs, getDoc, doc } from "firebase/firestore";
-import { db } from '../firebase.js';
-import { mapActions, mapGetters } from 'vuex';
 
+<script>
+import { ref, computed } from 'vue';
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../firebase.js';
 import { usePiniaStorage } from '../store/pinia.js';
 
 export default {
     name: 'Subscriptions',
+    setup() {
 
-    data() {
-        return {
-            loading: true,
-            dialogBuy: false,
-            selectedSubscription: null,
-            regularSubscriptionsNames: ['Basic', 'Basic - 12', 'Open', 'Open - 12'],
-            specialSubscriptionsNames: ['Student', 'Disabled person'],
-            regularSubscriptions: [],
-            specialSubscriptions: [],
-        }
-    },
 
-    computed: {
-        ...mapGetters(['loggedUser'])
-    },
+        const loading = ref(true);
+        const dialogBuy = ref(false);
+        const selectedSubscription = ref(null);
+        const regularSubscriptionsNames = ref(['Basic', 'Basic - 12', 'Open', 'Open - 12']);
+        const specialSubscriptionsNames = ref(['Student', 'Disabled person']);
+        const regularSubscriptions = ref([]);
+        const specialSubscriptions = ref([]);
 
-    mounted() {
-        this.fetchSubscriptions();
-    },
+        // Pinia
+        const store = usePiniaStorage();
+        const loggedUser = computed(() => store.userData);
 
-    methods: {
-        ...mapActions(['openLoginDialog', 'closeLoginDialog', 'openSignUpDialog', 'triggerAlert', 'setRegularSubscription', 'setSpecialSubscription']),
-
-        showBuyDialog(subscription) {
-            const store = usePiniaStorage();
+        function openLoginDialog() {
+            store.openLoginDialog();
+        };
+        
+        const showBuyDialog = (subscription) => {
             store.invokeBuyDialog(subscription);
-        },
+        };
+        // Pinia
 
+        
 
-        async fetchSubscriptionByTypeName(type, name, outputArray) {
+        const fetchSubscriptionByTypeName = async (type, name, outputArray) => {
             try {
                 const querySnapshot = await getDocs(collection(db, "Subscriptions", type, name));
                 querySnapshot.forEach((doc) => {
-                    outputArray.push(doc.data());
+                    outputArray.value.push(doc.data());
                 });
 
             } catch (error) {
                 console.error(`Error getting ${name} document:`, error);
             }
-        },
+        };
 
-        async fetchSubscriptions() {
-            for (let name of this.regularSubscriptionsNames) {
-                this.fetchSubscriptionByTypeName('Regular', name, this.regularSubscriptions);
+        const fetchSubscriptions = async () => {
+            for (let name of regularSubscriptionsNames.value) {
+                await fetchSubscriptionByTypeName('Regular', name, regularSubscriptions);
             }
-            for (let name of this.specialSubscriptionsNames) {
-                this.fetchSubscriptionByTypeName('Special', name, this.specialSubscriptions);
+            for (let name of specialSubscriptionsNames.value) {
+                await fetchSubscriptionByTypeName('Special', name, specialSubscriptions);
             }
-            this.loading = false;
-        },
+            loading.value = false;
+        };
 
+        fetchSubscriptions();
+
+        return {
+            loading,
+            dialogBuy,
+            selectedSubscription,
+            regularSubscriptionsNames,
+            specialSubscriptionsNames,
+            regularSubscriptions,
+            specialSubscriptions,
+            loggedUser,
+            openLoginDialog,
+            showBuyDialog,
+            fetchSubscriptionByTypeName,
+            fetchSubscriptions,
+        };
     },
-
-
-
-}
+};
 </script>
 
 

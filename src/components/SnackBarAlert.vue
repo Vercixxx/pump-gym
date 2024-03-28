@@ -3,7 +3,7 @@
     <v-snackbar v-model="alertData.show" location="top" :timeout="time" :color="alertData.type"
         style="position: fixed; top: 8vh;" rounded="pill" variant="elevated">
 
-        <v-progress-linear v-model="progressValue" :buffer-value="bufferValue" rounded color="white"></v-progress-linear>
+        <!-- <v-progress-linear v-model="progressValue" :buffer-value="bufferValue" rounded color="white"></v-progress-linear> -->
 
         <span class="font-weight-bold">
             {{ alertData.message }}
@@ -21,7 +21,7 @@
 
 <script>
 import { ref, computed, watch } from 'vue';
-import { usePiniaStorage } from '../store/pinia.js'; // adjust the path to your pinia.js file
+import { usePiniaStorage } from '../store/pinia.js';
 
 export default {
     name: 'SnackBarAlert',
