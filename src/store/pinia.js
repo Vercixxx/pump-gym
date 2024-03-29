@@ -13,7 +13,12 @@ export const usePiniaStorage = defineStore({
 
         // Login component
         loginDialog: false,
-        // Login component
+        // Login componentimport { useStore } from 'vuex';
+
+
+        // Sign up component
+        signUpDialog: false,
+        // Sign up component
 
         // WorkWithUs
         workWithUsDialog: false,
@@ -69,6 +74,16 @@ export const usePiniaStorage = defineStore({
             this.loginDialog = false;
         },
         // Login component
+
+
+        // Sign up component
+        openSignUpDialog() {
+            this.signUpDialog = true;
+        },
+        closeSignUpDialog() {
+            this.signUpDialog = false;
+        },
+        // Sign up component
 
 
         // WorkWithUs

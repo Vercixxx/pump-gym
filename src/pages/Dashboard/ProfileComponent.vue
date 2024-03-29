@@ -21,7 +21,7 @@
                                 text="Edit" v-if="!editing"></v-btn>
                             <v-btn prepend-icon="mdi-content-save" variant="text" color="success" v-if="editing"
                                 @click="updateUserData()" text="Save" :disabled="loading"></v-btn>
-                            <v-btn prepend-icon="mdi-close" variant="text" color="error" @click="editing = false"
+                            <v-btn prepend-icon="mdi-close" variant="text" color="error" @click="cancelEditing()"
                                 text="Cancel" v-if="editing"></v-btn>
                         </v-col>
                     </v-row>
@@ -109,11 +109,17 @@ export default {
             fields.forEach(field => {
                 field.value = userData.value[field.name];
             });
+            gender.value = userData.value.gender
+        }
+
+
+        function cancelEditing() {
+            setFieldsData();
+            editing.value = false;
         }
 
         onMounted(() => {
             setFieldsData();
-            gender.value = userData.value.gender
         });
         // Fields
 
@@ -177,6 +183,7 @@ export default {
             editing,
             loading,
             updateUserData,
+            cancelEditing,
         };
     },
 };

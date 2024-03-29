@@ -50,7 +50,8 @@
             <v-row class="mb-4">
                 <v-col cols="12" align="center">
                     <v-divider></v-divider>
-                    <v-btn class="mt-4 font-weight-black" variant="outlined" size="large" @click="signUp" color="success" append-icon="mdi-account-plus">
+                    <v-btn class="mt-4 font-weight-black" variant="outlined" size="large" @click="openSignUpDialog"
+                        color="success" append-icon="mdi-account-plus">
                         Sign up now
                     </v-btn>
 
@@ -65,8 +66,8 @@
                             Fill required fields
                         </v-tooltip>
                         <span>
-                            <v-btn block color="green-darken-2" @click="login()" :loading="loading"
-                                :disabled="!form" append-icon="mdi-login">Sign in</v-btn>
+                            <v-btn block color="green-darken-2" @click="login()" :loading="loading" :disabled="!form"
+                                append-icon="mdi-login">Sign in</v-btn>
                         </span>
                     </span>
                 </v-col>
@@ -114,10 +115,7 @@ export default {
         });
 
 
-        const signUp = () => {
-            // store.dispatch('closeLoginDialog');
-            store.dispatch('openSignUpDialog');
-        };
+
 
 
         // Pinia storage / get user data
@@ -128,6 +126,12 @@ export default {
         function closeLoginDialog() {
             piniaStorage.closeLoginDialog()
         }
+
+        const openSignUpDialog = () => {
+            piniaStorage.openSignUpDialog();
+            piniaStorage.closeLoginDialog();
+
+        };
 
         const login = async () => {
             loading.value = true;
@@ -180,7 +184,7 @@ export default {
             passwordVisible,
             rules,
             // showLoginDialog,
-            signUp,
+            openSignUpDialog,
             login,
         };
     },

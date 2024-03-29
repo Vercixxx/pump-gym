@@ -1,6 +1,6 @@
 <template>
 
-    <v-dialog v-model="showSignUpDialog" persistent width="800" style="background-color: rgba(100, 100, 100, 0.6);">
+    <v-dialog v-model="signUpDialog" persistent width="800" style="background-color: rgba(100, 100, 100, 0.6);">
         <v-card class="rounded-xl pa-4" :loading="loading">
 
             <template v-slot:loader="{ isActive }">
@@ -52,7 +52,8 @@
                                     </v-col>
                                     <v-col cols="12" md="6">
                                         <v-select v-model="genderValue" label="Gender" :items=genderOptions
-                                            prepend-inner-icon="mdi-family-tree" :rules="requiredRule" variant="underlined"></v-select>
+                                            prepend-inner-icon="mdi-family-tree" :rules="requiredRule"
+                                            variant="underlined"></v-select>
                                     </v-col>
                                 </v-row>
 
@@ -72,7 +73,8 @@
                                             :prepend-inner-icon="field.icon" :type="field.visible ? 'text' : 'password'"
                                             :append-inner-icon="field.visible ? 'mdi-eye' : ' mdi-eye-off'"
                                             @click:append-inner="field.visible = !field.visible"
-                                            autocomplete="current-password" :disabled="loading" variant="underlined"></v-text-field>
+                                            autocomplete="current-password" :disabled="loading"
+                                            variant="underlined"></v-text-field>
                                     </v-col>
                                 </v-row>
 
@@ -132,171 +134,200 @@
 </template>
 
 
-<script>
-import { mapState, mapActions, mapGetters } from 'vuex'
-import { auth } from '../firebase'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { collection, setDoc, doc } from "firebase/firestore";
-import { db } from '../firebase.js'
+<script setup>
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { usePiniaStorage } from '../store/pinia';
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, setDoc, doc, Timestamp } from "firebase/firestore";
+import { db } from '../firebase.js';
 
 
-export default {
-    name: 'SignUpComponent',
-
-    data() {
-        return {
-            form: false,
-            loading: false,
-            step: 0,
-
-            cards: [
-                {
-                    id: 1,
-                    text: 'Tell us about yourself',
-                    active: false,
-                },
-                {
-                    id: 2,
-                    text: 'Create your account',
-                    active: false,
-                },
-            ],
-
-
-            forms: [false, false],
-            requiredRule: [v => !!v || 'Field required'],
-
-            basicFields: [
-                {
-                    name: 'first_name',
-                    label: 'First name',
-                    icon: 'mdi-account',
-                    value: '',
-                    rules: [
-                        v => !!v || 'First name is required',
-                        v => (v.length >= 2) || 'First name must containt at least 2 characters',
-                        v => (v.length <= 70) || 'First name too large',
-                    ],
-                },
-                {
-                    name: 'last_name',
-                    label: 'Last name',
-                    icon: 'mdi-account',
-                    value: '',
-                    rules: [
-                        v => !!v || 'Last name is required',
-                        v => (v.length >= 2) || 'Last name must containt at least 2 characters',
-                        v => (v.length <= 70) || 'Last name too large',
-                    ],
-                },
-                {
-                    name: 'email',
-                    label: 'Email',
-                    icon: 'mdi-email',
-                    value: '',
-                    rules: [
-                        v => !!v || 'Email',
-                        v => (v.length >= 6) || 'Email must containt at least 6 characters',
-                        v => (v.length <= 70) || 'Email too large',
-                        v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Invalid email format',
-                    ],
-                },
-            ],
-
-            genderValue: null,
-            genderOptions: [
-                'Rather not say',
-                'Men',
-                'Woman',
-            ],
-
-            passwordFields: [
-                {
-                    name: 'password',
-                    label: 'Password',
-                    icon: 'mdi-key',
-                    visible: false,
-                    value: '',
-                    rules: [
-                        v => !!v || 'Password is required',
-                        v => (v.length >= 4) || 'Password must containt at least 4 characters',
-                        v => (v.length <= 70) || 'Password too large',
-                    ],
-                },
-                {
-                    name: 'password2',
-                    label: 'Repeat password',
-                    icon: 'mdi-key',
-                    visible: false,
-                    value: '',
-                    rules: [
-                        v => !!v || 'Password is required',
-                        v => (v.length >= 4) || 'Password must containt at least 4 characters',
-                        v => (v.length <= 70) || 'Password too large',
-                        v => v === this.passwordFields[0].value || 'Passwords do not match',
-                    ],
-                },
-            ],
-
-
-        }
+// Reactive data
+const form = ref(false);
+const loading = ref(false);
+const step = ref(0);
+const cards = ref([
+    {
+        id: 1,
+        text: 'Tell us about yourself',
+        active: false,
     },
-
-
-
-    computed: {
-        ...mapGetters(['showSignUpDialog']),
-
-        stepsCompleted() {
-            return this.forms.every(form => form);
-        }
+    {
+        id: 2,
+        text: 'Create your account',
+        active: false,
     },
+]);
+const forms = ref([false, false]);
+const requiredRule = [v => !!v || 'Field required'];
 
 
-
-    methods: {
-        ...mapActions(['openSignUpDialog', 'closeSignUpDialog', 'setLoggedUser', 'triggerAlert', 'setLoggedUser']),
-
-        async signUp() {
-            this.loading = true;
-
-            const data = {
-                first_name: this.basicFields[0].value,
-                last_name: this.basicFields[1].value,
-                email: this.basicFields[2].value,
-                sex: this.genderValue,
-                password: this.passwordFields[0].value,
-            }
-
-            try {
-                const response = await createUserWithEmailAndPassword(auth, data.email, data.password);
-                await setDoc(doc(collection(db, 'users'), response.user.uid), {
-                    first_name: data.first_name,
-                    last_name: data.last_name,
-                    email: data.email,
-                    sex: this.genderValue,
-                });
-
-                await this.setLoggedUser(response.user);
-                this.$router.push('/subscriptions');
-
-                this.triggerAlert({
-                    message: 'Account successfully created',
-                    type: 'success'
-                })
-
-            } catch (error) {
-                this.triggerAlert({
-                    message: `Error - ${error.code}`,
-                    type: 'error'
-                })
-            }
-
-            this.loading = false;
-            this.closeSignUpDialog();
-        }
-
+const basicFields = ref([
+    {
+        name: 'first_name',
+        label: 'First name',
+        icon: 'mdi-account',
+        value: '',
+        rules: [
+            v => !!v || 'First name is required',
+            v => (v.length >= 2) || 'First name must containt at least 2 characters',
+            v => (v.length <= 70) || 'First name too large',
+        ],
     },
+    {
+        name: 'last_name',
+        label: 'Last name',
+        icon: 'mdi-account',
+        value: '',
+        rules: [
+            v => !!v || 'Last name is required',
+            v => (v.length >= 2) || 'Last name must containt at least 2 characters',
+            v => (v.length <= 70) || 'Last name too large',
+        ],
+    },
+    {
+        name: 'email',
+        label: 'Email',
+        icon: 'mdi-email',
+        value: '',
+        rules: [
+            v => !!v || 'Email',
+            v => (v.length >= 6) || 'Email must containt at least 6 characters',
+            v => (v.length <= 70) || 'Email too large',
+            v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Invalid email format',
+        ],
+    },
+    {
+        name: 'phone',
+        label: 'Phone',
+        icon: 'mdi-phone',
+        value: '',
+        rules: [
+            v => !!v || 'Phone is required',
+            v => (v.length >= 6) || 'Phone must containt at least 6 characters',
+            v => (v.length <= 70) || 'Phone too large',
+        ],
+    },
+]);
 
+
+const genderValue = ref(null);
+const genderOptions = ref([
+    'Rather not say',
+    'Men',
+    'Woman',
+]);
+
+
+const passwordFields = ref([
+    {
+        name: 'password',
+        label: 'Password',
+        icon: 'mdi-key',
+        visible: false,
+        value: '',
+        rules: [
+            v => !!v || 'Password is required',
+            v => (v.length >= 4) || 'Password must containt at least 4 characters',
+            v => (v.length <= 70) || 'Password too large',
+        ],
+    },
+    {
+        name: 'password2',
+        label: 'Repeat password',
+        icon: 'mdi-key',
+        visible: false,
+        value: '',
+        rules: [
+            v => !!v || 'Password is required',
+            v => (v.length >= 4) || 'Password must containt at least 4 characters',
+            v => (v.length <= 70) || 'Password too large',
+            v => v === passwordFields.value[0].value || 'Passwords do not match',
+        ],
+    },
+]);
+// Reactive data
+
+
+
+// Computed / Pinia
+const storage = usePiniaStorage();
+
+var signUpDialog = computed(() => storage.signUpDialog);
+
+function closeSignUpDialog() {
+    basicFields.value.every(field => field.value = '');
+    passwordFields.value.every(field => field.value = '');
+    genderValue.value = null;
+    storage.closeSignUpDialog();
 }
+
+
+// Computed
+const stepsCompleted = computed(() => forms.value.every(form => form));
+
+// Computed / Pinia
+
+
+// Sign up method
+const signUp = async () => {
+    loading.value = true;
+
+    const data = {
+        first_name: basicFields.value[0].value,
+        last_name: basicFields.value[1].value,
+        email: basicFields.value[2].value,
+        phone: basicFields.value[3].value,
+        gender: genderValue.value,
+        password: passwordFields.value[0].value,
+    }
+
+    try {
+        const response = await createUserWithEmailAndPassword(auth, data.email, data.password);
+
+        // Set data for user
+        const userDocRef = doc(db, 'users', response.user.uid);
+
+        await setDoc(userDocRef, {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            phone: data.phone,
+            gender: genderValue.value,
+        });
+
+
+        // Add collection named subscriptions
+        const subscriptionDocRef = doc(collection(userDocRef, 'subscription'), 'Subscription');
+
+        await setDoc(subscriptionDocRef, {
+            status: '',
+            plan: '',
+            period: 0,
+            start_date: '',
+            end_date: '',
+        });
+
+
+        await storage.setUserData(response.user);
+
+
+        // const router = useRouter();
+        // router.push('/subscriptions');
+
+        storage.showAlert('success', 'Account successfully created, now go to dashboard and subscribe to a plan.');
+
+    } catch (error) {
+        console.log(error);
+        storage.showAlert('error', error.code);
+    }
+
+    loading.value = false;
+    closeSignUpDialog();
+};
+// Sign up method
+
+
 </script>
