@@ -7,9 +7,9 @@
 
                 <span v-if="!loggedUser">
                     <v-btn size="large" class="rounded-pill me-5" color="success" variant="elevated"
-                        text="Buy subscription" @click="goTo('/subscriptions')"></v-btn>
+                        text="Buy subscription" @click="goTo('/subscriptions')" prepend-icon="mdi-card-account-details"></v-btn>
                     <v-btn size="large" class="rounded-pill" color="primary" variant="outlined" text="Client panel"
-                        @click="invokeLoginDialog"></v-btn>
+                        @click="invokeLoginDialog" prepend-icon="mdi-account-circle"></v-btn>
                 </span>
 
                 <span v-else>

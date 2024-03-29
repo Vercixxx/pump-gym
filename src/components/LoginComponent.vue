@@ -7,7 +7,7 @@
                 <v-row>
                     <v-col cols="2"></v-col>
                     <v-col cols="8" class="headline text-h4" align=center>
-                        Login
+                        Sign in
                     </v-col>
                     <v-col cols="2" align="end">
                         <v-btn icon="mdi-close" variant="plain" @click="closeLoginDialog"></v-btn>
@@ -50,15 +50,15 @@
             <v-row class="mb-4">
                 <v-col cols="12" align="center">
                     <v-divider></v-divider>
-                    <v-btn class="mt-4" variant="tonal" @click="signUp" role="button">
-                        Dont have an account? Sign up now!
+                    <v-btn class="mt-4 font-weight-black" variant="outlined" size="large" @click="signUp" color="success" append-icon="mdi-account-plus">
+                        Sign up now
                     </v-btn>
 
                 </v-col>
             </v-row>
 
 
-            <v-row class="mb-1 mt-2">
+            <v-row class="mb-1 mt-1">
                 <v-col cols="12">
                     <span>
                         <v-tooltip v-if="!form" activator="parent" location="top" no-overflow>
@@ -66,7 +66,7 @@
                         </v-tooltip>
                         <span>
                             <v-btn block color="green-darken-2" @click="login()" :loading="loading"
-                                :disabled="!form">Login</v-btn>
+                                :disabled="!form" append-icon="mdi-login">Sign in</v-btn>
                         </span>
                     </span>
                 </v-col>

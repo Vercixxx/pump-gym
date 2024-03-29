@@ -51,7 +51,7 @@
                                             :prepend-inner-icon="field.icon" variant="underlined"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" md="6">
-                                        <v-select v-model="sexValue" label="Sex" :items=sexOptions
+                                        <v-select v-model="genderValue" label="Gender" :items=genderOptions
                                             prepend-inner-icon="mdi-family-tree" :rules="requiredRule" variant="underlined"></v-select>
                                     </v-col>
                                 </v-row>
@@ -203,8 +203,8 @@ export default {
                 },
             ],
 
-            sexValue: null,
-            sexOptions: [
+            genderValue: null,
+            genderOptions: [
                 'Rather not say',
                 'Men',
                 'Woman',
@@ -264,7 +264,7 @@ export default {
                 first_name: this.basicFields[0].value,
                 last_name: this.basicFields[1].value,
                 email: this.basicFields[2].value,
-                sex: this.sexValue,
+                sex: this.genderValue,
                 password: this.passwordFields[0].value,
             }
 
@@ -274,7 +274,7 @@ export default {
                     first_name: data.first_name,
                     last_name: data.last_name,
                     email: data.email,
-                    sex: this.sexValue,
+                    sex: this.genderValue,
                 });
 
                 await this.setLoggedUser(response.user);
