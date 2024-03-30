@@ -38,8 +38,14 @@ export const usePiniaStorage = defineStore({
             show: false,
             message: '',
             type: 'success'
-        }
+        },
         // Alert
+
+
+        // Payment
+        paymentSuccessfullDialog: false,
+        paymentData: null,
+        // Payment
 
     }),
 
@@ -121,7 +127,20 @@ export const usePiniaStorage = defineStore({
         },
         closeAlert() {
             this.alert.show = false;
-        }
+        },
         // Alert
+
+
+        // Payment
+        openPaymentSuccessfullDialog() {
+            this.paymentSuccessfullDialog = true;
+        },
+        closePaymentSuccessfullDialog() {
+            this.paymentSuccessfullDialog = false;
+        },
+        setPaymentData(data) {
+            this.paymentData = data;
+        },
+        // Payment
     }
 })

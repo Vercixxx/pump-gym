@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { ref, computed } from 'vue';
+import { usePiniaStorage } from '../store/pinia.js';
+
 // my sites
 import MainPage from '../pages/MainPage.vue'
 import ActivitiesPage from '../pages/Activities.vue'
@@ -41,6 +44,20 @@ const router = createRouter({
       name: 'ClientPage',
       component: ClientPage
     },
+
+    {
+      path: '/payment-successful',
+      name: 'payment-successful',
+      component: MainPage,
+      beforeEnter: (to, from, next) => {
+
+        const store = usePiniaStorage();
+        store.openPaymentSuccessfullDialog();
+
+        next();
+      },
+    },
+
   ]
 })
 

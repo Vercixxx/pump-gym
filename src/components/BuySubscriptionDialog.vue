@@ -66,8 +66,9 @@
                         :success-url="successURL" :cancel-url="cancelURL" @loading="v => loading = v" />
 
                     <v-card-actions>
-                        <v-btn color="success" block size="large" @click="submit" variant="elevated" :loading="loading">Buy ({{
-                            buyDialogData.price }} zł)</v-btn>
+                        <v-btn color="success" block size="large" @click="submit" variant="elevated"
+                            :loading="loading">Buy ({{
+        buyDialogData.price }} zł)</v-btn>
 
 
 
@@ -85,62 +86,67 @@
 
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { usePiniaStorage } from '../store/pinia.js';
-import { StripeCheckout } from '@vue-stripe/vue-stripe';
+import { loadStripe } from '@stripe/stripe-js';
 
-export default {
-    components: {
-        StripeCheckout,
+
+// Pinia
+const store = usePiniaStorage();
+const buyDialog = computed(() => store.buyDialog);
+const buyDialogData = computed(() => store.buyDialogData);
+
+function closeBuyDialog() {
+    store.closeBuyDialog();
+}
+// Pinia
+
+
+
+// Stripe
+const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+const loading = ref(false);
+
+let stripe: any;
+loadStripe(publishableKey).then((s) => {
+    stripe = s;
+});
+
+const lineItems = ref([
+    {
+        price: 'price_1OyamG09gQOP4k1JDE1Q6E5b',
+        quantity: 1,
     },
-    setup() {
-        // Dialog
-        const store = usePiniaStorage();
-        const buyDialog = computed(() => store.buyDialog);
-        const buyDialogData = computed(() => store.buyDialogData);
-        function closeBuyDialog() {
-            store.closeBuyDialog();
-        }
+]);
 
-        // Dialog
+const successURL = 'http://localhost:5173/payment-successful';
+const cancelURL = 'http://localhost:5173/subscriptions';
 
+async function submit() {
+    if (!stripe) {
+        console.error('Stripe has not been initialized');
+        return;
+    }
 
-        // Stripe
-        const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
-        const loading = ref(false);
-        const lineItems = ref([
-            {
-                price: 'price_1OyamG09gQOP4k1JDE1Q6E5b',
-                quantity: 1,
-            },
-        ]);
-        const successURL = 'http://localhost:5173/subscriptions';
-        const cancelURL = 'http://localhost:5173/subscriptions';
+    loading.value = true;
 
-        function submit() {
-            this.$refs.checkoutRef.redirectToCheckout();
-        }
-        // Stripe
+    const { error } = await stripe.redirectToCheckout({
+        lineItems: lineItems.value,
+        mode: 'payment',
+        successUrl: successURL,
+        cancelUrl: cancelURL,
+    });
+
+    if (error) {
+        console.error(error);
+    }
+
+    loading.value = false;
+}
 
 
+// Stripe
 
-        return {
-            // Dialog
-            closeBuyDialog,
-            buyDialog,
-            buyDialogData,
-            // Dialog
 
-            // Stripe
-            publishableKey,
-            loading,
-            lineItems,
-            successURL,
-            cancelURL,
-            submit,
-            // Stripe
-        };
-    },
-};
 </script>

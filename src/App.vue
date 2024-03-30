@@ -21,6 +21,7 @@
       <ContactUsDialog />
       <WorkWithUsDialog />
       <BuySubscriptionDialog/>
+      <PaymentSuccessfullDialog/>
       <!-- Dialogs -->
 
 
@@ -36,10 +37,14 @@ import AppBar from './components/AppBar.vue'
 import ContactUsDialog from './components/ContactUsDialog.vue'
 import WorkWithUsDialog from './components/WorkWithUsDialog.vue'
 import BuySubscriptionDialog from './components/BuySubscriptionDialog.vue'
+import PaymentSuccessfullDialog from './components/PaymentSuccessfull.vue'
 
 // Storage
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase.js";
+
+// Pinia
+import { usePiniaStorage } from './store/pinia.js';
 
 export default {
   name: 'App',
@@ -51,15 +56,17 @@ export default {
     ContactUsDialog,
     SignUpComponent,
     WorkWithUsDialog,
-    BuySubscriptionDialog
+    BuySubscriptionDialog,
+    PaymentSuccessfullDialog
   },
 
   created() {
     onAuthStateChanged(auth, (user) => {
+      const store = usePiniaStorage();
       if (user) {
-        this.$store.commit('setLoggedUser', user);
+        store.setUserData(user);
       } else {
-        this.$store.commit('setLoggedUser', null);
+        store.setUserData(null);
       }
     });
   },
