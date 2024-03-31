@@ -88,7 +88,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { usePiniaStorage } from '../store/pinia.js';
+import { usePiniaStorage } from '../store/pinia';
 import { loadStripe } from '@stripe/stripe-js';
 
 

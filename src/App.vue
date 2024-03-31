@@ -44,7 +44,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase.js";
 
 // Pinia
-import { usePiniaStorage } from './store/pinia.js';
+import { usePiniaStorage } from './store/pinia';
 
 export default {
   name: 'App',

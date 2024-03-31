@@ -5,7 +5,7 @@ export const usePiniaStorage = defineStore({
 
     state: () => ({
         buyDialog: false,
-        buyDialogData: {},
+        buyDialogData: {} as any,
 
         // User data
         userData: null,
@@ -30,7 +30,7 @@ export const usePiniaStorage = defineStore({
 
 
         // Facilities
-        facilities: null,
+        facilities: null as any,
         // Facilities
 
         // Alert
@@ -44,14 +44,14 @@ export const usePiniaStorage = defineStore({
 
         // Payment
         paymentSuccessfullDialog: false,
-        paymentData: null,
+        paymentData: null as any,
         // Payment
 
     }),
 
     actions: {
         // Buy dialog
-        invokeBuyDialog(value) {
+        invokeBuyDialog(value: any) {
             this.buyDialogData = value;
             this.buyDialog = true;
         },
@@ -63,7 +63,7 @@ export const usePiniaStorage = defineStore({
 
 
         // User data
-        setUserData(data) {
+        setUserData(data: any) {
             this.userData = data;
         },
         emptyUserData() {
@@ -113,14 +113,14 @@ export const usePiniaStorage = defineStore({
 
 
         // Facilities
-        setFacilities(data) {
+        setFacilities(data: any) {
             this.facilities = data;
         },
         // Facilities
 
 
         // Alert
-        showAlert(type, message) {
+        showAlert(type: string, message: string) {
             this.alert.show = true;
             this.alert.message = message;
             this.alert.type = type;
@@ -138,7 +138,7 @@ export const usePiniaStorage = defineStore({
         closePaymentSuccessfullDialog() {
             this.paymentSuccessfullDialog = false;
         },
-        setPaymentData(data) {
+        setPaymentData(data: any) {
             this.paymentData = data;
         },
         // Payment

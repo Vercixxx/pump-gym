@@ -49,7 +49,7 @@
 
 <script>
 import { onMounted, computed, ref } from 'vue';
-import { usePiniaStorage } from '../../store/pinia.js';
+import { usePiniaStorage } from '../../store/pinia';
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from '../../firebase.js';
 

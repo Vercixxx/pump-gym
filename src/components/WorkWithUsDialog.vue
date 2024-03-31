@@ -70,7 +70,7 @@
 
 <script>
 import { ref, computed } from 'vue';
-import { usePiniaStorage } from '../store/pinia.js';
+import { usePiniaStorage } from '../store/pinia';
 import { collection, setDoc, doc } from "firebase/firestore";
 import { db, storage } from '../firebase.js'
 import { ref as firebaseRef, uploadBytes, getDownloadURL } from "firebase/storage";

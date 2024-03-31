@@ -84,7 +84,7 @@
 <script>
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { usePiniaStorage } from '../store/pinia.js';
+import { usePiniaStorage } from '../store/pinia';
 import { auth } from '../firebase.js';
 import { signOut } from 'firebase/auth';
 

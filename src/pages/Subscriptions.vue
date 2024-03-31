@@ -134,7 +134,7 @@
 import { ref, computed } from 'vue';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js';
-import { usePiniaStorage } from '../store/pinia.js';
+import { usePiniaStorage } from '../store/pinia';
 
 export default {
     name: 'Subscriptions',

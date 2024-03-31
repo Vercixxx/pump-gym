@@ -183,7 +183,7 @@
 
 <script>
 import { ref, computed } from 'vue';
-import { usePiniaStorage } from '../store/pinia.js'; // adjust the path to your pinia.js file
+import { usePiniaStorage } from '../store/pinia';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js'
 import FooterComponent from '../components/Footer.vue'

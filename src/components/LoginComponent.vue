@@ -80,7 +80,6 @@
 
 <script>
 import { ref, computed } from 'vue';
-import { useStore } from 'vuex';
 import { usePiniaStorage } from '../store/pinia';
 
 // Firebase
@@ -92,7 +91,6 @@ import { db } from '../firebase.js';
 export default {
     name: 'LoginComponent',
     setup(_, { root }) {
-        const store = useStore();
 
         const form = ref(false);
         const loading = ref(false);

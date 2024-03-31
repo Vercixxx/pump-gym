@@ -136,8 +136,8 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
 import { usePiniaStorage } from '../store/pinia';
+
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, setDoc, doc, Timestamp } from "firebase/firestore";

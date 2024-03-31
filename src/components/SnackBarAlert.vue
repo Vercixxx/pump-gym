@@ -21,7 +21,7 @@
 
 <script>
 import { ref, computed, watch } from 'vue';
-import { usePiniaStorage } from '../store/pinia.js';
+import { usePiniaStorage } from '../store/pinia';
 
 export default {
     name: 'SnackBarAlert',
