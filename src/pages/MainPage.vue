@@ -180,168 +180,114 @@
 
 
 
-<script>
-import { ref, computed } from 'vue';
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js'
 import FooterComponent from '../components/Footer.vue'
 
 
-export default {
-    name: 'LoginPage',
-    components: {
-        FooterComponent
-    },
-    setup() {
-
-
-        const model = ref(0);
-        const menuButtons = ref([
+const model = ref(0);
+const menuButtons = ref([
+    {
+        id: 1,
+        title: 'Activities',
+        icon: 'mdi-dumbbell',
+        options: [
             {
                 id: 1,
-                title: 'Activities',
-                icon: 'mdi-dumbbell',
-                options: [
-                    {
-                        id: 1,
-                        title: 'a'
-                    },
-                    {
-                        id: 2,
-                        title: 'b'
-                    },
-                    {
-                        id: 3,
-                        title: 'c'
-                    },
-                ],
+                title: 'a'
             },
             {
                 id: 2,
-                title: 'Our Trainers',
-                icon: 'mdi-dumbbell',
-                options: [
-                    {
-                        id: 1,
-                        title: 'b'
-                    },
-                    {
-                        id: 2,
-                        title: 'c'
-                    },
-                    {
-                        id: 3,
-                        title: 'd'
-                    },
-                ],
+                title: 'b'
             },
             {
-                id: 4,
-                title: 'Contact us',
-                icon: 'mdi-dumbbell',
-                options: [
-                    {
-                        id: 1,
-                        title: 'b'
-                    },
-                    {
-                        id: 2,
-                        title: 'c'
-                    },
-                    {
-                        id: 3,
-                        title: 'd'
-                    },
-                ],
+                id: 3,
+                title: 'c'
             },
-            {
-                id: 5,
-                title: 'Schedule',
-                icon: 'mdi-dumbbell',
-                options: [
-                    {
-                        id: 1,
-                        title: 'b'
-                    },
-                    {
-                        id: 2,
-                        title: 'c'
-                    },
-                    {
-                        id: 3,
-                        title: 'd'
-                    },
-                ],
-            },
-        ]);
-
-        // Pinia
-        const store = usePiniaStorage();
-        const facilities = computed(() => store.facilities);
-
-        const setFacilities = (facilities) => {
-            store.setFacilities(facilities);
-        };
-
-        const triggerAlert = (alertData) => {
-            store.triggerAlert(alertData);
-        };
-        // Pinia
-
-
-        // Facilities
-        const fetchFacilities = async () => {
-            try {
-                const facilitiesQuerySnapshot = await getDocs(collection(db, "Facilities"));
-                const fetchedFacilities = [];
-
-                for (let doc of facilitiesQuerySnapshot.docs) {
-                    const facility = doc.data();
-                    facility.id = doc.id;
-
-                    const staffQuerySnapshot = await getDocs(collection(doc.ref, "Staff"));
-                    facility.staff = staffQuerySnapshot.docs.map(doc => doc.data());
-
-                    fetchedFacilities.push(facility);
-                }
-
-                setFacilities(fetchedFacilities);
-
-            } catch (error) {
-                triggerAlert({
-                    message: 'An error occurred',
-                    type: 'error'
-                });
-            }
-        };
-
-        fetchFacilities();
-
-
-        const chunkedFacilities = computed(() => {
-            let i, j, chunk = 3;
-            let facilitiesArray = facilities.value;
-            let result = [];
-
-            if (facilitiesArray) {
-                for (i = 0, j = facilitiesArray.length; i < j; i += chunk) {
-                    result.push(facilitiesArray.slice(i, i + chunk));
-                }
-            }
-
-            return result;
-        });
-        // Facilities
-
-        return {
-            model,
-            menuButtons,
-            facilities,
-            fetchFacilities,
-            chunkedFacilities,
-        };
+        ],
     },
-};
-</script>
+    {
+        id: 2,
+        title: 'Our Trainers',
+        icon: 'mdi-dumbbell',
+        options: [
+            {
+                id: 1,
+                title: 'b'
+            },
+            {
+                id: 2,
+                title: 'c'
+            },
+            {
+                id: 3,
+                title: 'd'
+            },
+        ],
+    },
+    {
+        id: 4,
+        title: 'Contact us',
+        icon: 'mdi-dumbbell',
+        options: [
+            {
+                id: 1,
+                title: 'b'
+            },
+            {
+                id: 2,
+                title: 'c'
+            },
+            {
+                id: 3,
+                title: 'd'
+            },
+        ],
+    },
+    {
+        id: 5,
+        title: 'Schedule',
+        icon: 'mdi-dumbbell',
+        options: [
+            {
+                id: 1,
+                title: 'b'
+            },
+            {
+                id: 2,
+                title: 'c'
+            },
+            {
+                id: 3,
+                title: 'd'
+            },
+        ],
+    },
+]);
 
+// Pinia
+const store = usePiniaStorage();
+const facilities = computed(() => store.facilities);
+// Pinia
+
+// Facilities
+const chunkedFacilities = computed(() => {
+    let i, j, chunk = 3;
+    let facilitiesArray = facilities.value;
+    let result = [];
+
+    if (facilitiesArray) {
+        for (i = 0, j = facilitiesArray.length; i < j; i += chunk) {
+            result.push(facilitiesArray.slice(i, i + chunk));
+        }
+    }
+
+    return result;
+});
+// Facilities
+
+
+</script>

@@ -1,65 +1,37 @@
 import { defineStore } from 'pinia'
 
-export const usePiniaStorage = defineStore({
-    id: 'piniaStorage',
+export const usePiniaStorage = defineStore('store', {
 
     state: () => ({
         buyDialog: false,
-        buyDialogData: {} as any,
-
-        // User data
-        userData: null as any,
+        buyDialogData: {} as unknown,
+        userData: null as unknown,
         userUid: null as string | null,
-        // User data
-
-        // Login component
         loginDialog: false,
-        // Login component;
-
-
-        // Sign up component
         signUpDialog: false,
-        // Sign up component
-
-        // WorkWithUs
         workWithUsDialog: false,
-        // WorkWithUs
-
-        // Contact us dialog
         contactUsDialog: false,
-        // Contact us dialog
-
-
-        // Facilities
-        facilities: null as any,
-        // Facilities
-
-        // Alert
+        facilities: null as unknown,
+        subscriptions: {
+            regular: {} as unknown,
+            special: {} as unknown,
+        },
         alert: {
             show: false,
             message: '',
             type: 'success'
         },
-        // Alert
-
-
-        // Payment
         paymentSuccessfullDialog: false,
-        // Payment
-
-
-        // Overlay
         overlay: false,
-        // Overlay
     }),
 
     actions: {
         // Buy dialog
-        invokeBuyDialog(value: any) {
+        invokeBuyDialog(value: unknown) {
             this.buyDialogData = value;
             this.buyDialog = true;
         },
-        
+
         closeBuyDialog() {
             this.buyDialog = false;
         },
@@ -67,7 +39,7 @@ export const usePiniaStorage = defineStore({
 
 
         // User data
-        setUserData(data: any, uid: string) {
+        setUserData(data: unknown, uid: string) {
             this.userData = data;
             this.userUid = uid;
         },
@@ -119,10 +91,18 @@ export const usePiniaStorage = defineStore({
 
 
         // Facilities
-        setFacilities(data: any) {
+        setFacilities(data: unknown) {
             this.facilities = data;
         },
         // Facilities
+
+
+        // Subscriptions
+        setSubscriptions(regular: unknown, special: unknown) {
+            this.subscriptions.regular = regular;
+            this.subscriptions.special = special;
+        },
+        // Subscriptions
 
 
         // Alert
@@ -155,5 +135,8 @@ export const usePiniaStorage = defineStore({
             this.overlay = false;
         }
         // Overlay
-    }
+    },
+    persist: {
+        storage: sessionStorage,
+    },
 })

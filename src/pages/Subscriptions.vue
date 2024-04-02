@@ -130,80 +130,34 @@
 </template>
 
 
-<script>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js';
 import { usePiniaStorage } from '../store/pinia';
 
-export default {
-    name: 'Subscriptions',
-    setup() {
 
 
-        const loading = ref(true);
-        const dialogBuy = ref(false);
-        const selectedSubscription = ref(null);
-        const regularSubscriptionsNames = ref(['Basic', 'Basic - 12', 'Open', 'Open - 12']);
-        const specialSubscriptionsNames = ref(['Student', 'Disabled person']);
-        const regularSubscriptions = ref([]);
-        const specialSubscriptions = ref([]);
+const loading = ref(true);
+const dialogBuy = ref(false);
+const selectedSubscription = ref(null);
 
-        // Pinia
-        const store = usePiniaStorage();
-        const loggedUser = computed(() => store.userData);
 
-        function openLoginDialog() {
-            store.openLoginDialog();
-        };
-        
-        const showBuyDialog = (subscription) => {
-            store.invokeBuyDialog(subscription);
-        };
-        // Pinia
+// Pinia
+const store = usePiniaStorage();
+const loggedUser = computed(() => store.userData);
+const regularSubscriptions = computed(() => store.subscriptions.regular);
+const specialSubscriptions = computed(() => store.subscriptions.special);
 
-        
-
-        const fetchSubscriptionByTypeName = async (type, name, outputArray) => {
-            try {
-                const querySnapshot = await getDocs(collection(db, "Subscriptions", type, name));
-                querySnapshot.forEach((doc) => {
-                    outputArray.value.push(doc.data());
-                });
-
-            } catch (error) {
-                console.error(`Error getting ${name} document:`, error);
-            }
-        };
-
-        const fetchSubscriptions = async () => {
-            for (let name of regularSubscriptionsNames.value) {
-                await fetchSubscriptionByTypeName('Regular', name, regularSubscriptions);
-            }
-            for (let name of specialSubscriptionsNames.value) {
-                await fetchSubscriptionByTypeName('Special', name, specialSubscriptions);
-            }
-            loading.value = false;
-        };
-
-        fetchSubscriptions();
-
-        return {
-            loading,
-            dialogBuy,
-            selectedSubscription,
-            regularSubscriptionsNames,
-            specialSubscriptionsNames,
-            regularSubscriptions,
-            specialSubscriptions,
-            loggedUser,
-            openLoginDialog,
-            showBuyDialog,
-            fetchSubscriptionByTypeName,
-            fetchSubscriptions,
-        };
-    },
+function openLoginDialog() {
+    store.openLoginDialog();
 };
+
+const showBuyDialog = (subscription) => {
+    store.invokeBuyDialog(subscription);
+};
+// Pinia
+
 </script>
 
 

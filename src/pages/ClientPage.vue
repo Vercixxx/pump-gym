@@ -11,7 +11,7 @@
                         <v-col cols="12">
 
                             <v-list style="background-color: rgba(250, 250, 250, 0.5);">
-                                <v-list-item :title="userData.first_name + ' ' + userData.last_name" :subtitle="userData.email">
+                                <v-list-item :title="userData ? userData.first_name + ' ' + userData.last_name : ''" :subtitle="userData ? userData.email : ''">
                                     <template v-slot:prepend>
                                         <v-icon icon="mdi-face-man-profile"></v-icon>
                                     </template>
