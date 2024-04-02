@@ -85,7 +85,7 @@ import { usePiniaStorage } from '../store/pinia';
 // Firebase
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js';
 
 export default {
@@ -146,8 +146,16 @@ export default {
                 const userDocSnap = await getDoc(userDocRef);
                 const userDetailData = userDocSnap.data();
 
-                // Set the user data in the store
-                piniaStorage.setUserData({ ...user, ...userDetailData }, user.user.uid);
+                // Get subscription data
+                const subscriptionCollectionRef = collection(userDocRef, 'subscription');
+
+                const subscriptionSnapshot = await getDocs(subscriptionCollectionRef);
+
+                const subscriptionData = subscriptionSnapshot.docs.map(doc => doc.data())[0];
+                subscriptionData['endDate'] = subscriptionData.end_date.toDate();
+                subscriptionData['startDate'] = subscriptionData.start_date.toDate();
+
+                piniaStorage.setUserData({ ...userDetailData, subscription: subscriptionData }, user.user.uid);
 
                 closeLoginDialog();
 

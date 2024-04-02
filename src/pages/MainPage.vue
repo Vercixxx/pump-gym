@@ -340,7 +340,6 @@ export default {
             facilities,
             fetchFacilities,
             chunkedFacilities,
-            test,
         };
     },
 };
