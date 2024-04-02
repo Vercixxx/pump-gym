@@ -15,7 +15,6 @@
             </v-card-title>
             <v-card-text>
 
-                asdas
                 {{ paymentSuccessfullDialogData }}
             </v-card-text>
 
@@ -38,7 +37,7 @@ import { usePiniaStorage } from '../store/pinia';
 // Pinia
 const store = usePiniaStorage();
 const paymentSuccessfullDialog = computed(() => store.paymentSuccessfullDialog);
-const paymentSuccessfullDialogData = computed(() => store.paymentData);
+const paymentSuccessfullDialogData = computed(() => store.buyDialogData);
 
 
 function closePaymentSuccessfullDialog() {
@@ -47,9 +46,6 @@ function closePaymentSuccessfullDialog() {
 // Pinia
 
 
-// Data declaration
-
-// Data declaration
 
 
 </script>

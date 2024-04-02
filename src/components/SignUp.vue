@@ -299,23 +299,7 @@ const signUp = async () => {
         });
 
 
-        // Add collection named subscriptions
-        const subscriptionDocRef = doc(collection(userDocRef, 'subscription'), 'Subscription');
-
-        await setDoc(subscriptionDocRef, {
-            status: '',
-            plan: '',
-            period: 0,
-            start_date: '',
-            end_date: '',
-        });
-
-
         await storage.setUserData(response.user);
-
-
-        // const router = useRouter();
-        // router.push('/subscriptions');
 
         storage.showAlert('success', 'Account successfully created, now go to dashboard and subscribe to a plan.');
 

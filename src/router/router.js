@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import { ref, computed } from 'vue';
-import { usePiniaStorage } from '../store/pinia';
 
 // my sites
 import MainPage from '../pages/MainPage.vue'
@@ -10,6 +8,9 @@ import TrainersPage from '../pages/Trainers.vue'
 import SchedulePage from '../pages/Schedule.vue'
 import SubscriptionsPage from '../pages/Subscriptions.vue'
 import ClientPage from '../pages/ClientPage.vue'
+
+// Scripts
+import { PaymentSuccessfull } from '../scripts/PaymentSuccessfull'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -51,8 +52,7 @@ const router = createRouter({
       component: MainPage,
       beforeEnter: (to, from, next) => {
 
-        const store = usePiniaStorage();
-        store.openPaymentSuccessfullDialog();
+        PaymentSuccessfull();
 
         next();
       },
@@ -64,8 +64,6 @@ const router = createRouter({
       component: MainPage,
       beforeEnter: (to, from, next) => {
 
-        const store = usePiniaStorage();
-        store.openPaymentSuccessfullDialog();
 
         next();
       },

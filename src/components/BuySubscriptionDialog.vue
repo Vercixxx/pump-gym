@@ -124,6 +124,7 @@ const successURL = 'http://localhost:5173/payment-successful';
 const cancelURL = 'http://localhost:5173/subscriptions';
 
 async function submit() {
+
     if (!stripe) {
         console.error('Stripe has not been initialized');
         return;

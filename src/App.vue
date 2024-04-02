@@ -22,6 +22,7 @@
       <WorkWithUsDialog />
       <BuySubscriptionDialog/>
       <PaymentSuccessfullDialog/>
+      <MyOverlay />
       <!-- Dialogs -->
 
 
@@ -38,6 +39,9 @@ import ContactUsDialog from './components/ContactUsDialog.vue'
 import WorkWithUsDialog from './components/WorkWithUsDialog.vue'
 import BuySubscriptionDialog from './components/BuySubscriptionDialog.vue'
 import PaymentSuccessfullDialog from './components/PaymentSuccessfull.vue'
+
+// Component
+import MyOverlay from './components/MyOverlay.vue'
 
 // Storage
 import { onAuthStateChanged } from "firebase/auth";
@@ -57,7 +61,8 @@ export default {
     SignUpComponent,
     WorkWithUsDialog,
     BuySubscriptionDialog,
-    PaymentSuccessfullDialog
+    PaymentSuccessfullDialog,
+    MyOverlay,
   },
 
   created() {

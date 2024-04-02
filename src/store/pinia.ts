@@ -8,12 +8,13 @@ export const usePiniaStorage = defineStore({
         buyDialogData: {} as any,
 
         // User data
-        userData: null,
+        userData: null as any,
+        userUid: null as string | null,
         // User data
 
         // Login component
         loginDialog: false,
-        // Login componentimport { useStore } from 'vuex';
+        // Login component;
 
 
         // Sign up component
@@ -44,9 +45,12 @@ export const usePiniaStorage = defineStore({
 
         // Payment
         paymentSuccessfullDialog: false,
-        paymentData: null as any,
         // Payment
 
+
+        // Overlay
+        overlay: false,
+        // Overlay
     }),
 
     actions: {
@@ -63,11 +67,13 @@ export const usePiniaStorage = defineStore({
 
 
         // User data
-        setUserData(data: any) {
+        setUserData(data: any, uid: string) {
             this.userData = data;
+            this.userUid = uid;
         },
         emptyUserData() {
             this.userData = null;
+            this.userUid = null;
         },
         // User data
 
@@ -138,9 +144,16 @@ export const usePiniaStorage = defineStore({
         closePaymentSuccessfullDialog() {
             this.paymentSuccessfullDialog = false;
         },
-        setPaymentData(data: any) {
-            this.paymentData = data;
-        },
         // Payment
+
+
+        // Overlay
+        openOverlay() {
+            this.overlay = true;
+        },
+        closeOverlay() {
+            this.overlay = false;
+        }
+        // Overlay
     }
 })

@@ -53,7 +53,6 @@
 
                     </v-row>
 
-
                 </v-col>
                 <!-- First row -->
 
@@ -187,6 +186,7 @@ import { usePiniaStorage } from '../store/pinia';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js'
 import FooterComponent from '../components/Footer.vue'
+
 
 export default {
     name: 'LoginPage',
@@ -340,6 +340,7 @@ export default {
             facilities,
             fetchFacilities,
             chunkedFacilities,
+            test,
         };
     },
 };

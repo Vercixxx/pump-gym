@@ -147,7 +147,7 @@ export default {
                 const userDetailData = userDocSnap.data();
 
                 // Set the user data in the store
-                piniaStorage.setUserData({ ...user, ...userDetailData });
+                piniaStorage.setUserData({ ...user, ...userDetailData }, user.user.uid);
 
                 closeLoginDialog();
 
