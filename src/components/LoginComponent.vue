@@ -146,16 +146,23 @@ export default {
                 const userDocSnap = await getDoc(userDocRef);
                 const userDetailData = userDocSnap.data();
 
-                // Get subscription data
-                const subscriptionCollectionRef = collection(userDocRef, 'subscription');
+                // Get subscription data if exists
+                try {
+                    const subscriptionCollectionRef = collection(userDocRef, 'subscription');
+    
+                    const subscriptionSnapshot = await getDocs(subscriptionCollectionRef);
+    
+                    const subscriptionData = subscriptionSnapshot.docs.map(doc => doc.data())[0];
+                    subscriptionData['endDate'] = subscriptionData.end_date.toDate().toISOString().split('T')[0];
+                    subscriptionData['startDate'] = subscriptionData.start_date.toDate().toISOString().split('T')[0];
+    
+                    piniaStorage.setUserData({ ...userDetailData, subscription: subscriptionData }, user.user.uid);
+                }
+                catch (error) {
+                    console.log('No subscription data found');
+                    piniaStorage.setUserData({ ...userDetailData }, user.user.uid);
+                }
 
-                const subscriptionSnapshot = await getDocs(subscriptionCollectionRef);
-
-                const subscriptionData = subscriptionSnapshot.docs.map(doc => doc.data())[0];
-                subscriptionData['endDate'] = subscriptionData.end_date.toDate();
-                subscriptionData['startDate'] = subscriptionData.start_date.toDate();
-
-                piniaStorage.setUserData({ ...userDetailData, subscription: subscriptionData }, user.user.uid);
 
                 closeLoginDialog();
 

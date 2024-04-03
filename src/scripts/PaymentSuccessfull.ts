@@ -47,8 +47,22 @@ export const PaymentSuccessfull = async () => {
 
         const endDate = Timestamp.fromDate(endDateDate);
         // Dates
-        
 
+
+        // Payment history
+        const paymentDate = startDate.toDate().toISOString().slice(0, 10);
+
+        const paymentDocRef = doc(db, 'Payments', userUid, 'History' ,paymentDate);
+        await setDoc(paymentDocRef, {
+            paymentDate: startDate,
+            plan: plan,
+            cost: planData.price,
+            status: 'Successfull',
+        });
+        // Payment history
+
+
+        // Subscription
         await setDoc(subscriptionDocRef, {
             status: 'active',
             plan: plan,
@@ -56,10 +70,16 @@ export const PaymentSuccessfull = async () => {
             start_date: startDate,
             end_date: endDate,
         });
+        // Subscription
+
+        piniaStorage.closeBuyDialog();
+
+        piniaStorage.closeOverlay();
 
         piniaStorage.openPaymentSuccessfullDialog();
 
-        piniaStorage.closeOverlay();
+
+
     } catch (error) {
         console.error(error);
         piniaStorage.closeOverlay();

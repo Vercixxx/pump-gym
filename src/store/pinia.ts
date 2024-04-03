@@ -136,7 +136,9 @@ export const usePiniaStorage = defineStore('store', {
         }
         // Overlay
     },
+
     persist: {
         storage: sessionStorage,
     },
+    
 })
