@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { usePiniaStorage } from '../store/pinia'
+
 
 // my sites
 import MainPage from '../pages/MainPage.vue'
@@ -43,7 +45,21 @@ const router = createRouter({
     {
       path: '/dashboard',
       name: 'ClientPage',
-      component: ClientPage
+      component: ClientPage,
+      beforeEnter: (to, from, next) => {
+
+        const store = usePiniaStorage();
+        const userUid = store.userUid;
+
+        if (userUid) {
+          next();
+        }
+        else {
+          next('/');
+          store.showAlert('error', 'You need to be logged in to access this page');
+        }
+
+      },
     },
 
     {
