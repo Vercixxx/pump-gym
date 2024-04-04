@@ -105,12 +105,12 @@ export default {
                 icon: 'mdi-weight-lifter',
                 route: '/trainers',
             },
-            {
-                id: 4,
-                title: 'Schedule',
-                icon: 'mdi-calendar',
-                route: '/schedule',
-            },
+            // {
+            //     id: 4,
+            //     title: 'Schedule',
+            //     icon: 'mdi-calendar',
+            //     route: '/schedule',
+            // },
         ]);
 
 

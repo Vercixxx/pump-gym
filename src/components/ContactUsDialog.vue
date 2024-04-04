@@ -34,32 +34,27 @@
     </v-dialog>
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 
+// Pinia
+const store = usePiniaStorage();
+const contactUsDialog = computed(() => store.contactUsDialog);
+const facilities = computed(() => store.facilities);
 
-export default {
-    name: 'ContactUsDialog',
-
-    setup() {
-
-        // Pinia
-        const store = usePiniaStorage();
-        const contactUsDialog = computed(() => store.contactUsDialog);
-        const facilities = computed(() => store.facilities);
-
-        function closeContactUsDialog() {
-            store.closeContactUsDialog();
-        };
-        // Pinia
-
-        return {
-            contactUsDialog,
-            closeContactUsDialog,
-            facilities,
-        };
-
-    },
+function closeContactUsDialog() {
+    store.closeContactUsDialog();
 };
+// Pinia
+
+
+// Call
+const makeCall = (phone: string) => {
+    window.location.href = `tel:${phone}`;
+};
+// Call
+
+
+
 </script>

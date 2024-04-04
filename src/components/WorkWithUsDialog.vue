@@ -68,135 +68,114 @@
 
 
 
-<script>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 import { collection, setDoc, doc } from "firebase/firestore";
 import { db, storage } from '../firebase.js'
 import { ref as firebaseRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export default {
-    name: 'WorkWithUsDialog',
-    setup() {
+const form = ref(false);
+const loading = ref(false);
+const selectedFacility = ref(null);
+const message = ref('');
 
-        const form = ref(false);
-        const loading = ref(false);
-        const selectedFacility = ref(null);
-        const message = ref('');
-
-        // File
-        const file = ref([]);
-        const fileUrl = ref(null);
-        // File
+// File
+const file = ref([]);
+const fileUrl = ref(null);
+// File
 
 
-        // Pinia
-        const store = usePiniaStorage();
-        const workWithUsDialog = computed(() => store.workWithUsDialog);
-        const facilities = computed(() => store.facilities);
+// Pinia
+const store = usePiniaStorage();
+const workWithUsDialog = computed(() => store.workWithUsDialog);
+const facilities = computed(() => store.facilities);
 
-        const closeWorkWithUsDialog = () => {
-            store.closeWorkWithUsDialog();
-        };
-
-        const triggerAlert = (alertData) => {
-            store.triggerAlert(alertData);
-        };
-        // Pinia
-
-
-        // Fields
-        const fields = ref([
-            {
-                name: 'name',
-                label: 'Name',
-                value: '',
-                rules: [
-                    v => !!v || 'Name is required'
-                ]
-            },
-            {
-                name: 'email',
-                label: 'Email',
-                value: '',
-                rules: [
-                    v => !!v || 'Email is required',
-                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
-                ]
-            },
-            {
-                name: 'phone',
-                label: 'Phone',
-                value: '',
-                rules: [
-                    v => !!v || 'Phone is required',
-                    v => (v && v.length >= 9 && v.length <= 15) || 'Phone must be valid'
-                ]
-            },
-        ]);
-        // Fields
-
-
-
-        const sendApplication = async () => {
-            loading.value = true;
-
-            try {
-                if (file.value.length > 0) {
-                    const fileRef = firebaseRef(storage, 'Applications/' + fields.value.find(field => field.name === 'email').value + '/' + file.value[0].name);
-                    await uploadBytes(fileRef, file.value[0]);
-                    fileUrl.value = await getDownloadURL(fileRef);
-                }
-
-                const data = {
-                    name: fields.value.find(field => field.name === 'name').value,
-                    email: fields.value.find(field => field.name === 'email').value,
-                    phone: fields.value.find(field => field.name === 'phone').value,
-                    facility: selectedFacility.value,
-                    message: message.value,
-                    fileUrl: fileUrl.value
-                };
-
-                await setDoc(doc(collection(db, 'Applications'), data.email), data);
-
-
-                triggerAlert({
-                    message: 'Application sent successfully!',
-                    type: 'success'
-                });
-
-            } catch (error) {
-                console.error('Error occurred while sending application', error);
-                triggerAlert({
-                    message: 'Error occurred while sending application, please try again later',
-                    type: 'error'
-                });
-            }
-
-            loading.value = false;
-            closeWorkWithUsDialog();
-        };
-
-        const exitDialog = () => {
-            fields.value.forEach(field => field.value = '');
-            closeWorkWithUsDialog();
-        };
-
-        return {
-            form,
-            selectedFacility,
-            message,
-            file,
-            fileUrl,
-            loading,
-            workWithUsDialog,
-            facilities,
-            fields,
-            closeWorkWithUsDialog,
-            triggerAlert,
-            sendApplication,
-            exitDialog,
-        };
-    },
+const closeWorkWithUsDialog = () => {
+    store.closeWorkWithUsDialog();
 };
+
+const triggerAlert = (alertData) => {
+    store.triggerAlert(alertData);
+};
+// Pinia
+
+
+// Fields
+const fields = ref([
+    {
+        name: 'name',
+        label: 'Name',
+        value: '',
+        rules: [
+            v => !!v || 'Name is required'
+        ]
+    },
+    {
+        name: 'email',
+        label: 'Email',
+        value: '',
+        rules: [
+            v => !!v || 'Email is required',
+            v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        ]
+    },
+    {
+        name: 'phone',
+        label: 'Phone',
+        value: '',
+        rules: [
+            v => !!v || 'Phone is required',
+            v => (v && v.length >= 9 && v.length <= 15) || 'Phone must be valid'
+        ]
+    },
+]);
+// Fields
+
+
+
+const sendApplication = async () => {
+    loading.value = true;
+
+    try {
+        if (file.value.length > 0) {
+            const fileRef = firebaseRef(storage, 'Applications/' + fields.value.find(field => field.name === 'email').value + '/' + file.value[0].name);
+            await uploadBytes(fileRef, file.value[0]);
+            fileUrl.value = await getDownloadURL(fileRef);
+        }
+
+        const data = {
+            name: fields.value.find(field => field.name === 'name').value,
+            email: fields.value.find(field => field.name === 'email').value,
+            phone: fields.value.find(field => field.name === 'phone').value,
+            facility: selectedFacility.value,
+            message: message.value,
+            fileUrl: fileUrl.value
+        };
+
+        await setDoc(doc(collection(db, 'Applications'), data.email), data);
+
+
+        triggerAlert({
+            message: 'Application sent successfully!',
+            type: 'success'
+        });
+
+    } catch (error) {
+        console.error('Error occurred while sending application', error);
+        triggerAlert({
+            message: 'Error occurred while sending application, please try again later',
+            type: 'error'
+        });
+    }
+
+    loading.value = false;
+    closeWorkWithUsDialog();
+};
+
+const exitDialog = () => {
+    fields.value.forEach(field => field.value = '');
+    closeWorkWithUsDialog();
+};
+
 </script>

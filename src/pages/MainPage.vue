@@ -2,7 +2,7 @@
     <div>
         <v-parallax
             src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
-            class="ma-0 pa-0">
+            class="ma-0 pa-0 ">
 
             <!-- Body -->
 
@@ -11,14 +11,13 @@
 
                 <!-- First row -->
                 <v-col cols="12" style="height: 70vh;">
-
                     <v-row>
-                        <v-col cols="12" sm="6" class="py-10 ps-10 d-flex justify-center align-center">
-                            <div class="pa-4 rounded-xl font-weight-black text-h6"
+                        <v-col cols="12" sm="6" class="py-10 ps-10 d-flex justify-center align-center ">
+                            <div class="pa-4 rounded-xl font-weight-black text-h6 "
                                 style="background-color: rgba(255, 255, 255, 0.6);">
                                 Welcome to Pump Gym!
 
-                                <span class="text-wrap font-weight-thin text-justify">
+                                <span class="text-wrap font-weight-thin text-justify ">
                                     Do you dream of health, strength, and perfect fitness? If so, you've found
                                     the
                                     perfect
@@ -47,7 +46,7 @@
 
 
                         <v-col cols="12" sm="6" align="center">
-                            <v-avatar size="500" class="me-2" image="src/images/logo.png">
+                            <v-avatar size="500" class="me-2 " image="src/images/logo.png">
                             </v-avatar>
                         </v-col>
 
@@ -66,6 +65,7 @@
                             <v-col cols="12" align="center" jusify="center" class="text-h4 font-weight-black"
                                 style="background-color: rgba(255, 255, 255, 0.6);">
                                 Our clubs
+
                             </v-col>
                         </v-row>
 
