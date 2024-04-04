@@ -3,11 +3,12 @@
     <v-app-bar v-if="!$vuetify.display.mobile" color="" class="px-5" elevation="0">
         <v-row>
 
-            <v-col cols="3" justify="space-around">
+            <v-col cols="auto" justify="space-around">
 
                 <span v-if="!loggedUser">
                     <v-btn size="large" class="rounded-pill me-5" color="success" variant="elevated"
-                        text="Buy subscription" @click="goTo('/subscriptions')" prepend-icon="mdi-card-account-details"></v-btn>
+                        text="Buy subscription" @click="goTo('/subscriptions')"
+                        prepend-icon="mdi-card-account-details"></v-btn>
                     <v-btn size="large" class="rounded-pill" color="primary" variant="outlined" text="Client panel"
                         @click="invokeLoginDialog" prepend-icon="mdi-account-circle"></v-btn>
                 </span>
@@ -24,32 +25,32 @@
             </v-col>
 
 
-            <v-col cols="3" align="center" justify="center" class="text-h3 font-weight-black"
+            <v-col cols="3" align="start" justify="center" class="text-h3 font-weight-black"
                 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);" @click="goTo('/')" role="button">
 
-                <v-avatar size="50" class="me-2" image="src/images/logo.png">
+                <v-avatar class="mx-2" image="src/images/logo.png">
                 </v-avatar>
 
-                <span style="letter-spacing: 5px;">
+                <span style="letter-spacing: 3px;">
                     Pump Gym
                 </span>
             </v-col>
 
 
-            <v-col cols="6" align="end" justify="center">
+            <v-col align="end" justify="center">
 
 
-                <v-btn size="large" v-for="button in menuButtons" :key="button.id" class="font-weight-black mt-1"
+                <v-btn size="large" v-for="button in menuButtons" :key="button.id" class="font-weight-black mt-1 me-2" :class="darkMode ? 'text-white' : ''" :variant="darkMode ? 'tonal' : ''"
                     color="black" @click="goTo(button.route)" :prepend-icon="button.icon">
                     {{ button.title }}
                 </v-btn>
 
-                <v-btn size="large" class="font-weight-black mt-1" color="black" prepend-icon="mdi-account-group"
+                <v-btn size="large" class="font-weight-black mt-1 me-2" :class="darkMode ? 'text-white' : ''" :variant="darkMode ? 'tonal' : ''" color="black" prepend-icon="mdi-account-group"
                     @click="openWorkWithUsDialog">
                     Work with us
                 </v-btn>
 
-                <v-btn size="large" class="font-weight-black mt-1" color="black" prepend-icon="mdi-phone"
+                <v-btn size="large" class="font-weight-black mt-1 me-2"  :class="darkMode ? 'text-white' : ''" :variant="darkMode ? 'tonal' : ''" color="black" prepend-icon="mdi-phone"
                     @click="openContactUsDialog">
                     Contact
                 </v-btn>
@@ -81,85 +82,79 @@
     <!-- Mobile -->
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { usePiniaStorage } from '../store/pinia';
 import { auth } from '../firebase.js';
 import { signOut } from 'firebase/auth';
 
-export default {
-    name: 'AppBar',
-    setup(_, { root }) {
 
-        const menuButtons = ref([
-            {
-                id: 1,
-                title: 'Activities',
-                icon: 'mdi-dumbbell',
-                route: '/activities',
-            },
-            {
-                id: 2,
-                title: 'Our Trainers',
-                icon: 'mdi-weight-lifter',
-                route: '/trainers',
-            },
-            // {
-            //     id: 4,
-            //     title: 'Schedule',
-            //     icon: 'mdi-calendar',
-            //     route: '/schedule',
-            // },
-        ]);
-
-
-        // Pinia
-        const store = usePiniaStorage();
-        const loggedUser = computed(() => store.userData);
-
-        const invokeLoginDialog = () => {
-            store.openLoginDialog();
-        };
-
-        const openWorkWithUsDialog = () => {
-            store.openWorkWithUsDialog();
-        };
-
-        const openContactUsDialog = () => {
-            store.openContactUsDialog();
-        };
-
-        // Pinia
-        const router = useRouter();
-        const goTo = (route) => {
-            router.push(route);
-        };
-
-        // Logout
-        const signOutUser = async () => {
-            try {
-                await signOut(auth);
-
-                store.emptyUserData();
-
-                store.showAlert('success', 'You have been signed out');
-                goTo('/');
-            } catch (error) {
-                store.showAlert('error', error);
-            }
-        };
-        // Logout
-
-        return {
-            menuButtons,
-            loggedUser,
-            invokeLoginDialog,
-            openWorkWithUsDialog,
-            openContactUsDialog,
-            goTo,
-            signOutUser,
-        };
+const menuButtons = ref([
+    {
+        id: 1,
+        title: 'Activities',
+        icon: 'mdi-dumbbell',
+        route: '/activities',
     },
+    {
+        id: 2,
+        title: 'Our Trainers',
+        icon: 'mdi-weight-lifter',
+        route: '/trainers',
+    },
+    // {
+    //     id: 4,
+    //     title: 'Schedule',
+    //     icon: 'mdi-calendar',
+    //     route: '/schedule',
+    // },
+]);
+
+
+// Pinia
+const store = usePiniaStorage();
+const loggedUser = computed(() => store.userData);
+
+const invokeLoginDialog = () => {
+    store.openLoginDialog();
 };
+
+const openWorkWithUsDialog = () => {
+    store.openWorkWithUsDialog();
+};
+
+const openContactUsDialog = () => {
+    store.openContactUsDialog();
+};
+
+// Pinia
+const router = useRouter();
+const goTo = (route) => {
+    router.push(route);
+};
+// Pinia
+
+
+// Theme
+import { useTheme } from 'vuetify'
+const theme = useTheme();
+const darkMode = computed(() => theme.name.value === 'dark');
+// Theme
+
+// Logout
+const signOutUser = async () => {
+    try {
+        await signOut(auth);
+
+        store.emptyUserData();
+
+        store.showAlert('success', 'You have been signed out');
+        goTo('/');
+    } catch (error) {
+        store.showAlert('error', error);
+    }
+};
+// Logout
+
 </script>

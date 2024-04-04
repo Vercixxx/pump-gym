@@ -7,8 +7,10 @@
 
                 <v-row>
                     <v-col cols="12" align=center>
-                        <h2 style="background-color: rgba(250, 250, 250, 0.9);" class="rounded-s py-4">Special
-                            subscriptions</h2>
+                        <h2 class="rounded-s text-h4 py-8 font-weight-black backdrop-blur-xl"
+                            :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
+                            Special subscriptions
+                        </h2>
                     </v-col>
                 </v-row>
 
@@ -18,8 +20,8 @@
                         <v-card class="mx-auto v-card-hover" height="500" elevation="16" variant="elevated"
                             :image="subscription.image">
 
-                            <v-card style="background-color: rgba(250, 250, 250, 0.9);" height="420"
-                                class="ma-10 d-flex flex-column">
+                            <div class="ma-10 d-flex flex-column backdrop-blur-md"
+                                :class="darkMode ? ' bg-black/50' : ' bg-white/50'">
 
 
                                 <v-card-title align="center" class="font-weight-bold mb-2">
@@ -40,8 +42,8 @@
                                     <v-col>
                                         <v-btn block color="success" @click="openLoginDialog">Buy {{ subscription.name
                                             }} plan ({{
-                        subscription.price
-                    }}zł)</v-btn>
+                                subscription.price
+                            }}zł)</v-btn>
                                     </v-col>
                                 </v-row>
                                 <!-- User not logged in -->
@@ -51,14 +53,14 @@
                                 <v-row v-else class="ma-5" align="end" justify="end">
                                     <v-col>
                                         <v-btn block color="success" @click="showBuyDialog(subscription)">Select {{
-                        subscription.name }} plan ({{
-                        subscription.price
-                    }}zł)</v-btn>
+                                subscription.name }} plan ({{
+                                subscription.price
+                            }}zł)</v-btn>
                                     </v-col>
                                 </v-row>
                                 <!-- User logged in -->
 
-                            </v-card>
+                            </div>
 
                         </v-card>
                     </v-col>
@@ -67,8 +69,10 @@
 
                 <v-row>
                     <v-col cols="12" align=center>
-                        <h2 style="background-color: rgba(250, 250, 250, 0.9);" class="rounded-s py-4">Regular
-                            subscriptions</h2>
+                        <h2 class="rounded-s text-h4 py-8 font-weight-black backdrop-blur-xl"
+                            :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
+                            Regular subscriptions
+                        </h2>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -76,8 +80,7 @@
                         <v-card class="mx-auto v-card-hover" height="500" elevation="16" variant="elevated"
                             :image="subscription.image">
 
-                            <v-card style="background-color: rgba(250, 250, 250, 0.9);" height="420"
-                                class="ma-10 d-flex flex-column">
+                            <div class="ma-10 d-flex flex-column backdrop-blur-md" :class="darkMode? ' bg-black/50':' bg-white/50'">
                                 <v-card-title align="center" class="font-weight-bold">
                                     {{ subscription.name }}
                                 </v-card-title>
@@ -96,8 +99,8 @@
                                     <v-col>
                                         <v-btn block color="success" @click="openLoginDialog">Buy {{ subscription.name
                                             }} plan ({{
-                        subscription.price
-                    }}zł)</v-btn>
+                                subscription.price
+                            }}zł)</v-btn>
                                     </v-col>
                                 </v-row>
                                 <!-- User not logged in -->
@@ -114,7 +117,7 @@
                                 </v-row>
                                 <!-- User logged in -->
 
-                            </v-card>
+                            </div>
                         </v-card>
                     </v-col>
                 </v-row>
@@ -157,6 +160,12 @@ const showBuyDialog = (subscription) => {
     store.invokeBuyDialog(subscription);
 };
 // Pinia
+
+// Theme
+import { useTheme } from 'vuetify'
+const theme = useTheme();
+const darkMode = computed(() => theme.name.value === 'dark');
+// Theme
 
 </script>
 

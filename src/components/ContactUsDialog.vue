@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="contactUsDialog" persistent width="600">
-        <v-card class="rounded-xl pa-4 bg-brown-lighten-5">
+        <v-card class="rounded-xl pa-4">
             <v-card-title>
                 <v-row>
                     <v-col cols="2"></v-col>
@@ -47,6 +47,13 @@ function closeContactUsDialog() {
     store.closeContactUsDialog();
 };
 // Pinia
+
+
+// Theme
+import { useTheme } from 'vuetify'
+const theme = useTheme();
+const darkMode = computed(() => theme.name.value === 'dark');
+// Theme
 
 
 // Call

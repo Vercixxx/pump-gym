@@ -1,8 +1,8 @@
 <template>
-    <v-card elevation="0" class="mt-3 " style="background-color: rgba(250, 250, 250, 0.8);">
+    <div class="mt-3 rounded backdrop-blur-xl" :class="darkMode? ' bg-black/70':' bg-white/30'">
 
         <span v-if="!subscription">
-            <v-card-title class="font-weight-black text-h5">Subscription</v-card-title>
+            <v-card-title class="font-weight-black text-h6">Subscription</v-card-title>
 
             <v-card-text>
                 You don't have a subscription yet. Buy one to access all the features.
@@ -42,7 +42,7 @@
 
                         <v-expansion-panel @click="getPaymentHistory">
                             <v-expansion-panel-title disable-icon-rotate>
-                                <h3>History of payments</h3>
+                                <h3 class="my-3">History of payments</h3>
                                 <template v-slot:actions>
                                     <v-icon color="info" icon="mdi-invoice-text-multiple">
                                     </v-icon>
@@ -64,7 +64,7 @@
         </span>
 
 
-    </v-card>
+    </div>
 
 </template>
 
@@ -82,7 +82,11 @@ const subscription = computed(() => store.userData.subscription);
 const userUid = computed(() => store.userUid);
 // Pinia 
 
-
+// Theme
+import { useTheme } from 'vuetify'
+const theme = useTheme();
+const darkMode = computed(() => theme.name.value === 'dark');
+// Theme
 
 // Router
 import { useRouter } from 'vue-router';

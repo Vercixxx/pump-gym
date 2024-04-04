@@ -2,45 +2,20 @@
     <v-parallax
         src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
         class="ma-0 pa-0">
-        <v-row>
 
-            <v-col cols="auto">
 
-                <v-layout>
-                    <v-row>
-                        <v-col cols="12">
+        <v-tabs v-model="tab" bg-color="info" color="basil" grow >
+            <v-tab v-for="item in items" :key="item" :value="item" @click="switchToComponent(item.component)">
+                {{ item.title }}
+            </v-tab>
+        </v-tabs>
 
-                            <v-list style="background-color: rgba(250, 250, 250, 0.5);">
-                                <v-list-item :title="userData ? userData.first_name + ' ' + userData.last_name : ''" :subtitle="userData ? userData.email : ''">
-                                    <template v-slot:prepend>
-                                        <v-icon icon="mdi-face-man-profile"></v-icon>
-                                    </template>
-                                </v-list-item>
-                            </v-list>
 
-                            <v-divider></v-divider>
 
-                            <v-list style="background-color: rgba(250, 250, 250, 0.5);">
-                                <v-list-item v-for="(item, i) in items" :key="i" :value="item" color="primary"
-                                    @click="switchToComponent(item.component)">
-                                    <template v-slot:prepend>
-                                        <v-icon :icon="item.icon"></v-icon>
-                                    </template>
+        <v-col align="center" justify="center">
+            <component :is="selectedComponent"></component>
+        </v-col>
 
-                                    <v-list-item-title v-text="item.title"></v-list-item-title>
-                                </v-list-item>
-                            </v-list>
-                        </v-col>
-                    </v-row>
-
-                </v-layout>
-
-            </v-col>
-
-            <v-col align="center" justify="center">
-                <component :is="selectedComponent"></component>
-            </v-col>
-        </v-row>
 
     </v-parallax>
 </template>
@@ -57,8 +32,15 @@ const storage = usePiniaStorage();
 const userData = computed(() => storage.userData);
 // Pinia
 
+// Theme
+import { useTheme } from 'vuetify'
+const theme = useTheme();
+const darkMode = computed(() => theme.name.value === 'dark');
+// Theme
+
 
 // Menu
+const tab = ref('option-1')
 const items = ref([
     {
         title: 'Profile',

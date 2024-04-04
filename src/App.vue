@@ -9,6 +9,11 @@
       <!-- Body -->
       <v-main>
         <router-view />
+
+        <!-- Theme toogler -->
+        <v-btn @click="toogleTheme" icon="mdi-theme-light-dark" size="large" style="position: fixed; bottom:2%; right:2%"/>
+        <!-- Theme toogler -->
+
       </v-main>
       <!-- Body -->
 
@@ -23,6 +28,7 @@
       <PaymentSuccessfullDialog />
       <MyOverlay />
       <!-- Dialogs -->
+
 
 
     </v-layout>
@@ -50,6 +56,14 @@ import MyOverlay from './components/MyOverlay.vue'
 import { db } from "./firebase.js";
 import { collection, getDocs } from "firebase/firestore";
 
+// Theme
+import { useTheme } from 'vuetify'
+const theme = useTheme();
+
+const toogleTheme = () => {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+};
+// Theme
 
 // Pinia
 import { usePiniaStorage } from './store/pinia';

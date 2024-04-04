@@ -1,20 +1,20 @@
 <template>
-    <div class="mt-3">
+    <div>
 
         <v-parallax
             src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
             class="ma-0 pa-0">
 
 
+            <div class="backdrop-blur-xl" :class="darkMode? ' bg-black/70':' bg-white/30'">
 
-            <v-row class="mb-10">
-                <v-col cols="12">
+  
 
                     <span v-if="!$vuetify.display.mobile">
 
                         <v-row>
-                            <v-col cols="12" align="center" jusify="center" class="text-h4 font-weight-black"
-                                style="background-color: rgba(255, 255, 255, 0.6);">
+                            <v-col cols="12" align="center" jusify="center"
+                                class="text-h4 py-8 font-weight-black">
                                 Select a club to see the trainers
                             </v-col>
                         </v-row>
@@ -22,12 +22,11 @@
 
                         <!-- Skeleton loader -->
                         <v-carousel v-if="chunkedFacilities.length == 0" progress="success" hide-delimiters
-                            v-model="model" class="pt-10" style="background-color: rgba(255, 255, 255, 0.6);">
+                            v-model="model" class="pt-10">
                             <v-carousel-item>
                                 <v-row>
                                     <v-col cols="4" v-for="i in 3">
-                                        <v-skeleton-loader type="image" min-height="400"
-                                            style="background-color: rgba(255, 255, 255, 0.6);"></v-skeleton-loader>
+                                        <v-skeleton-loader type="image" min-height="400" class="backdrop-blur-md" :class="darkMode? ' bg-black/70':' bg-white/30'"></v-skeleton-loader>
                                     </v-col>
                                 </v-row>
                                 <!-- Skeleton loader -->
@@ -35,8 +34,7 @@
                         </v-carousel>
 
 
-                        <v-carousel v-else progress="success" hide-delimiters v-model="model" class="pt-10"
-                            style="background-color: rgba(255, 255, 255, 0.6);">
+                        <v-carousel v-else progress="success" hide-delimiters v-model="model" class="pt-10">
 
 
                             <v-carousel-item v-for="(chunk, index) in chunkedFacilities" :key="index">
@@ -101,11 +99,10 @@
                             </v-carousel-item>
                         </v-carousel>
                     </span>
-                </v-col>
-            </v-row>
+
 
             <!-- Actual workers -->
-            <v-row v-if="selectedFacility" style="background-color: rgba(255, 255, 255, 0.6);">
+            <v-row v-if="selectedFacility">
                 <v-col align="center">
                     <v-timeline direction="horizontal" side="end" class="overflow-x-auto">
                         <v-timeline-item v-for="staffPersonel in staff()" :key="staffPersonel.FirstName">
@@ -128,6 +125,9 @@
             </v-row>
             <!-- Actual workers -->
 
+
+            </div>
+
             <!-- Footer -->
             <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
             <!-- Footer -->
@@ -136,61 +136,56 @@
     </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 
 import FooterComponent from '../components/Footer.vue'
 
-export default {
-    setup() {
 
-        const model = ref(0);
-        const selectedFacility = ref(null);
-
-        // Pinia
-        const store = usePiniaStorage();
-        const facilities = computed(() => store.facilities);
-
-        // Facilities
-        const chunkedFacilities = computed(() => {
-            let i, j, chunk = 3;
-            let facilitiesArray = facilities.value;
-            let result = [];
-
-            if (facilitiesArray) {
-                for (i = 0, j = facilitiesArray.length; i < j; i += chunk) {
-                    result.push(facilitiesArray.slice(i, i + chunk));
-                }
-            }
-
-            return result;
-        });
+const model = ref(0);
+const selectedFacility = ref(null);
 
 
-        function selectObject(facilityName) {
-            selectedFacility.value = facilityName;
+// Pinia
+const store = usePiniaStorage();
+const facilities = computed(() => store.facilities);
+// Pinia
+
+
+// Theme
+import { useTheme } from 'vuetify'
+const theme = useTheme();
+const darkMode = computed(() => theme.name.value === 'dark');
+// Theme
+
+
+// Facilities
+const chunkedFacilities = computed(() => {
+    let i, j, chunk = 3;
+    let facilitiesArray = facilities.value;
+    let result = [];
+
+    if (facilitiesArray) {
+        for (i = 0, j = facilitiesArray.length; i < j; i += chunk) {
+            result.push(facilitiesArray.slice(i, i + chunk));
         }
+    }
 
-        function staff() {
-            if (selectedFacility.value && facilities.value) {
-                return facilities.value.filter(facility => facility.Name === selectedFacility.value)[0]?.staff
-            }
-        }
-        // Facilities
+    return result;
+});
 
-        return {
-            model,
-            selectedFacility,
-            chunkedFacilities,
-            selectObject,
-            staff,
-        }
 
-    },
-
-    components: {
-        FooterComponent
-    },
+function selectObject(facilityName) {
+    selectedFacility.value = facilityName;
 }
+
+function staff() {
+    if (selectedFacility.value && facilities.value) {
+        return facilities.value.filter(facility => facility.Name === selectedFacility.value)[0]?.staff
+    }
+}
+// Facilities
+
+
 </script>
