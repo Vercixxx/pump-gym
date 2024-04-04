@@ -14,20 +14,12 @@ export const PaymentSuccessfull = async () => {
     const userUid = computed(() => piniaStorage.userUid).value;
 
     const planData = computed(() => piniaStorage.buyDialogData).value;
-
     // Pinia
 
 
     // Overlay
     piniaStorage.openOverlay();
     // Overlay
-
-
-    // temporary solution
-    setInterval(() => {
-        piniaStorage.closeOverlay();
-    }, 500);
-    // temporary solution
 
     try {
         const period = planData.period;

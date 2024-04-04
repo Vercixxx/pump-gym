@@ -3,9 +3,8 @@
     <v-layout>
 
       <!-- Header -->
-      <AppBar />
+      <AppBar v-if="route.path != '/error'"/>
       <!-- Header -->
-
 
       <!-- Body -->
       <v-main>
@@ -55,14 +54,17 @@ import { collection, getDocs } from "firebase/firestore";
 // Pinia
 import { usePiniaStorage } from './store/pinia';
 
-
-// Pinia
 const store = usePiniaStorage();
 // Pinia
 
 
-// Get data in background after rendering
+// Route
+import { useRoute } from 'vue-router';
+const route = useRoute();
+// Route
 
+
+// Get data in background after rendering
 
 // Facilities
 const fetchFacilities = async () => {

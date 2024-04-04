@@ -10,9 +10,11 @@ import TrainersPage from '../pages/Trainers.vue'
 import SchedulePage from '../pages/Schedule.vue'
 import SubscriptionsPage from '../pages/Subscriptions.vue'
 import ClientPage from '../pages/ClientPage.vue'
+import ErrorPage from '../pages/404.vue'
 
 // Scripts
 import { PaymentSuccessfull } from '../scripts/PaymentSuccessfull'
+import { PaymentUnsuccessfull } from '../scripts/PaymentUnsuccessfull'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -43,6 +45,11 @@ const router = createRouter({
       component: SubscriptionsPage
     },
     {
+      path: '/error',
+      name: 'ErrorPage',
+      component: ErrorPage,
+    },
+    {
       path: '/dashboard',
       name: 'ClientPage',
       component: ClientPage,
@@ -55,7 +62,7 @@ const router = createRouter({
           next();
         }
         else {
-          next('/');
+          next('/error');
           store.showAlert('error', 'You need to be logged in to access this page');
         }
 
@@ -67,10 +74,15 @@ const router = createRouter({
       name: 'payment-successful',
       component: MainPage,
       beforeEnter: (to, from, next) => {
+        const store = usePiniaStorage();
 
-        PaymentSuccessfull();
-
-        next();
+        if (from.name !== undefined) {
+          PaymentSuccessfull();
+          next();
+        } else {
+          next('/error');
+          store.showAlert('error', 'You can\'t access this page');
+        }
       },
     },
 
@@ -79,9 +91,15 @@ const router = createRouter({
       name: 'payment-unsuccessful',
       component: MainPage,
       beforeEnter: (to, from, next) => {
+        const store = usePiniaStorage();
 
-
-        next();
+        if (from.name !== undefined) {
+          PaymentUnsuccessfull();
+          next();
+        } else {
+          next('/error');
+          store.showAlert('error', 'You can\'t access this page');
+        }
       },
     },
 
