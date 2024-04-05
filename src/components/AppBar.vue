@@ -1,6 +1,6 @@
 <template>
     <!-- Desktop -->
-    <v-app-bar v-if="!$vuetify.display.mobile" color="" class="px-5" elevation="0">
+    <v-app-bar v-if="!$vuetify.display.mobile" class="px-3 pt-1 pb-1" elevation="0" :color="darkMode ? 'rgb(15 23 42)':'rgb(226 232 240)' " :class="darkMode ? 'bg-slate-900' : 'bg-slate-200'">
         <v-row>
 
             <v-col cols="auto" justify="space-around">
@@ -31,7 +31,7 @@
                 <v-avatar class="mx-2" image="src/images/logo.png">
                 </v-avatar>
 
-                <span style="letter-spacing: 3px;">
+                <span style="letter-spacing: 3px;" :class="darkMode ? 'text-white':''">
                     Pump Gym
                 </span>
             </v-col>

@@ -76,13 +76,15 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const store = usePiniaStorage();
 
-        if (from.name !== undefined) {
-          PaymentSuccessfull();
-          next();
-        } else {
-          next('/error');
-          store.showAlert('error', 'You can\'t access this page');
-        }
+        // if (from.name !== undefined) {
+        //   PaymentSuccessfull();
+        //   next();
+        // } else {
+        //   next('/error');
+        //   store.showAlert('error', 'You can\'t access this page');
+        // }
+        PaymentSuccessfull();
+        next();
       },
     },
 
@@ -93,13 +95,15 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const store = usePiniaStorage();
 
-        if (from.name !== undefined) {
-          PaymentUnsuccessfull();
-          next();
-        } else {
-          next('/error');
-          store.showAlert('error', 'You can\'t access this page');
-        }
+        // if (from.name !== undefined) {
+        //   PaymentUnsuccessfull();
+        //   next();
+        // } else {
+        //   next('/error');
+        //   store.showAlert('error', 'You can\'t access this page');
+        // }
+        PaymentUnsuccessfull();
+        next();
       },
     },
 

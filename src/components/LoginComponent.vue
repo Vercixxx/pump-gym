@@ -46,10 +46,11 @@
                 </v-form>
             </v-card-text>
 
-
+ 
             <v-row class="mb-4">
                 <v-col cols="12" align="center">
-                    <v-divider></v-divider>
+                    <v-divider ></v-divider>
+                  
                     <v-btn class="mt-4 font-weight-black" variant="outlined" size="large" @click="openSignUpDialog"
                         color="success" append-icon="mdi-account-plus">
                         Sign up now
@@ -149,13 +150,13 @@ export default {
                 // Get subscription data if exists
                 try {
                     const subscriptionCollectionRef = collection(userDocRef, 'subscription');
-    
+
                     const subscriptionSnapshot = await getDocs(subscriptionCollectionRef);
-    
+
                     const subscriptionData = subscriptionSnapshot.docs.map(doc => doc.data())[0];
                     subscriptionData['endDate'] = subscriptionData.end_date.toDate().toISOString().split('T')[0];
                     subscriptionData['startDate'] = subscriptionData.start_date.toDate().toISOString().split('T')[0];
-    
+
                     piniaStorage.setUserData({ ...userDetailData, subscription: subscriptionData }, user.user.uid);
                 }
                 catch (error) {
