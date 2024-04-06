@@ -1,11 +1,7 @@
 <template>
 
-    <v-dialog v-model="signUpDialog" persistent width="800" style="background-color: rgba(100, 100, 100, 0.6);">
-        <v-card class="rounded-xl pa-4" :loading="loading">
-
-            <template v-slot:loader="{ isActive }">
-                <v-progress-linear :active="isActive" color="success" height="5" indeterminate></v-progress-linear>
-            </template>
+    <v-dialog v-model="signUpDialog" persistent width="700" style="background-color: rgba(50, 50, 50, 0.8);">
+        <div class="rounded-xl pa-4 border-4 border-indigo-900 " :class="darkMode ? 'bg-slate-900' : 'bg-slate-200'">
 
             <v-card-title>
 
@@ -128,13 +124,13 @@
             </v-card-text>
 
 
-        </v-card>
+        </div>
     </v-dialog>
 
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 
@@ -312,6 +308,13 @@ const signUp = async () => {
     closeSignUpDialog();
 };
 // Sign up method
+
+
+// Theme
+import { useTheme } from 'vuetify'
+const theme = useTheme();
+const darkMode = computed(() => theme.name.value === 'dark');
+// Theme
 
 
 </script>

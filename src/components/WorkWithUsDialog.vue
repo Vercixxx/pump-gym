@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="workWithUsDialog" persistent width="600">
-        <v-card class="rounded-xl pa-4">
+        <div class="rounded-xl pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'" >
             <v-card-title class="font-weight-black">
                 <v-row>
                     <v-col cols="2"></v-col>
@@ -62,7 +62,7 @@
                     </v-col>
                 </v-row>
             </v-card-actions>
-        </v-card>
+        </div>
     </v-dialog>
 </template>
 

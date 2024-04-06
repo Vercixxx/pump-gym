@@ -3,7 +3,7 @@
     <v-layout>
 
       <!-- Header -->
-      <AppBar v-if="route.path != '/error'"/>
+      <AppBar v-if="route.path != '/error'" />
       <!-- Header -->
 
       <!-- Body -->
@@ -11,7 +11,12 @@
         <router-view />
 
         <!-- Theme toogler -->
-        <v-btn @click="toogleTheme" icon="mdi-theme-light-dark" size="large" style="position: fixed; bottom:2%; right:2%"/>
+
+        <button class="themeIcon" @click="toogleTheme" icon="mdi-theme-light-dark" size="large"
+          style="position: fixed; bottom:2%; right:2%">
+          <v-icon class="svgIcon" color="white">{{ theme.global.current.value.dark ? 'mdi-theme-light-dark' : 'mdi-theme-light-dark' }}</v-icon>
+        </button>
+
         <!-- Theme toogler -->
 
       </v-main>
@@ -37,7 +42,7 @@
 
 <script setup lang="ts">
 // Vue
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 // Components
 import LoginComponent from './components/LoginComponent.vue'
@@ -63,7 +68,9 @@ const theme = useTheme();
 const toogleTheme = () => {
   theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
 };
+const darkMode = computed(() => theme.name.value === 'dark');
 // Theme
+
 
 // Pinia
 import { usePiniaStorage } from './store/pinia';
@@ -155,4 +162,6 @@ onMounted(() => {
 @import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-vue-schedule/styles/material.css';
+
+@import './assets/themeIcon.css';
 </style>

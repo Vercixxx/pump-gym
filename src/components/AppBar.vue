@@ -1,25 +1,50 @@
 <template>
     <!-- Desktop -->
-    <v-app-bar v-if="!$vuetify.display.mobile" class="px-3 pt-1 pb-1" elevation="0" :color="darkMode ? 'rgb(15 23 42)':'rgb(226 232 240)' " :class="darkMode ? 'bg-slate-900' : 'bg-slate-200'">
+    <v-app-bar v-if="!$vuetify.display.mobile" class="px-3 pt-1 pb-1" elevation="0"
+        :color="darkMode ? 'rgb(30 46 84)' : 'rgb(226 232 240)'" >
         <v-row>
 
             <v-col cols="auto" justify="space-around">
 
-                <span v-if="!loggedUser">
-                    <v-btn size="large" class="rounded-pill me-5" color="success" variant="elevated"
-                        text="Buy subscription" @click="goTo('/subscriptions')"
-                        prepend-icon="mdi-card-account-details"></v-btn>
-                    <v-btn size="large" class="rounded-pill" color="primary" variant="outlined" text="Client panel"
-                        @click="invokeLoginDialog" prepend-icon="mdi-account-circle"></v-btn>
-                </span>
 
-                <span v-else>
-                    <v-btn size="large" @click="goTo('/dashboard')" append-icon="mdi-home-circle" text="My dashboard"
-                        color="success" variant="tonal" class="me-3"></v-btn>
 
-                    <v-btn size="large" class="rounded-pill" color="red" variant="elevated" text="Sign out"
-                        append-icon="mdi-logout" @click="signOutUser()"></v-btn>
-                </span>
+                <button v-if="!loggedUser" :class="darkMode ? 'bg-slate-800 text-white' : ''"
+                    @click="goTo('/subscriptions')"
+                    class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
+                    Buy subscription
+                    <v-icon class="ps-3" size="30">mdi-card-account-details</v-icon>
+                </button>
+
+                <button v-else :class="darkMode ? 'bg-slate-800 text-white' : ''" @click="goTo('/subscriptions')"
+                    class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
+                    Buy subscription
+                    <v-icon class="ps-3" size="30">mdi-card-account-details</v-icon>
+                </button>
+
+
+
+                <button v-if="!loggedUser" :class="darkMode ? 'bg-slate-800 text-white' : ''" @click="invokeLoginDialog"
+                    class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
+                    Client panel
+                    <v-icon class="ps-3" size="30">mdi-account-circle</v-icon>
+                </button>
+
+                <button v-else>
+                    <v-btn  class="logOutStyle" size="large" :class="darkMode ? 'text-white' : 'text-black '"
+                        @click="signOutUser()">
+                        <div class="svg-wrapper-1">
+                            <div class="svg-wrapper">
+                                <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z"
+                                        :fill="darkMode ? '#FFF' : '#000'" />
+                                </svg>
+                            </div>
+                        </div>
+                        <span>Logout</span>
+                    </v-btn>
+                </button>
 
 
             </v-col>
@@ -31,7 +56,7 @@
                 <v-avatar class="mx-2" image="src/images/logo.png">
                 </v-avatar>
 
-                <span style="letter-spacing: 3px;" :class="darkMode ? 'text-white':''">
+                <span style="letter-spacing: 3px;" :class="darkMode ? 'text-white' : ''">
                     Pump Gym
                 </span>
             </v-col>
@@ -40,18 +65,19 @@
             <v-col align="end" justify="center">
 
 
-                <v-btn size="large" v-for="button in menuButtons" :key="button.id" class="font-weight-black mt-1 me-2" :class="darkMode ? 'text-white' : ''" :variant="darkMode ? 'tonal' : ''"
-                    color="black" @click="goTo(button.route)" :prepend-icon="button.icon">
+                <v-btn size="large" v-for="button in menuButtons" :key="button.id"
+                    class="font-weight-black mt-1 me-2 buttonBuy" :class="darkMode ? 'text-white' : ''" color="black"
+                    @click="goTo(button.route)" :prepend-icon="button.icon">
                     {{ button.title }}
                 </v-btn>
 
-                <v-btn size="large" class="font-weight-black mt-1 me-2" :class="darkMode ? 'text-white' : ''" :variant="darkMode ? 'tonal' : ''" color="black" prepend-icon="mdi-account-group"
-                    @click="openWorkWithUsDialog">
+                <v-btn size="large" class="font-weight-black mt-1 me-2 buttonBuy" :class="darkMode ? 'text-white' : ''"
+                    color="black" prepend-icon="mdi-account-group" @click="openWorkWithUsDialog">
                     Work with us
                 </v-btn>
 
-                <v-btn size="large" class="font-weight-black mt-1 me-2"  :class="darkMode ? 'text-white' : ''" :variant="darkMode ? 'tonal' : ''" color="black" prepend-icon="mdi-phone"
-                    @click="openContactUsDialog">
+                <v-btn size="large" class="font-weight-black mt-1 me-2 buttonBuy" :class="darkMode ? 'text-white' : ''"
+                    color="black" prepend-icon="mdi-phone" @click="openContactUsDialog">
                     Contact
                 </v-btn>
 
@@ -158,3 +184,10 @@ const signOutUser = async () => {
 // Logout
 
 </script>
+
+
+
+<style scoped>
+@import './../assets/buttonBuy.css';
+@import './../assets/logOutStyle.css';
+</style>

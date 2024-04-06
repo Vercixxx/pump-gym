@@ -1,11 +1,11 @@
 <template>
     <v-dialog v-model="contactUsDialog" persistent width="600">
-        <v-card class="rounded-xl pa-4">
+        <div class="rounded-xl pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
             <v-card-title>
                 <v-row>
                     <v-col cols="2"></v-col>
                     <v-col cols="8" align="center">
-                        <span class="headline font-weight-black">Contact Us</span>
+                        <span class="headline font-weight-black text-h5">Contact Us</span>
                     </v-col>
                     <v-col cols="2" align="end">
                         <v-btn icon="mdi-close" variant="plain" @click="closeContactUsDialog"></v-btn>
@@ -16,21 +16,20 @@
 
             <v-card-text>
 
-                <v-hover v-for="(facility, index) in facilities" :key="index">
-                    <template v-slot:default="{ isHovering, props }">
-                        <v-card v-bind="props" :color="isHovering ? 'success' : undefined" :title="facility.Name"
-                            :subtitle="facility.Phone" class="mb-5 cursor-pointer" elevation="0"
-                            prepend-icon="mdi-phone" @click="makeCall(facility.Phone)"
-                            style="background-color: rgba(255, 255, 255, 0.4);">
-                        </v-card>
-                    </template>
 
-                </v-hover>
+                <v-row v-for="(facility, index) in facilities" :key="index" @click="makeCall(facility.Phone)">
+                    <v-col cols="12" align=center>
+                        <div class="w-100 buttonBuy py-5" :class="darkMode? 'text-white':'text-black'" >
+                                <v-icon class="me-2" :color="darkMode ? 'white':'black'" icon="mdi-phone"></v-icon>
+                                {{ facility.Name }}
+                        </div>
+                    </v-col>
+                </v-row>
 
 
 
             </v-card-text>
-        </v-card>
+        </div>
     </v-dialog>
 </template>
 
@@ -65,3 +64,9 @@ const makeCall = (phone: string) => {
 
 
 </script>
+
+<style scoped>
+
+@import '../assets/buttonBuy.css';
+
+</style>
