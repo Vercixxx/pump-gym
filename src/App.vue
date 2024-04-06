@@ -7,16 +7,19 @@
       <!-- Header -->
 
       <!-- Body -->
-      <v-main>
-        <router-view />
+      <v-main @click="closeDrawer">
+        <router-view/>
+
+        <!-- Drawer -->
+        <MyDrawer/>
+        <!-- Drawer -->
 
         <!-- Theme toogler -->
-
         <button class="themeIcon" @click="toogleTheme" icon="mdi-theme-light-dark" size="large"
           style="position: fixed; bottom:2%; right:2%">
-          <v-icon class="svgIcon" color="white">{{ theme.global.current.value.dark ? 'mdi-theme-light-dark' : 'mdi-theme-light-dark' }}</v-icon>
+          <v-icon class="svgIcon" color="white">{{ theme.global.current.value.dark ? 'mdi-theme-light-dark' :
+            'mdi-theme-light-dark' }}</v-icon>
         </button>
-
         <!-- Theme toogler -->
 
       </v-main>
@@ -53,6 +56,7 @@ import ContactUsDialog from './components/ContactUsDialog.vue'
 import WorkWithUsDialog from './components/WorkWithUsDialog.vue'
 import BuySubscriptionDialog from './components/BuySubscriptionDialog.vue'
 import PaymentSuccessfullDialog from './components/PaymentSuccessfull.vue'
+import MyDrawer from './components/Drawer.vue'
 
 // Component
 import MyOverlay from './components/MyOverlay.vue'
@@ -77,6 +81,14 @@ import { usePiniaStorage } from './store/pinia';
 
 const store = usePiniaStorage();
 // Pinia
+
+
+// Drawer
+const drawer = computed(() => store.drawer);
+const closeDrawer = () => {
+  store.closeDrawer();
+};
+// Drawer
 
 
 // Route

@@ -23,6 +23,7 @@ export const usePiniaStorage = defineStore('store', {
         },
         paymentSuccessfullDialog: false,
         overlay: false,
+        drawer: false,
     }),
 
     actions: {
@@ -133,8 +134,21 @@ export const usePiniaStorage = defineStore('store', {
         },
         closeOverlay() {
             this.overlay = false;
-        }
+        },
         // Overlay
+
+
+        // Drawer
+        openDrawer() {
+            this.drawer = true;
+        },
+        closeDrawer() {
+            this.drawer = false;
+        },
+        useDrawer() {
+            this.drawer = !this.drawer;
+        },
+        // Drawer
     },
 
     persist: {

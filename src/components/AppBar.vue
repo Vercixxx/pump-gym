@@ -1,7 +1,7 @@
 <template>
     <!-- Desktop -->
-    <v-app-bar v-if="!$vuetify.display.mobile" class="px-3 pt-1 pb-1" elevation="0"
-        :color="darkMode ? 'rgb(30 46 84)' : 'rgb(226 232 240)'" >
+    <v-app-bar v-if="$vuetify.display.width > 1730" class="px-3 pt-1 pb-1" elevation="0"
+        :color="darkMode ? 'rgb(30 46 84)' : 'rgb(226 232 240)'">
         <v-row>
 
             <v-col cols="auto" justify="space-around">
@@ -30,7 +30,7 @@
                 </button>
 
                 <button v-else>
-                    <v-btn  class="logOutStyle" size="large" :class="darkMode ? 'text-white' : 'text-black '"
+                    <v-btn class="logOutStyle" size="large" :class="darkMode ? 'text-white' : 'text-black '"
                         @click="signOutUser()">
                         <div class="svg-wrapper-1">
                             <div class="svg-wrapper">
@@ -94,16 +94,29 @@
     <!-- Desktop -->
 
     <!-- Mobile -->
-    <v-app-bar v-else density="compact" class="px-5">
+    <v-app-bar v-else density="compact" class="px-5" :color="darkMode ? 'rgb(15 23 42)' : 'white'"
+        :class="darkMode ? 'text-white' : ''">
+        <v-row>
+            <v-col cols="auto">
+                <input type="checkbox" id="drawer-toggle" class="relative sr-only peer" checked @click="useDrawer()">
+                <label for="drawer-toggle"
+                    class="inline-block p-3 transition-all duration-500 rounded-pill peer-checked:rotate-180">
+                    <v-icon :color="darkMode ? 'white':'black'" size="45">mdi-menu-up</v-icon>
+                </label>
+            </v-col>
 
-        <template v-slot:prepend>
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
-        </template>
+            <v-col align="center" class="text-4xl pt-6">
+                Pump gym
+            </v-col>
 
-        <v-app-bar-title>Pump gym</v-app-bar-title>
 
-        <v-avatar size="50" class="me-2" image="src/images/logo.png">
-        </v-avatar>
+            <v-col cols="auto" align="end" class="pt-5">
+                <v-avatar size="50" image="src/images/logo.png" @click="goTo('/')">
+                </v-avatar>
+            </v-col>
+        </v-row>
+
+
     </v-app-bar>
     <!-- Mobile -->
 </template>
@@ -154,12 +167,19 @@ const openContactUsDialog = () => {
     store.openContactUsDialog();
 };
 
-// Pinia
+
 const router = useRouter();
 const goTo = (route) => {
     router.push(route);
 };
 // Pinia
+
+
+// Drawer
+const useDrawer = () => {
+    store.useDrawer();
+};
+// Drawer
 
 
 // Theme

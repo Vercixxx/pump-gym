@@ -56,12 +56,11 @@
                             Fill required fields
                         </v-tooltip>
                         <span>
-                            <button :class="darkMode ? '' : 'text-black'" class="loginButton w-50 hover:text-white" :disabled="!form">
+                            <v-btn :class="darkMode ? '' : 'text-black'" class="loginButton w-50 hover:text-white" :disabled="!form" @click="login()">
                                 Sign in
                                 <v-icon right>mdi-login</v-icon>
-                            </button>
-                            <!-- <v-btn block color="green-darken-2" @click="login()" :loading="loading" :disabled="!form"
-                                append-icon="mdi-login">Sign in</v-btn> -->
+                            </v-btn>
+
                         </span>
                     </span>
                 </v-col>
