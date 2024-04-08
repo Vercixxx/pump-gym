@@ -12,7 +12,7 @@
                         <span class="text-3xl font-weight-black">Join out team!</span>
                     </v-col>
                     <v-col cols="2" align="end">
-                        <v-btn icon="mdi-close" variant="plain" @click="closeWorkWithUsDialog"></v-btn>
+                        <v-btn icon="mdi-close" variant="plain" class="text-xl" @click="closeWorkWithUsDialog"></v-btn>
                     </v-col>
                 </v-row>
 

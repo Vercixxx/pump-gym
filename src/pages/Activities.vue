@@ -5,9 +5,9 @@
             src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
             class="ma-0 pa-0" style="min-height: 100dvh;">
 
-            <!-- Carousel -->
+            <!-- Desktop -->
 
-            <v-carousel v-if="!$vuetify.display.smAndDown" show-arrows="hover" cycle hide-delimiter-background
+            <!-- <v-carousel v-if="!$vuetify.display.smAndDown" show-arrows="hover" cycle hide-delimiter-background
                 progress="success" class="mt-10">
                 <v-carousel-item v-for="zone in zones" :key="zone.name">
 
@@ -31,9 +31,37 @@
 
 
                 </v-carousel-item>
-            </v-carousel>
+            </v-carousel> -->
 
-            <!-- Carousel -->
+            <v-row v-if="!$vuetify.display.smAndDown" class="pa-5">
+                <v-col cols="6" v-for="zone in zones" :key="zone.name">
+
+                    <v-card class="pa-4 backdrop-blur-xl rounded-xl" :class="darkMode ? 'bg-black/75' : ' bg-white/50'" :variant="darkMode ? '':''" :color="darkMode ? 'white':''">
+
+                        <div class="text-3xl font-weight-black mb-4" align="center">
+                            <v-icon size="30">{{ zone.icon }}</v-icon>
+                            {{ zone.name }}
+                        </div>
+
+                        <div class="text-xl font-weight-medium text-justify mb-6">
+                            {{ zone.description }}
+                        </div>
+
+
+                        <v-list-item v-for="(content, title) in zone.items" :key="title" class="my-1 hover:scale-105 hover:-skew-y-1 ease-in-out duration-300 cursor-pointer" >
+                            <template v-slot:prepend>
+                                <v-icon icon="mdi-dots-circle"></v-icon>
+                            </template>
+                            <v-list-item-title>{{ title }}</v-list-item-title>
+                            <v-list-item-subtitle>{{ content }}</v-list-item-subtitle>
+                        </v-list-item>
+
+                    </v-card>
+
+                </v-col>
+            </v-row>
+
+            <!-- Dektop -->
 
 
 
