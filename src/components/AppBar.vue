@@ -94,7 +94,7 @@
     <!-- Desktop -->
 
     <!-- Mobile -->
-    <v-app-bar v-else density="compact" class="px-5" :color="darkMode ? 'rgb(15 23 42)' : 'white'"
+    <v-app-bar v-else density="compact" class="px-5"  elevation="0" :color="darkMode ? 'rgb(15 23 42)' : 'white'"
         :class="darkMode ? 'text-white' : ''">
         <v-row>
             <v-col cols="auto">
@@ -105,7 +105,7 @@
                 </label>
             </v-col>
 
-            <v-col align="center" class="text-4xl pt-6">
+            <v-col align="center" class="text-4xl pt-6" @click="goTo('/')">
                 Pump gym
             </v-col>
 

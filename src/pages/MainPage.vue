@@ -11,7 +11,7 @@
         <v-row>
 
             <!-- First row -->
-            <v-col cols="12" style="height: 70vh;">
+            <v-col cols="12" style="height: 70dvh;" v-if="!$vuetify.display.smAndDown">
                 <v-row>
                     <v-col cols="12" sm="6" class="py-10 ps-10 d-flex justify-center align-center ">
                         <div class="pa-4 rounded-xl font-weight-black text-h6 backdrop-blur-xl"
@@ -54,11 +54,60 @@
                 </v-row>
 
             </v-col>
+
+            <!-- Mobile -->
+            <v-col cols="12" v-else>
+                <div>
+
+
+                    <v-row>
+                        <v-col class="align-self-center ms-5 font-black text-3xl ">
+                            Welcome to Pump Gym!
+                        </v-col>
+                        <v-col cols="auto" align="center">
+                            <v-avatar size="200" class="me-2 " image="src/images/logo.png">
+                            </v-avatar>
+                        </v-col>
+                    </v-row>
+
+
+                    <v-card-text class="backdrop-blur-xl rounded-xl text-white"
+                        :class="darkMode ? ' bg-black/70 ' : ' bg-indigo-500/25 '">
+                        Do you dream of health, strength, and perfect fitness? If so, you've found
+                        the
+                        perfect
+                        place! Our gym not only offers top-quality equipment but also an inspiring
+                        environment
+                        that motivates action.
+
+                        Our experienced instructors are here to help you achieve your fitness goals,
+                        whether
+                        you're just starting your fitness journey or you're an experienced athlete.
+                        Whether you
+                        want to build muscle, lose weight, or improve your endurance, we're ready to
+                        support you
+                        every step of the way.
+
+                        Come to our gym and join the community of people who actively care for their
+                        health and
+                        well-being. Together, we'll achieve more!
+
+                        Don't wait any longer - start your journey to a better version of yourself
+                        today!
+                    </v-card-text>
+                </div>
+
+            </v-col>
+            <!-- Mobile -->
+
             <!-- First row -->
 
+            <!-- Spacer -->
+            <v-col cols="12" style="height: 10dvh;"></v-col>
+            <!-- Spacer -->
 
             <!-- Second row -->
-            <v-col cols="12" style="height: 40vh;">
+            <v-col cols="12" style="height: 40dvh;">
 
                 <span v-if="!$vuetify.display.mobile">
 
@@ -83,8 +132,8 @@
                                                 <h1 class="text-h5 font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
                                                     style="background-color: rgba(0, 0, 0, 0.6);">
                                                     {{ facility.Name }}, <br> {{ facility.City + ', ' +
-        facility.Street
-        + ' ' + facility.Home }}
+                                                        facility.Street
+                                                        + ' ' + facility.Home }}
                                                 </h1>
                                             </div>
                                         </v-parallax>
@@ -96,33 +145,32 @@
 
                 </span>
 
+
+                <!-- Mobile -->
                 <span v-else>
+                    <v-row>
+                        <v-col cols="12" align="center" jusify="center"
+                            class="text-h4 py-6 font-weight-black backdrop-blur-xl"
+                            :class="darkMode ? ' bg-black/70 ' : ' bg-white/30 '">
+                            Our clubs
+                        </v-col>
+                    </v-row>
+
+
                     <v-carousel height="400" hide-delimiter-background show-arrows>
 
-                        <template v-slot:prev="{ props }">
-                            <v-btn color="success" variant="elevated" @click="props.onClick" icon="mdi-arrow-left">
-                            </v-btn>
-                        </template>
-
-                        <template v-slot:next="{ props }">
-                            <v-btn color="info" variant="elevated" @click="props.onClick"
-                                icon="mdi-arrow-right"></v-btn>
-                        </template>
-
-
-
-                        <v-carousel-item v-for="facility in getFacilities" :key="facility.name">
-                            <v-sheet height="100%">
+                        <v-carousel-item v-for="facility in facilities" :key="facility.name">
+                            <v-sheet height="100%" class="bg-transparent backdrop-blur-xl" :class="darkMode? ' bg-black/70':' bg-white/30'" >
                                 <div class="d-flex fill-height justify-center align-center">
-                                    <v-avatar size="300">
-                                        <v-parallax :src="facility.Image" class="ma-0 pa-0" type="button">
+                                    <v-avatar size="300" >
+                                        <v-parallax :src="facility.Image" class="ma-0 pa-0" type="button" >
                                             <div
                                                 class="d-flex flex-column fill-height justify-center align-center text-white">
                                                 <span class="font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
                                                     style="background-color: rgba(0, 0, 0, 0.6);">
                                                     {{ facility.Name }}, <br> {{ facility.City + ', ' +
-        facility.Street
-                                                    + ' ' + facility.Home }}
+                                                        facility.Street
+                                                        + ' ' + facility.Home }}
                                                 </span>
                                             </div>
                                         </v-parallax>
@@ -298,5 +346,3 @@ const chunkedFacilities = computed(() => {
 
 
 </script>
-
-

@@ -1,18 +1,31 @@
 <template>
-    <v-dialog v-model="workWithUsDialog" persistent width="600">
-        <div class="rounded-xl pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'" >
-            <v-card-title class="font-weight-black">
-                <v-row>
+    <v-dialog v-model="workWithUsDialog" persistent width="600" transition="dialog-top-transition"
+        :fullscreen="$vuetify.display.smAndDown ? true : false">
+        <div class="pa-4" :class="[
+            darkMode ? 'bg-slate-800' : 'bg-slate-200',
+            $vuetify.display.smAndDown ? '' : 'rounded-xl',
+        ]">
+           
+                <v-row v-if="!$vuetify.display.smAndDown">
                     <v-col cols="2"></v-col>
                     <v-col cols="8" align="center">
-                        <span class="headline">Join out team!</span>
+                        <span class="text-3xl font-weight-black">Join out team!</span>
                     </v-col>
                     <v-col cols="2" align="end">
-
                         <v-btn icon="mdi-close" variant="plain" @click="closeWorkWithUsDialog"></v-btn>
                     </v-col>
                 </v-row>
-            </v-card-title>
+
+                <v-row v-else>
+                    <v-col cols="2" align="start">
+                        <v-btn text="Back" @click="exitDialog" prepend-icon="mdi-arrow-left" variant="plain"></v-btn>
+                    </v-col>
+                    <v-col cols="8" align=center>
+                        <span class="text-3xl font-weight-black">Join out team!</span>
+                    </v-col>
+                    <v-col cols="2"></v-col>
+                </v-row>
+   
 
             <v-card-text>
                 <v-form v-model="form">
