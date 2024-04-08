@@ -6,9 +6,7 @@
             class="ma-0 pa-0" style="min-height:100dvh;">
 
 
-            <div >
-
-
+            <div>
 
                 <span v-if="!$vuetify.display.mobile">
 

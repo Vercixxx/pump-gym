@@ -7,7 +7,8 @@
 
             <!-- Carousel -->
 
-            <v-carousel show-arrows="hover" cycle hide-delimiter-background progress="success" class="mt-10">
+            <v-carousel v-if="!$vuetify.display.smAndDown" show-arrows="hover" cycle hide-delimiter-background
+                progress="success" class="mt-10">
                 <v-carousel-item v-for="zone in zones" :key="zone.name">
 
 
@@ -29,18 +30,48 @@
                     </div>
 
 
-
-
-
-
                 </v-carousel-item>
             </v-carousel>
 
             <!-- Carousel -->
 
 
+
+            <!-- Mobile -->
+            <v-row v-if="$vuetify.display.smAndDown">
+                <v-col cols="12" v-for="zone in zones" :key="zone.name">
+
+                    <div class="pa-4 backdrop-blur-xl" :class="darkMode ? 'bg-black/50' : ' bg-white/50'">
+
+                        <div class="text-3xl font-weight-black mb-4" align="center">
+                            <v-icon size="30">{{ zone.icon }}</v-icon>
+                            {{ zone.name }}
+                        </div>
+
+                        <div class="text-xl font-weight-medium text-justify mb-6">
+                            {{ zone.description }}
+                        </div>
+
+
+                        <v-list-item v-for="(content, title) in zone.items" :key="title" class="my-1">
+                            <template v-slot:prepend>
+                                <v-icon icon="mdi-dots-circle"></v-icon>
+                            </template>
+                            <v-list-item-title>{{ title }}</v-list-item-title>
+                            <v-list-item-subtitle>{{ content }}</v-list-item-subtitle>
+                        </v-list-item>
+
+                    </div>
+
+                </v-col>
+            </v-row>
+
+
+            <!-- Mobile -->
+
+
             <!-- Footer -->
-            <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
+            <FooterComponent />
             <!-- Footer -->
 
 
