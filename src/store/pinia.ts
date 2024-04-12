@@ -8,6 +8,7 @@ export const usePiniaStorage = defineStore('store', {
         userData: null as unknown,
         userUid: null as string | null,
         loginDialog: false,
+        passwordResetDialog: false,
         signUpDialog: false,
         workWithUsDialog: false,
         contactUsDialog: false,
@@ -59,6 +60,16 @@ export const usePiniaStorage = defineStore('store', {
             this.loginDialog = false;
         },
         // Login component
+
+
+        // Password reset component
+        openPasswordResetDialog() {
+            this.passwordResetDialog = true;
+        },
+        closePasswordResetDialog() {
+            this.passwordResetDialog = false;
+        },
+        // Password reset component
 
 
         // Sign up component

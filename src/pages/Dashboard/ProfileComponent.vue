@@ -4,7 +4,7 @@
         <v-col cols="12" align="center" justify="center">
 
             <div elevation="0" class="mt-3 pa-5 rounded backdrop-blur-xl"
-                :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
+                :class="darkMode ? ' bg-black/75' : ' bg-white/75'">
                 <v-card-title class="font-weight-black text-h6">
                     Profile
                     <span v-if="editing">
@@ -26,6 +26,7 @@
                         </v-col>
                     </v-row>
 
+                    {{ fields }}
 
                     <v-row>
                         <v-col cols="12" sm="6" v-for="field in fields">
@@ -50,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, computed, ref, reactive } from 'vue';
 import { usePiniaStorage } from '../../store/pinia';
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from '../../firebase.js';
@@ -69,7 +70,7 @@ const darkMode = computed(() => theme.name.value === 'dark');
 
 // Fields
 var loading = ref(false);
-var fields = [
+let fields = reactive([
     {
         name: 'first_name',
         label: 'First Name',
@@ -107,7 +108,7 @@ var fields = [
             v => (v.length <= 70) || 'Phone too large',
         ]
     },
-]
+]);
 
 const gender = ref();
 

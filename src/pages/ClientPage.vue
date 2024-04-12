@@ -4,7 +4,19 @@
         class="ma-0 pa-0">
 
 
-        <v-tabs v-model="tab" bg-color="info" color="basil" grow >
+        <v-row class="py-2 text-2xl ps-3" :style="darkMode ? 'background-color:rgb(30 46 84)':'background-color:rgb(226 232 240)'" >
+            <v-col cols="auto">
+                <v-icon>
+                    mdi-menu
+                </v-icon>
+            </v-col>
+            <v-col>
+                My profile
+            </v-col>
+        </v-row>
+
+        <v-tabs v-model="tab" :bg-color="darkMode ? 'rgb(30 46 84)' : 'rgb(226 232 240)'"
+            :class="darkMode ? 'text-white' : ''" color="basil" grow>
             <v-tab v-for="item in items" :key="item" :value="item" @click="switchToComponent(item.component)">
                 {{ item.title }}
             </v-tab>

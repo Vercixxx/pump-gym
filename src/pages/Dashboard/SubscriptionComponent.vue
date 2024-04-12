@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-3 rounded backdrop-blur-xl" :class="darkMode? ' bg-black/70':' bg-white/30'">
+    <div class="mt-3 rounded backdrop-blur-xl" :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
 
         <span v-if="!subscription">
             <v-card-title class="font-weight-black text-h6">Subscription</v-card-title>
@@ -13,9 +13,20 @@
         </span>
 
         <span v-else>
+
+            <v-row>
+                <v-col cols="0" sm="3"></v-col>
+                <v-col align="center" class="font-weight-black text-3xl">
+                    Subscription
+                </v-col>
+                <v-col cols="12" sm="3" :align="$vuetify.display.smAndDown ? 'center' : 'end'">
+                    <v-btn size="large" text="Cancel subscription" @click="cancelSubscriptionDialog = true"
+                        class="font-weight-black hover:bg-orange-600" variant="tonal"></v-btn>
+                </v-col>
+            </v-row>
+
             <v-card-text>
 
-                <v-card-title class="font-weight-black text-h6">Subscription Details</v-card-title>
                 <v-card-text>
                     <v-table style="background-color: rgba(250, 250, 250, 0);">
                         <thead>
@@ -62,6 +73,42 @@
 
             </v-card-text>
         </span>
+
+
+        <!-- Cancel subscription dialog -->
+        <v-dialog v-model="cancelSubscriptionDialog" persistent transition="dialog-top-transition">
+            <div class="rounded-xl pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
+
+                <v-row>
+                    <v-col cols="2"></v-col>
+                    <v-col cols="8" align="center">
+                        <span class="text-3xl font-weight-black">Cancel Subscription</span>
+                    </v-col>
+                    <v-col cols="2" align="end">
+                        <v-btn icon="mdi-close" variant="plain" class="text-xl" @click="cancelSubscriptionDialog = false"></v-btn>
+                    </v-col>
+                </v-row>
+
+
+
+                <v-card-text>
+
+                    {{ subscription }}
+                    <!-- <v-row v-for="(facility, index) in facilities" :key="index" @click="makeCall(facility.Phone)">
+                        <v-col cols="12" align=center>
+                            <div class="w-100 buttonBuy py-5" :class="darkMode ? 'text-white' : 'text-black'">
+                                <v-icon class="me-2" :color="darkMode ? 'white' : 'black'" icon="mdi-phone"></v-icon>
+                                {{ facility.Name }}
+                            </div>
+                        </v-col>
+                    </v-row> -->
+
+
+
+                </v-card-text>
+            </div>
+        </v-dialog>
+        <!-- Cancel subscription dialog -->
 
 
     </div>
@@ -144,7 +191,7 @@ const getPaymentHistory = async () => {
         const paymentSnapshot = await getDocs(paymentCollectionRef);
         const paymentData = paymentSnapshot.docs.map(doc => {
             const paymentDate = doc.data().paymentDate.toDate().toISOString().split('T')[0];
-            return { ...doc.data(), date:paymentDate };
+            return { ...doc.data(), date: paymentDate };
         });
         console.log(paymentData);
         serverItems.value = paymentData;
@@ -157,5 +204,11 @@ const getPaymentHistory = async () => {
 
 
 
+// Cancel subscription 
+const cancelSubscriptionDialog = ref(false);
+
+
+
+// Cancel subscription 
 
 </script>

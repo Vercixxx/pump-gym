@@ -11,16 +11,16 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "@syncfusion/ej2-vue-base": "^25.1.35",
-    "@syncfusion/ej2-vue-schedule": "^25.1.37",
+    "@syncfusion/ej2-vue-schedule": "^25.1.39",
     "@vue-stripe/vue-stripe": "^4.5.0",
-    "firebase": "^10.10.0",
+    "firebase": "^10.11.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "qalendar": "^3.8.1",
-    "stripe": "^14.24.0",
+    "stripe": "^15.1.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
-    "vuetify": "^3.5.14"
+    "vuetify": "^3.5.15"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
@@ -28,7 +28,7 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.4.4",
+    "typescript": "^5.4.5",
     "vite": "^5.2.8"
   }
 }

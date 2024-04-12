@@ -1,51 +1,43 @@
 <template>
     <!-- Desktop -->
-    <v-app-bar v-if="$vuetify.display.width > 1730" class="px-3 pt-1 pb-1" elevation="0"
+    <v-app-bar v-if="$vuetify.display.width > 1730" class=" pt-1 pb-1" elevation="0"
         :color="darkMode ? 'rgb(30 46 84)' : 'rgb(226 232 240)'">
         <v-row>
 
             <v-col cols="auto" justify="space-around">
 
+                <!-- User not logged in  -->
+                <span v-if="!loggedUser">
+
+                    <button :class="darkMode ? 'bg-slate-800 text-white' : ''" @click="invokeLoginDialog"
+                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
+                        Client panel
+                        <v-icon class="ps-3" size="30">mdi-account-circle</v-icon>
+                    </button>
 
 
-                <button v-if="!loggedUser" :class="darkMode ? 'bg-slate-800 text-white' : ''"
-                    @click="goTo('/subscriptions')"
-                    class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
-                    Buy subscription
-                    <v-icon class="ps-3" size="30">mdi-card-account-details</v-icon>
-                </button>
-
-                <button v-else :class="darkMode ? 'bg-slate-800 text-white' : ''" @click="goTo('/subscriptions')"
-                    class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
-                    Buy subscription
-                    <v-icon class="ps-3" size="30">mdi-card-account-details</v-icon>
-                </button>
+                </span>
+                <!-- User not logged in  -->
 
 
+                <!-- User logged in -->
+                <span v-else>
 
-                <button v-if="!loggedUser" :class="darkMode ? 'bg-slate-800 text-white' : ''" @click="invokeLoginDialog"
-                    class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
-                    Client panel
-                    <v-icon class="ps-3" size="30">mdi-account-circle</v-icon>
-                </button>
+                    <button :class="darkMode ? 'bg-slate-800 text-white border' : ''" @click="signOutUser"
+                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
+                        Logout
+                        <v-icon class="ps-3" size="30">mdi-logout</v-icon>
+                    </button>
 
-                <button v-else>
-                    <v-btn class="logOutStyle" size="large" :class="darkMode ? 'text-white' : 'text-black '"
-                        @click="signOutUser()">
-                        <div class="svg-wrapper-1">
-                            <div class="svg-wrapper">
-                                <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z"
-                                        :fill="darkMode ? '#FFF' : '#000'" />
-                                </svg>
-                            </div>
-                        </div>
-                        <span>Logout</span>
-                    </v-btn>
-                </button>
 
+                    <button :class="darkMode ? 'bg-slate-800 text-white border' : ''" @click="goTo('/dashboard')"
+                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
+                        Client panel
+                        <v-icon class="ps-3" size="30">mdi-account-circle</v-icon>
+                    </button>
+
+                </span>
+                <!-- User logged in -->
 
             </v-col>
 
@@ -94,14 +86,14 @@
     <!-- Desktop -->
 
     <!-- Mobile -->
-    <v-app-bar v-else density="compact" class="px-5"  elevation="0" :color="darkMode ? 'rgb(15 23 42)' : 'white'"
+    <v-app-bar v-else density="compact" class="px-5" elevation="0" :color="darkMode ? 'rgb(15 23 42)' : 'white'"
         :class="darkMode ? 'text-white' : ''">
         <v-row>
             <v-col cols="auto">
                 <input type="checkbox" id="drawer-toggle" class="relative sr-only peer" checked @click="useDrawer()">
                 <label for="drawer-toggle"
                     class="inline-block p-3 transition-all duration-500 rounded-pill peer-checked:rotate-180">
-                    <v-icon :color="darkMode ? 'white':'black'" size="45">mdi-menu-up</v-icon>
+                    <v-icon :color="darkMode ? 'white' : 'black'" size="45">mdi-menu-down</v-icon>
                 </label>
             </v-col>
 
@@ -132,12 +124,18 @@ import { signOut } from 'firebase/auth';
 const menuButtons = ref([
     {
         id: 1,
+        title: 'Subscriptions',
+        icon: 'mdi-card-account-details',
+        route: '/subscriptions',
+    },
+    {
+        id: 2,
         title: 'Activities',
         icon: 'mdi-dumbbell',
         route: '/activities',
     },
     {
-        id: 2,
+        id: 3,
         title: 'Our Trainers',
         icon: 'mdi-weight-lifter',
         route: '/trainers',

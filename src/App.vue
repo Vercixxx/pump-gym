@@ -28,6 +28,7 @@
 
       <!-- Dialogs -->
       <LoginComponent />
+      <PasswordResetDialog /> 
       <SignUpComponent />
       <SnackBarAlert />
       <ContactUsDialog />
@@ -49,6 +50,7 @@ import { ref, onMounted, computed } from 'vue';
 
 // Components
 import LoginComponent from './components/LoginComponent.vue'
+import PasswordResetDialog from './components/PasswordResetDialog.vue'
 import SignUpComponent from './components/SignUp.vue'
 import SnackBarAlert from './components/SnackBarAlert.vue'
 import AppBar from './components/AppBar.vue'

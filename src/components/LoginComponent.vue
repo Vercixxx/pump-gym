@@ -34,10 +34,10 @@
                     <!-- Password -->
 
                     <!-- Password recovery -->
-                    <div class="text-subtitle-1 text-medium-emphasis d-flex align-end justify-space-between">
+                    <div class="text-subtitle-1 text-medium-emphasis d-flex align-end justify-space-between ">
                         <span></span>
 
-                        <v-btn variant="plain" size="small" @click="passwordRecoverDialog = true"
+                        <v-btn variant="plain" size="small" @click="openPasswordResetDialog"
                             class="text-cyan-darken-4 font-weight-bold" prepend-icon="mdi-restore">
                             Forgot password?
                         </v-btn>
@@ -100,7 +100,7 @@ import { usePiniaStorage } from '../store/pinia';
 
 // Firebase
 import { auth } from '../firebase';
-import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
+import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence, sendPasswordResetEmail } from 'firebase/auth';
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js';
 
@@ -198,6 +198,15 @@ const login = async () => {
     loading.value = false;
 };
 // Pinia storage / get user data
+
+
+
+// Password recovery
+const openPasswordResetDialog = () => {
+    piniaStorage.openPasswordResetDialog();
+    piniaStorage.closeLoginDialog();
+};
+// Password recovery
 
 
 // Theme
