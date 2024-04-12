@@ -12,6 +12,9 @@ import SubscriptionsPage from '../pages/Subscriptions.vue'
 import ClientPage from '../pages/ClientPage.vue'
 import ErrorPage from '../pages/404.vue'
 
+// Admin
+import AdminDashboard from '../pages/admin/AdminDashboard.vue'
+
 // Scripts
 import { PaymentSuccessfull } from '../scripts/PaymentSuccessfull'
 import { PaymentUnsuccessfull } from '../scripts/PaymentUnsuccessfull'
@@ -50,6 +53,22 @@ const router = createRouter({
       component: ErrorPage,
     },
     {
+      path: '/admin/dashboard',
+      name: 'AdminDashboard',
+      component: AdminDashboard,
+      beforeEnter: (to, from, next) => {
+        const store = usePiniaStorage();
+        const userRole = store.userData ? store.userData.role : undefined;
+        
+        if (userRole && userRole == 'admin') {
+          next();
+        } else {
+          next('/error');
+          store.showAlert('error', 'Error 404: Page not found');
+        }
+      },
+    },
+    {
       path: '/dashboard',
       name: 'ClientPage',
       component: ClientPage,
@@ -63,7 +82,7 @@ const router = createRouter({
         }
         else {
           next('/error');
-          store.showAlert('error', 'You need to be logged in to access this page');
+          store.showAlert('error', 'Error 404: Page not found');
         }
 
       },

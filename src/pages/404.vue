@@ -1,5 +1,5 @@
 <template>
-    <v-empty-state image="src/images/error_image.jpeg" size="450" text-width="500">
+    <v-empty-state image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Ferror_image.jpeg?alt=media&token=7aeb6423-4191-4549-9c36-6540f6521810" size="450" text-width="500">
         <template v-slot:media>
             <v-img class="mb-8"></v-img>
         </template>

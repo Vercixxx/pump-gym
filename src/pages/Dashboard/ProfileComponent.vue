@@ -26,7 +26,6 @@
                         </v-col>
                     </v-row>
 
-                    {{ fields }}
 
                     <v-row>
                         <v-col cols="12" sm="6" v-for="field in fields">
@@ -59,7 +58,9 @@ import { db } from '../../firebase.js';
 
 // User data from the store
 const store = usePiniaStorage();
-var userData = computed(() => store.userData);
+let userData = computed(() => store.userData);
+let userUid = computed(() => store.userUid).value;
+
 // User data from the store
 
 // Theme
@@ -69,7 +70,7 @@ const darkMode = computed(() => theme.name.value === 'dark');
 // Theme
 
 // Fields
-var loading = ref(false);
+let loading = ref(false);
 let fields = reactive([
     {
         name: 'first_name',
@@ -132,18 +133,16 @@ onMounted(() => {
 
 
 // Edit
-const editing = ref(false);
+let editing = ref(false);
 
 async function updateUserData() {
-    this.loading = true;
+    loading.value = true;
 
     try {
 
-        const userUid = userData.value.user.uid;
-
         const userRef = await doc(db, "users", userUid);
 
-        var newUserData = {};
+        let newUserData = {};
         fields.forEach(field => {
             newUserData[field.name] = field.value;
         });
@@ -156,7 +155,7 @@ async function updateUserData() {
         await updateDoc(userRef, newUserData);
 
         const updatedUserSnapshot = await getDoc(userRef);
-        var updatedUserData = {
+        let updatedUserData = {
             ...updatedUserSnapshot.data(),
             user: {
                 uid: userUid,
@@ -166,19 +165,24 @@ async function updateUserData() {
 
         store.setUserData(
             updatedUserData,
+            userUid
         );
 
 
 
         setFieldsData();
 
-        this.editing = false;
+        editing.value = false;
+        store.showAlert('success', 'User data updated successfully');
+
+
     } catch (error) {
         console.error(error);
+        store.showAlert('error', error.message);
     }
 
 
-    this.loading = false;
+    loading.value = false;
 }
 // Edit
 

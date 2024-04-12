@@ -64,11 +64,11 @@ const items = ref([
         component: SubscriptionComponent,
         icon: 'mdi-cash-sync',
     },
-    {
-        title: 'My parameters',
-        component: ParametersComponent,
-        icon: 'mdi-weight-kilogram',
-    },
+    // {
+    //     title: 'My parameters',
+    //     component: ParametersComponent,
+    //     icon: 'mdi-weight-kilogram',
+    // },
 ]);
 
 const selectedComponent = ref(ProfileComponent);
