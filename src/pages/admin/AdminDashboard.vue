@@ -73,13 +73,13 @@ const menu = ref([
         icon: 'mdi-account-group',
         component: ManageUsers,
     },
+    // {
+    //     title: 'Manage Subscriptions',
+    //     icon: 'mdi-package-variant-closed',
+    //     component: ManageUsers,
+    // },
     {
-        title: 'Manage Subscriptions',
-        icon: 'mdi-package-variant-closed',
-        component: ManageUsers,
-    },
-    {
-        title: 'Manage Ficilities',
+        title: 'Manage Facilities',
         icon: 'mdi-cart',
         component: ManageUsers,
     },
