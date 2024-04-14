@@ -25,6 +25,10 @@ export const usePiniaStorage = defineStore('store', {
         paymentSuccessfullDialog: false,
         overlay: false,
         drawer: false,
+
+        // Admin
+        editUserDialog: false,
+        editUserData: {} as unknown,
     }),
 
     actions: {
@@ -160,6 +164,18 @@ export const usePiniaStorage = defineStore('store', {
             this.drawer = !this.drawer;
         },
         // Drawer
+
+
+        // Admin
+        // Edit user dialog
+        openEditUserDialog(userData = {}) {
+            this.editUserData = userData;
+            this.editUserDialog = true;
+        },
+        closeEditUserDialog() {
+            this.editUserDialog = false;
+        },
+        // Edit user dialog
     },
 
     persist: {

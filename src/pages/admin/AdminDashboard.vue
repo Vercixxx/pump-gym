@@ -30,6 +30,11 @@
         </div>
 
 
+        <!-- Dialogs -->
+        <EditUserDialog />
+        <!-- Dialogs -->
+
+
         <!-- Footer -->
         <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
         <!-- Footer -->
@@ -96,6 +101,9 @@ const selectedComponent = ref(DashboardComponent);
 function switchToComponent(component) {
     selectedComponent.value = component;
 }
+
+
+import EditUserDialog from './components/EditUser.vue'
 // Navigation
 
 </script>

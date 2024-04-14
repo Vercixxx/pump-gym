@@ -56,7 +56,8 @@
             </v-col>
             <v-col cols="0" sm="2" align=end>
 
-                <v-btn text="Add staff user" prepend-icon="mdi-plus" variant="plain" class="hover:bg-green-500 transition ease-in-out duration-300 "></v-btn>
+                <v-btn text="Add staff user" prepend-icon="mdi-plus" variant="plain"
+                    class="hover:bg-green-500 transition ease-in-out duration-300 "></v-btn>
 
             </v-col>
 
@@ -76,8 +77,7 @@
                         <template v-if="header.key === 'actions'">
                             <v-tooltip location="top" :text="'Edit ' + item.first_name + item.last_name">
                                 <template v-slot:activator="{ props }">
-                                    <v-btn v-bind="props" icon="mdi-pencil" color="success" variant="text"
-                                        disabled></v-btn>
+                                    <v-btn v-bind="props" icon="mdi-pencil" color="success" variant="text" @click="openEditUserDialog(item)"></v-btn>
                                 </template>
                             </v-tooltip>
 
@@ -260,5 +260,13 @@ function firstCharToLower(str: string): string {
 
 
 
+// Edit user dialog
+import { usePiniaStorage } from '../../../store/pinia';
+const storage = usePiniaStorage();
+
+const openEditUserDialog = (userData) => {
+    storage.openEditUserDialog(userData);
+}
+// Edit user dialog
 
 </script>
