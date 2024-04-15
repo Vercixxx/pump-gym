@@ -64,20 +64,41 @@
         </v-row>
 
 
-        <v-data-table :items="Object.values(allUsersData)" :headers="headers" :loading="loading" item-key="id" hover
+        <v-data-table :items="Object.values(allUsersData)" :headers="headers" :loading="loading" item-key="id"
+            item-value="id" hover
             :style="darkMode ? 'background-color:rgba(30, 46, 84, 0.9)' : 'background-color:rgba(226, 232, 240, 0.9)'"
             class="mx-5">
 
+            <template v-slot:headers="{ columns, isSorted, getSortIcon, toggleSort }">
+                <tr align="center" class="font-weight-black text-xl">
+                    <template v-for="column in columns" :key="column.key">
+                        <td @click="() => toggleSort(column)">
+                            <span class="mr-2" :class="column.sortable? 'cursor-pointer':''">
+                                {{ column.title
+                                }}
+
+                                <v-icon v-if="column.sortable && !isSorted(column)"
+                                    icon="mdi-sort-alphabetical-ascending" />
+                                <v-icon v-else-if="column.sortable && isSorted(column)"
+                                    icon="mdi-sort-alphabetical-descending" />
+
+                            </span>
+
+                        </td>
+                    </template>
+                </tr>
+            </template>
 
             <template v-slot:item="{ item }">
-                <tr>
+                <tr align="center">
                     <td v-for="header in headers" :key="header.key">
 
 
                         <template v-if="header.key === 'actions'">
-                            <v-tooltip location="top" :text="'Edit ' + item.first_name + item.last_name">
+                            <v-tooltip location="top" :text="'Edit ' + item.first_name + ' ' + item.last_name">
                                 <template v-slot:activator="{ props }">
-                                    <v-btn v-bind="props" icon="mdi-pencil" color="success" variant="text" @click="openEditUserDialog(item)"></v-btn>
+                                    <v-btn v-bind="props" icon="mdi-pencil" color="success" variant="text"
+                                        @click="openEditUserDialog(item)"></v-btn>
                                 </template>
                             </v-tooltip>
 
@@ -119,7 +140,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, ref, reactive } from 'vue';
+import { onMounted, computed, ref, reactive, watch } from 'vue';
 
 // Theme
 import { useTheme } from 'vuetify'
@@ -138,6 +159,7 @@ let allUsersData = {};
 
 const headers = ref<readonly any[]>([
     { key: 'id', title: 'Id', align: 'start', sortable: false },
+    { key: 'active', title: 'Account active', align: 'start', sortable: false },
     { key: 'email', title: 'Email', align: 'start', sortable: false },
     { key: 'first_name', title: 'First name', align: 'start' },
     { key: 'last_name', title: 'Last name', align: 'start' },
@@ -267,6 +289,12 @@ const storage = usePiniaStorage();
 const openEditUserDialog = (userData) => {
     storage.openEditUserDialog(userData);
 }
+
+watch(() => storage.editUserDialog, (value) => {
+    if (!value) {
+        getUsers();
+    }
+});
 // Edit user dialog
 
 </script>

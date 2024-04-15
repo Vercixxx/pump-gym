@@ -1,14 +1,16 @@
 <template>
 
-    <v-dialog v-model="editUserDialog" persistent width="600" transition="dialog-top-transition">
-        <div class="rounded-xl pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
+    <v-dialog v-model="editUserDialog" persistent width="800" transition="dialog-top-transition"
+        style="background-color: rgba(50, 50, 50, 0.8);">
+        <div class="rounded-xl pa-4 border-2 border-indigo-500 hover:shadow-2xl hover:shadow-indigo-500/50 "
+            :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
 
 
             <v-row>
                 <v-col cols="2"></v-col>
                 <v-col cols="8" align="center">
                     <span class="text-3xl font-weight-black">
-                        Edit user
+                        Edit {{ userData.first_name }} {{ userData.last_name }}
                         <v-icon>mdi-account-edit</v-icon>
                     </span>
                 </v-col>
@@ -19,20 +21,35 @@
 
 
 
-            <div>
+            <div class="ma-5 pa-6 border-2 border-indigo-500 rounded-xl">
                 <v-row dense>
                     <v-col cols="12" md="4" sm="6" v-for="field in userFields" :key="field.model">
-                        <v-text-field :label="field.label" variant="outlined" v-model="field.value"></v-text-field>
+                        <v-text-field :label="field.label" variant="outlined" v-model="field.value" :disabled="loading"></v-text-field>
                     </v-col>
+
+
+
                     <v-col cols="12" md="4" sm="6">
-
                         <v-select v-model="selectedGender" :items="genders" label="Gender"
-                            variant="outlined"></v-select>
-
+                            variant="outlined" :disabled="loading"></v-select>
                     </v-col>
 
-                </v-row> {{ userData }}
+
+
+                    <v-col cols="12" md="4" sm="6">
+                        <v-switch label="Account active" inset v-model="activeStatus"
+                            :color="activeStatus ? 'success' : 'danger'" :disabled="loading"></v-switch>
+                    </v-col>
+
+                </v-row>
             </div>
+
+
+
+            <v-btn block color="success" @click="updateUserData" append-icon="mdi-content-save-check" text="Save changes"
+                class="font-weight-black text-xl" :disabled="loading"></v-btn>
+
+
         </div>
     </v-dialog>
 
@@ -40,7 +57,7 @@
 
 <script setup lang="ts">
 
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watch, reactive } from 'vue';
 import { usePiniaStorage } from '../../../store/pinia';
 
 const storage = usePiniaStorage();
@@ -62,7 +79,7 @@ const closeDialog = () => {
 
 
 // Fields
-const userFields = ref([
+let userFields = reactive([
     {
         label: 'First name',
         model: 'first_name',
@@ -93,12 +110,6 @@ const userFields = ref([
             (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
         ]
     },
-    // {
-    //     label: 'Role',
-    //     model: 'role',
-    //     type: 'select',
-    //     required: true
-    // },
     {
         label: 'Phone number',
         model: 'phone',
@@ -118,15 +129,63 @@ const genders = ref([
 ]);
 let selectedGender = ref();
 
+let activeStatus = ref();
+
 // Fields
 
-onMounted(() => {
-    userFields.value.forEach((field) => {
-        field.value = userData.value[field.model];
-    });
+watch(() => storage.editUserData, (newVal) => {
 
-    selectedGender = userData.value.gender;
+    if (newVal) {
+        const userData = storage.editUserData;
+
+        userFields.forEach((field) => {
+            field.value = userData[field.model];
+        });
+
+        selectedGender.value = userData.gender;
+        activeStatus.value = userData.active;
+    }
 });
 
+
+
+// Update user
+import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { db } from '../../../firebase.js';
+
+let loading = ref(false);
+
+const updateUserData = async () => {
+    loading.value = true;
+
+    try {
+
+        const userRef = await doc(db, "users", userData.value.id);
+
+        let newUserData = {};
+        userFields.forEach(field => {
+            newUserData[field.model] = field.value;
+        });
+
+        newUserData = {
+            ...newUserData,
+            gender: selectedGender.value,
+            active: activeStatus.value,
+        };
+
+        await updateDoc(userRef, newUserData);
+
+        storage.closeEditUserDialog();
+
+        storage.showAlert('success', 'User updated successfully');
+
+    } catch (error) {
+        storage.showAlert('error', 'Error updating user');
+        console.error(error);
+    }
+
+    loading.value = false;
+};
+// Update user
 
 </script>

@@ -10,6 +10,11 @@
             <v-list-item v-if="!loggedUser" prepend-icon="mdi-card-account-details" title="Subscriptions" value="Subscriptions"
                 @click="goTo('/subscriptions')"></v-list-item>
 
+            <!-- Admin -->
+            <v-list-item v-else-if="loggedUser.role == 'admin'" prepend-icon="mdi-security" title="Admin panel" value="Admin panel"
+            @click="goTo('/admin/dashboard')" class="bg-success" ></v-list-item>
+            <!-- Admin -->
+
             <v-list-item v-else prepend-icon="mdi-account" title="My profile" value="My profile"
                 @click="goTo('/dashboard')" class="bg-success" ></v-list-item>
 

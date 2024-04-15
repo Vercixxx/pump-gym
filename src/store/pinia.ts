@@ -174,6 +174,7 @@ export const usePiniaStorage = defineStore('store', {
         },
         closeEditUserDialog() {
             this.editUserDialog = false;
+            this.editUserData = {};
         },
         // Edit user dialog
     },
