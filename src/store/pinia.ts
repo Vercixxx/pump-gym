@@ -29,6 +29,9 @@ export const usePiniaStorage = defineStore('store', {
         // Admin
         editUserDialog: false,
         editUserData: {} as unknown,
+
+        manageSubscriptionDialog: false,
+        manageSubscriptionData: {} as unknown,
     }),
 
     actions: {
@@ -177,6 +180,17 @@ export const usePiniaStorage = defineStore('store', {
             this.editUserData = {};
         },
         // Edit user dialog
+
+        // Manage subscription dialog
+        openManageSubscriptionDialog(data = {}) {
+            this.manageSubscriptionData = data;
+            this.manageSubscriptionDialog = true;
+        },
+        closeManageSubscriptionDialog() {
+            this.manageSubscriptionDialog = false;
+            this.manageSubscriptionData = {};
+        },
+        // Manage subscription dialog
     },
 
     persist: {

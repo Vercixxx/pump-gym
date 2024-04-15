@@ -1,7 +1,7 @@
 <template>
 
     <div :style="darkMode ? 'background-color:rgba(30, 46, 84, 0.9)' : 'background-color:rgba(226, 232, 240, 0.9)'"
-        class="ma-0 h-screen">
+        class="ma-0 min-h-screen">
 
 
         <v-row class="pt-5 px-5 mb-9">
@@ -56,7 +56,7 @@
             </v-col>
             <v-col cols="0" sm="2" align=end>
 
-                <v-btn text="Add staff user" prepend-icon="mdi-plus" variant="plain"
+                <v-btn text="Add user" prepend-icon="mdi-plus" variant="plain"
                     class="hover:bg-green-500 transition ease-in-out duration-300 "></v-btn>
 
             </v-col>
@@ -105,8 +105,7 @@
                             <v-tooltip location="top"
                                 :text="'Manage ' + item.first_name + item.last_name + ' subscription'">
                                 <template v-slot:activator="{ props }">
-                                    <v-btn v-bind="props" icon="mdi-account-credit-card" color="info" variant="text"
-                                        disabled></v-btn>
+                                    <v-btn v-bind="props" icon="mdi-account-credit-card" color="info" variant="text" @click="openManageSubscriptionDialog(item)"></v-btn>
                                 </template>
                             </v-tooltip>
                         </template>
@@ -296,5 +295,20 @@ watch(() => storage.editUserDialog, (value) => {
     }
 });
 // Edit user dialog
+
+
+
+
+// Manage subscription dialog
+const openManageSubscriptionDialog = (userData) => {
+    storage.openManageSubscriptionDialog(userData);
+}
+
+watch(() => storage.manageSubscriptionDialog, (value) => {
+    if (!value) {
+        getUsers();
+    }
+});
+// Manage subscription dialog
 
 </script>

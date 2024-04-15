@@ -1,37 +1,57 @@
 <template>
 
-    <v-dialog v-model="editUserDialog" persistent width="800" transition="dialog-top-transition"
-        style="background-color: rgba(50, 50, 50, 0.8);">
-        <div class="rounded-xl pa-4 border-2 border-indigo-500 hover:shadow-2xl hover:shadow-indigo-500/50 "
-            :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
+    <v-dialog v-model="editUserDialog" persistent width="800" :fullscreen="$vuetify.display.smAndDown"
+        transition="dialog-top-transition" style="background-color: rgba(50, 50, 50, 0.8);">
+        <v-card :class="[
+            $vuetify.display.smAndDown ? '' : 'rounded-xl pa-4',
+            darkMode ? 'bg-slate-800' : 'bg-slate-200'
+        ]"  :style="darkMode ? 'background-color:rgb(30 46 84)' : 'background-color:rgb(226 232 240)'">
 
+            <v-card-title v-if="$vuetify.display.smAndUp">
+                <v-row>
+                    <v-col cols="2"></v-col>
+                    <v-col cols="8" align="center">
+                        <span class="text-3xl font-weight-black">
+                            Edit {{ userData.first_name }} {{ userData.last_name }}
+                            <v-icon>mdi-account-edit</v-icon>
+                        </span>
+                    </v-col>
+                    <v-col cols="2" align="end">
+                        <v-btn icon="mdi-close" variant="plain" class="text-xl" @click="closeDialog"></v-btn>
+                    </v-col>
+                </v-row>
+            </v-card-title>
 
-            <v-row>
-                <v-col cols="2"></v-col>
-                <v-col cols="8" align="center">
-                    <span class="text-3xl font-weight-black">
-                        Edit {{ userData.first_name }} {{ userData.last_name }}
-                        <v-icon>mdi-account-edit</v-icon>
-                    </span>
-                </v-col>
-                <v-col cols="2" align="end">
-                    <v-btn icon="mdi-close" variant="plain" class="text-xl" @click="closeDialog"></v-btn>
-                </v-col>
-            </v-row>
+            <!-- Mobile -->
+            <v-card-title v-else>
 
+                <v-row>
+                    <v-col cols="2" align="start">
+                        <v-btn text="Back" @click="closeDialog" prepend-icon="mdi-arrow-left" variant="plain"></v-btn>
+                    </v-col>
+                    <v-col cols="8" align=center>
+                        <span class="text-lg font-weight-black text-wrap"> Edit {{ userData.first_name }} {{ userData.last_name
+                            }} <v-icon>mdi-account-edit</v-icon></span>
+                    </v-col>
+                    <v-col cols="2"></v-col>
+                </v-row>
+
+            </v-card-title>
+            <!-- Mobile -->
 
 
             <div class="ma-5 pa-6 border-2 border-indigo-500 rounded-xl">
                 <v-row dense>
                     <v-col cols="12" md="4" sm="6" v-for="field in userFields" :key="field.model">
-                        <v-text-field :label="field.label" variant="outlined" v-model="field.value" :disabled="loading"></v-text-field>
+                        <v-text-field :label="field.label" variant="outlined" v-model="field.value"
+                            :disabled="loading"></v-text-field>
                     </v-col>
 
 
 
                     <v-col cols="12" md="4" sm="6">
-                        <v-select v-model="selectedGender" :items="genders" label="Gender"
-                            variant="outlined" :disabled="loading"></v-select>
+                        <v-select v-model="selectedGender" :items="genders" label="Gender" variant="outlined"
+                            :disabled="loading"></v-select>
                     </v-col>
 
 
@@ -45,12 +65,13 @@
             </div>
 
 
+            <v-card-actions>
+                <v-btn block color="success" @click="updateUserData" append-icon="mdi-content-save-check"
+                    text="Save changes" class="font-weight-black text-xl" :disabled="loading"></v-btn>
+            </v-card-actions>
 
-            <v-btn block color="success" @click="updateUserData" append-icon="mdi-content-save-check" text="Save changes"
-                class="font-weight-black text-xl" :disabled="loading"></v-btn>
 
-
-        </div>
+        </v-card>
     </v-dialog>
 
 </template>

@@ -32,11 +32,13 @@
 
         <!-- Dialogs -->
         <EditUserDialog />
+        <ManageSubscription />
         <!-- Dialogs -->
 
 
         <!-- Footer -->
-        <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
+        <FooterComponent v-if="!$vuetify.display.smAndDown" style="position: absolute; bottom: 0px; width: 100%;" />
+        <FooterComponent v-else />
         <!-- Footer -->
 
     </v-parallax>
@@ -96,6 +98,7 @@ const menu = ref([
 import DashboardComponent from './pages/Dashboard.vue'
 import ManageUsers from './pages/ManageUsers.vue'
 
+
 const selectedComponent = ref(DashboardComponent);
 
 function switchToComponent(component) {
@@ -103,7 +106,9 @@ function switchToComponent(component) {
 }
 
 
+
 import EditUserDialog from './components/EditUser.vue'
+import ManageSubscription from './components/ManageSubscription.vue'
 // Navigation
 
 </script>
