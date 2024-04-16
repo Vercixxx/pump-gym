@@ -4,80 +4,120 @@
         class="ma-0  min-h-screen ">
 
         <v-row class="pa-3">
-            <v-col cols="auto" align="center" justify="start">
 
-                <div
+            <!-- Left pane -->
+            <v-col cols="3">
+
+                <v-row
                     style="font-family: 'Share Tech Mono', monospace; text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);">
-                    
-                    <!-- Clock -->
-                    <span class="font-weight-black text-3xl">
-                        {{ clock }}
-                    </span>
-                    <!-- Clock -->
+                    <v-col align="center">
+                        <!-- Clock -->
+                        <span class="font-weight-black text-h2">
+                            {{ clock }}
+                        </span>
+                        <!-- Clock -->
 
-                    <v-expansion-panels >
-                        <v-expansion-panel :style="darkMode ? 'background-color:rgba(30, 46, 84, 0.9)' : 'background-color:rgba(226, 232, 240, 0.9)'" elevation="0">
-                            
-                            <v-expansion-panel-title>
-                                <v-icon>mdi-calendar</v-icon>
-                                <span>{{ currentDate.toDateString( ) }}</span>
-                            </v-expansion-panel-title>
+                        <v-expansion-panels>
+                            <v-expansion-panel
+                                :style="darkMode ? 'background-color:rgba(30, 46, 84, 0.9)' : 'background-color:rgba(226, 232, 240, 0.9)'"
+                                elevation="0">
 
-                            <v-expansion-panel-text>
-                                <v-date-picker show-adjacent-months v-model="currentDate"
-                                    :allowed-dates="allowedDates" hide-header></v-date-picker>
-                            </v-expansion-panel-text>
-                           
-                        </v-expansion-panel>
-                    </v-expansion-panels>
+                                <v-expansion-panel-title>
+                                    <v-icon>mdi-calendar</v-icon>
+                                    <span>{{ currentDate.toDateString() }}</span>
+                                </v-expansion-panel-title>
 
-                </div>
+                                <v-expansion-panel-text>
+                                    <v-date-picker show-adjacent-months v-model="currentDate"
+                                        :allowed-dates="allowedDates" hide-header></v-date-picker>
+                                </v-expansion-panel-text>
+
+                            </v-expansion-panel>
+                        </v-expansion-panels>
+                    </v-col>
+                </v-row>
+
+
+
+                <!-- Menu -->
+                <v-list class="my-2 bg-transparent">
+                    <v-list-item class="cursor-pointer hover:border-2">
+                        <v-list-item-title>
+                            <v-icon class="mr-2">mdi-barcode-scan</v-icon>
+                            Scan member
+                        </v-list-item-title>
+                    </v-list-item>
+
+                    <v-list-item class="cursor-pointer hover:border-2">
+                        <v-list-item-title>
+                            <v-icon class="mr-2">mdi-barcode-scan</v-icon>
+                            Scan member
+                        </v-list-item-title>
+                    </v-list-item>
+                </v-list>
+                <!-- Menu -->
+
             </v-col>
+            <!-- Left pane -->
 
-            <v-col cols="auto" align="start" >
-                <v-card >
-                    <v-card-title>
-                        <v-icon>mdi-account-group</v-icon>
-                        Members registered at the club
-                    </v-card-title>
-                    <v-card-text>
-                        <v-row>
-                            <v-col>
-                                <v-icon>mdi-account</v-icon>
-                                172 
-                            </v-col>
-                        </v-row>
-                    </v-card-text>
-                </v-card>
+
+            <!-- Right pane -->
+            <v-col cols="9">
+
+                <v-row>
+
+                    <v-col cols="auto" align="start">
+                        <v-card>
+                            <v-card-title>
+                                <v-icon>mdi-account-group</v-icon>
+                                Members registered at the club
+                            </v-card-title>
+                            <v-card-text>
+                                <v-row>
+                                    <v-col>
+                                        <v-icon>mdi-account</v-icon>
+                                        172
+                                    </v-col>
+                                </v-row>
+                            </v-card-text>
+                        </v-card>
+                    </v-col>
+                    <v-col cols="auto" align="start">
+                        <v-card>
+                            <v-card-title>
+                                <v-icon>mdi-account-group</v-icon>
+                                Members currently in club
+                            </v-card-title>
+                            <v-card-text>
+                                <v-row>
+                                    <v-col>
+                                        <v-icon>mdi-account</v-icon>
+                                        21
+                                    </v-col>
+                                </v-row>
+                            </v-card-text>
+                        </v-card>
+                    </v-col>
+                </v-row>
+
+
+                <!-- Chart -->
+                <v-row class="mb-10">
+                    <v-col cols="12" sm="8" align="center">
+
+                        <span class="font-weight-bold">History</span>
+                        <canvas ref="chart"></canvas>
+                    </v-col>
+                </v-row>
+                <!-- Chart -->
+
             </v-col>
-            <v-col cols="auto" align="start" >
-                <v-card >
-                    <v-card-title>
-                        <v-icon>mdi-account-group</v-icon>
-                        Members currently in club
-                    </v-card-title>
-                    <v-card-text>
-                        <v-row>
-                            <v-col>
-                                <v-icon>mdi-account</v-icon>
-                                21
-                            </v-col>
-                        </v-row>
-                    </v-card-text>
-                </v-card>
-            </v-col>
+            <!-- Right pane -->
+
         </v-row>
 
 
 
-        <!-- Chart -->
-        <v-row class="mb-10">
-            <v-col cols="12" sm="6" align="center">
-                <span class="font-weight-bold">History</span>
-                <canvas ref="chart"></canvas>
-            </v-col>
-        </v-row>
-        <!-- Chart -->
 
 
 

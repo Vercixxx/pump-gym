@@ -11,7 +11,7 @@
                 @click="goTo('/subscriptions')"></v-list-item>
 
             <!-- Admin -->
-            <v-list-item v-else-if="loggedUser.role == 'admin'" prepend-icon="mdi-security" title="Admin panel" value="Admin panel"
+            <v-list-item v-else-if="loggedUser.role == 'Admin'" prepend-icon="mdi-security" title="Admin panel" value="Admin panel"
             @click="goTo('/admin/dashboard')" class="bg-success" ></v-list-item>
             <!-- Admin -->
 

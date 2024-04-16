@@ -27,9 +27,7 @@
                     <div class="rounded-3xl border-2 border-indigo-600 transform transition-all hover:-translate-y-2 duration-300 shadow-lxl hover:shadow-2xl hover:shadow-indigo-500/50"
                         :class="$vuetify.display.smAndDown ? 'w-100' : 'w-75'" max-width="374" rounded="xl">
 
-                        <v-img height="250" :src="subscription.image" cover class="brightness-75 rounded-t-3xl"></v-img>
-
-                        <!-- <img class="" :src="subscription.image" alt="..."> -->
+                        <v-img height="250" :src="subscription.image" cover class="brightness-75 rounded-t-3xl" ></v-img>
 
                         <v-card-item>
                             <v-card-title>{{ subscription.name }}</v-card-title>

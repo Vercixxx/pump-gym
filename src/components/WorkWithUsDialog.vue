@@ -1,7 +1,7 @@
 <template>
-    <v-dialog v-model="workWithUsDialog" persistent width="600" transition="dialog-top-transition"
+    <v-dialog v-model="workWithUsDialog" persistent width="600"  transition="dialog-top-transition"
         :fullscreen="$vuetify.display.smAndDown ? true : false">
-        <div class="pa-4" :class="[
+        <v-card class="pa-4" :class="[
             darkMode ? 'bg-slate-800' : 'bg-slate-200',
             $vuetify.display.smAndDown ? '' : 'rounded-xl',
         ]">
@@ -75,7 +75,7 @@
                     </v-col>
                 </v-row>
             </v-card-actions>
-        </div>
+        </v-card>
     </v-dialog>
 </template>
 
