@@ -29,6 +29,7 @@ export const usePiniaStorage = defineStore('store', {
         // Admin
         editUserDialog: false,
         editUserData: {} as unknown,
+        addingUser: false,
 
         manageSubscriptionDialog: false,
         manageSubscriptionData: {} as unknown,
@@ -180,6 +181,19 @@ export const usePiniaStorage = defineStore('store', {
             this.editUserData = {};
         },
         // Edit user dialog
+
+
+        // Adding user
+        openAddUserDialog() {
+            this.addingUser = true;
+            this.editUserDialog = true;
+        },
+        closeAddUserDialog() {
+            this.addingUser = false;
+            this.editUserDialog = false;
+        },
+        // Adding user
+
 
         // Manage subscription dialog
         openManageSubscriptionDialog(data = {}) {

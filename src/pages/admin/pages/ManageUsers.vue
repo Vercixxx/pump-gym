@@ -57,7 +57,7 @@
             <v-col cols="0" sm="2" align=end>
 
                 <v-btn text="Add user" prepend-icon="mdi-plus" variant="plain"
-                    class="hover:bg-green-500 transition ease-in-out duration-300 "></v-btn>
+                    class="hover:bg-green-500 transition ease-in-out duration-300" @click="openAddUserDialog"></v-btn>
 
             </v-col>
 
@@ -182,7 +182,7 @@ const getUsers = async () => {
 
     if (search.value === '') {
         const users = collection(db, 'users');
-        const q = query(users, where('role', '==', selectedRole.value.toLowerCase()));
+        const q = query(users, where('role', '==', selectedRole.value));
         userSnapshots = await getDocs(q);
 
         // Text
@@ -190,8 +190,8 @@ const getUsers = async () => {
     }
     else {
         const usersGroup = collectionGroup(db, 'users');
-        const q = query(usersGroup, where(selectedSearchOption.value, "==", firstCharToUpper(search.value.trim())), where('role', '==', selectedRole.value.toLowerCase()));
-        const q2 = query(usersGroup, where(selectedSearchOption.value, "==", firstCharToLower(search.value.trim())), where('role', '==', selectedRole.value.toLowerCase()));
+        const q = query(usersGroup, where(selectedSearchOption.value, "==", firstCharToUpper(search.value.trim())), where('role', '==', selectedRole.value));
+        const q2 = query(usersGroup, where(selectedSearchOption.value, "==", firstCharToLower(search.value.trim())), where('role', '==', selectedRole.value));
 
         let userSnapshot1;
         let userSnapshot2;
@@ -310,5 +310,14 @@ watch(() => storage.manageSubscriptionDialog, (value) => {
     }
 });
 // Manage subscription dialog
+
+
+
+
+// Add user dialog
+const openAddUserDialog = () => {
+    storage.openAddUserDialog();
+}
+// Add user dialog
 
 </script>
