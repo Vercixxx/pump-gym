@@ -28,15 +28,15 @@
                         Logout
                         <v-icon class="ps-3" size="30">mdi-logout</v-icon>
                     </button>
+                  
 
-
-                    <button v-if="loggedUser.role != 'admin'" :class="darkMode ? 'bg-slate-800 text-white border' : ''" @click="goTo('/dashboard')"
+                    <button v-if="loggedUser.role != 'Admin'" :class="darkMode ? 'bg-slate-800 text-white border' : ''" @click="goTo('/dashboard')"
                         class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
                         Client panel
                         <v-icon class="ps-3" size="30">mdi-account-circle</v-icon>
                     </button>
 
-                    <button :class="darkMode ? 'bg-slate-800 text-white border' : ''" @click="goTo('/admin/dashboard')"
+                    <button v-else :class="darkMode ? 'bg-slate-800 text-white border' : ''" @click="goTo('/admin/dashboard')"
                         class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
                         Admin
                         <v-icon class="ps-3" size="30">mdi-security</v-icon>

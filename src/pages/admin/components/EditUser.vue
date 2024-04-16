@@ -212,6 +212,7 @@ watch(() => storage.editUserData, (newVal) => {
 
 
 
+
 // Update user
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from '../../../firebase.js';
@@ -254,6 +255,14 @@ const updateUserData = async () => {
 
 
 // Adding user
+watch(() => storage.addingUser, (newVal) => {
+
+    if (newVal) {
+        activeStatus.value = true;
+    }
+});
+
+
 const addingUser = computed(() => storage.addingUser);
 
 const closeAddUserDialog = () => {

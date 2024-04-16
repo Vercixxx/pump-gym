@@ -60,7 +60,7 @@ const router = createRouter({
         const store = usePiniaStorage();
         const userRole = store.userData ? store.userData.role : undefined;
         
-        if (userRole && userRole == 'admin') {
+        if (userRole && userRole == 'Admin') {
           next();
         } else {
           next('/error');
