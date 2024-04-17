@@ -36,6 +36,7 @@
       <BuySubscriptionDialog />
       <PaymentSuccessfullDialog />
       <MyOverlay />
+      <Dialog />
       <!-- Dialogs -->
 
 
@@ -59,6 +60,7 @@ import WorkWithUsDialog from './components/WorkWithUsDialog.vue'
 import BuySubscriptionDialog from './components/BuySubscriptionDialog.vue'
 import PaymentSuccessfullDialog from './components/PaymentSuccessfull.vue'
 import MyDrawer from './components/Drawer.vue'
+import Dialog from './components/Dialog.vue'
 
 // Component
 import MyOverlay from './components/MyOverlay.vue'

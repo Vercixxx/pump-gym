@@ -33,6 +33,19 @@ export const usePiniaStorage = defineStore('store', {
 
         manageSubscriptionDialog: false,
         manageSubscriptionData: {} as unknown,
+
+        // Dialog
+        dialog: {
+            show: false,
+            title: '',
+            message: '',
+            cancelText: '',
+            cancelAction: () => { },
+            confirmText: '',
+            confirmAction: () => { },
+            type: '',
+        },
+        // Dialog
     }),
 
     actions: {
@@ -205,10 +218,43 @@ export const usePiniaStorage = defineStore('store', {
             this.manageSubscriptionData = {};
         },
         // Manage subscription dialog
+
+
+
+        // Dialog
+        openDialog(
+            title: string,
+            message: string,
+            cancelText: string,
+            cancelAction: () => void,
+            confirmText: string,
+            confirmAction: () => void,
+            type?: string,
+        ) {
+            this.dialog.show = true;
+            this.dialog.title = title;
+            this.dialog.message = message;
+            this.dialog.cancelText = cancelText;
+            this.dialog.cancelAction = cancelAction;
+            this.dialog.confirmText = confirmText;
+            this.dialog.confirmAction = confirmAction;
+        
+            if (type) {
+                this.dialog.type = type;
+            }
+            else {
+                this.dialog.type = 'info';
+            }
+        },
+
+        closeDialog() {
+            this.dialog.show = false;
+        },
+        // Dialog
     },
 
     persist: {
         storage: sessionStorage,
     },
-    
+
 })

@@ -92,9 +92,15 @@
             <template v-slot:item="{ item }">
                 <tr align="center">
                     <td v-for="header in headers" :key="header.key">
-
-
+                        
                         <template v-if="header.key === 'actions'">
+                            <v-tooltip location="top" :text="'Make ' + item.first_name + ' ' + item.last_name + (item.active ? ' not active':' active')">
+                                <template v-slot:activator="{ props }">
+                                    <v-btn v-bind="props" :icon="item.active ? 'mdi-account-off':'mdi-account-check' " :color="item.active ? 'red':'success'" variant="text"
+                                        @click="openChangeActiveStatus(item.id, item.active, item.first_name, item.last_name)"></v-btn>
+                                </template>
+                            </v-tooltip>
+
                             <v-tooltip location="top" :text="'Edit ' + item.first_name + ' ' + item.last_name">
                                 <template v-slot:activator="{ props }">
                                     <v-btn v-bind="props" icon="mdi-pencil" color="success" variant="text"
@@ -319,5 +325,26 @@ const openAddUserDialog = () => {
     storage.openAddUserDialog();
 }
 // Add user dialog
+
+
+
+
+// Change active status
+const openChangeActiveStatus = (userId, active, firstName, lastName) => {
+    storage.openDialog(
+        'Change active status',
+        'Are you sure you want to make ' + firstName + ' ' + lastName + (active ? ' not active' : ' active') + '?',
+        'Cancel',
+        () => {
+            storage.closeDialog();
+        },
+        'Confirm',
+        () => {
+            storage.closeDialog();
+        }
+        
+    )
+}
+// Change active status
 
 </script>

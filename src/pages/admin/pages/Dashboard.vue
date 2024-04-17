@@ -51,7 +51,7 @@
                     <v-list-item class="cursor-pointer hover:border-2">
                         <v-list-item-title>
                             <v-icon class="mr-2">mdi-barcode-scan</v-icon>
-                            Scan member
+                            Scan parking ticket
                         </v-list-item-title>
                     </v-list-item>
                 </v-list>
@@ -67,7 +67,7 @@
                 <v-row>
 
                     <v-col cols="auto" align="start">
-                        <v-card>
+                        <v-card hover>
                             <v-card-title>
                                 <v-icon>mdi-account-group</v-icon>
                                 Members registered at the club
@@ -83,7 +83,7 @@
                         </v-card>
                     </v-col>
                     <v-col cols="auto" align="start">
-                        <v-card>
+                        <v-card hover>
                             <v-card-title>
                                 <v-icon>mdi-account-group</v-icon>
                                 Members currently in club
@@ -115,9 +115,6 @@
             <!-- Right pane -->
 
         </v-row>
-
-
-
 
 
 
@@ -208,6 +205,7 @@ onMounted(() => {
     });
 });
 // Chart
+
 
 
 </script>
