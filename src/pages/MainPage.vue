@@ -11,11 +11,11 @@
         <v-row>
 
             <!-- First row -->
-            <v-col cols="12" style="height: 70dvh;" v-if="!$vuetify.display.smAndDown">
+            <v-col cols="12" v-if="!$vuetify.display.smAndDown">
                 <v-row>
                     <v-col cols="12" sm="6" class="py-10 ps-10 d-flex justify-center align-center ">
                         <div class="pa-4 rounded-xl font-weight-black text-h6 backdrop-blur-xl"
-                            :class="darkMode ? ' bg-black/70 ' : ' bg-white/30 '">
+                            :class="darkMode ? ' bg-black/70 font-black' : ' bg-white/30 font-white'">
                             Welcome to Pump Gym!
 
                             <span class="text-wrap font-weight-thin text-justify ">
@@ -102,26 +102,21 @@
 
             <!-- First row -->
 
-            <!-- Spacer -->
-            <v-col cols="12" style="height: 10dvh;"></v-col>
-            <!-- Spacer -->
-
             <!-- Second row -->
-            <v-col cols="12" style="height: 40dvh;">
+            <v-col cols="12">
 
-                <span v-if="!$vuetify.display.mobile">
+                <div v-if="!$vuetify.display.mobile" class=" backdrop-blur-lg"
+                    :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
 
                     <v-row>
                         <v-col cols="12" align="center" jusify="center"
-                            class="text-h4 py-6 font-weight-black backdrop-blur-xl"
-                            :class="darkMode ? ' bg-black/70 ' : ' bg-white/30 '">
+                            class="text-h4 py-6 font-weight-black text-white">
                             Our clubs
                         </v-col>
                     </v-row>
 
 
-                    <v-carousel progress="success" hide-delimiters v-model="model" class="pt-10 backdrop-blur-xl"
-                        :class="darkMode ? ' bg-black/70 ' : ' bg-white/30 '">
+                    <v-carousel progress="success" hide-delimiters v-model="model" class="pt-10">
                         <v-carousel-item v-for="(chunk, index) in chunkedFacilities" :key="index">
                             <v-row>
                                 <v-col cols="4" v-for="facility in chunk" :key="facility.name" align="center">
@@ -143,7 +138,7 @@
                         </v-carousel-item>
                     </v-carousel>
 
-                </span>
+                </div>
 
 
                 <!-- Mobile -->
@@ -160,10 +155,11 @@
                     <v-carousel height="400" hide-delimiter-background show-arrows>
 
                         <v-carousel-item v-for="facility in facilities" :key="facility.name">
-                            <v-sheet height="100%" class="bg-transparent backdrop-blur-xl" :class="darkMode? ' bg-black/70':' bg-white/30'" >
+                            <v-sheet height="100%" class="bg-transparent backdrop-blur-xl"
+                                :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
                                 <div class="d-flex fill-height justify-center align-center">
-                                    <v-avatar size="300" >
-                                        <v-parallax :src="facility.Image" class="ma-0 pa-0" type="button" >
+                                    <v-avatar size="300">
+                                        <v-parallax :src="facility.Image" class="ma-0 pa-0" type="button">
                                             <div
                                                 class="d-flex flex-column fill-height justify-center align-center text-white">
                                                 <span class="font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
@@ -184,25 +180,41 @@
             <!-- Second row-->
 
             <!-- Spacer -->
-            <v-col cols="12" style="height: 15dvh;"></v-col>
+            <v-col cols="12" style="height: 3dvh;"></v-col>
             <!-- Spacer -->
 
 
             <!-- Third row -->
-            <!-- <v-col cols="12" style="height: 40dvh; min-width: 100%;">
-                    <v-parallax
-                        src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
-                        class="ma-0 pa-0">
-                        <div class="d-flex flex-column fill-height justify-center align-center text-white">
-                            <h1 class="text-h4 font-weight-thin mb-4">
-                                Hey!
-                            </h1>
-                            <h4 class="subheading pa-3">
-                                Content Content Content Content Content Content Content Content
-                            </h4>
-                        </div>
-                    </v-parallax>
-                </v-col> -->
+            <v-col cols="12">
+
+                <div class=" backdrop-blur-xl font-weight-black text-white"
+                    :class="darkMode ? ' bg-black/70 ' : ' bg-white/30'">
+
+                    <v-row>
+                        <v-col cols="12" align="center" jusify="center" class="text-h4 py-6 font-weight-black">
+                            Latest posts
+                        </v-col>
+                    </v-row>
+
+                    <v-card v-for="i in 3" :key="i" hover class="mx-4 my-4">
+                        <v-card-title class="text-h6 font-weight-black">
+                            Post title
+                        </v-card-title>
+
+                        <v-card-text>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
+                            fringilla
+                            nunc. Nullam
+                            nec
+                            nulla
+                            nec
+                            nulla
+                        </v-card-text>  
+                    </v-card>
+
+                </div>
+
+            </v-col>
             <!-- Third row -->
 
             <!-- Spacer -->
