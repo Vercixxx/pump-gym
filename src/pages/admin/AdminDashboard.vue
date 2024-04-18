@@ -19,6 +19,7 @@
         <v-tabs v-model="tab" :bg-color="darkMode ? 'rgb(30 46 84)' : 'rgb(226 232 240)'"
             :class="darkMode ? 'text-white' : ''" color="basil" grow>
             <v-tab v-for="item in menu" :key="item" :value="item" @click="switchToComponent(item.component)">
+                <v-icon :icon="item.icon" class="me-2"></v-icon>
                 {{ item.title }}
             </v-tab>
         </v-tabs>
@@ -86,8 +87,8 @@ const menu = ref([
     //     component: ManageUsers,
     // },
     {
-        title: 'Manage Facilities',
-        icon: 'mdi-cart',
+        title: 'Manage Posts',
+        icon: 'mdi-post',
         component: ManageUsers,
     },
 ]);

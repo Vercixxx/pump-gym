@@ -196,21 +196,54 @@
                         </v-col>
                     </v-row>
 
-                    <v-card v-for="i in 3" :key="i" hover class="mx-4 my-4">
+                    <!-- <v-card v-for="i in 5" :key="i" hover class="mx-4 my-4" :style="darkMode ? 'background-color:rgb(30 46 84)':'background-color:rgb(226 232 240)'">
                         <v-card-title class="text-h6 font-weight-black">
                             Post title
                         </v-card-title>
+
+                        <v-card-subtitle>
+                            2021-09-01, 12:00 - by Admin
+                        </v-card-subtitle>
 
                         <v-card-text>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
                             fringilla
                             nunc. Nullam
                             nec
-                            nulla
-                            nec
-                            nulla
-                        </v-card-text>  
+                            nulla nec nulla
+                        </v-card-text>
+                    </v-card> -->
+
+                    {{newPostTitle}}
+                    {{ newPostContent }}
+                    <v-card :style="darkMode ? 'background-color:rgb(30 46 84)':'background-color:rgb(226 232 240)'">
+                        <v-card-title class="font-weight-black">
+                            <v-text-field label="Post title" variant="solo-filled" v-model=newPostTitle></v-text-field>
+                        </v-card-title>
+
+                        <v-card-subtitle>
+                            2021-09-01, 12:00 - by Admin
+                        </v-card-subtitle>
+
+                        <v-card-text>
+                            <Editor :api-key="EditorApiKey" :init="{
+                                toolbar_mode: 'sliding',
+                                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+                                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                                tinycomments_mode: 'embedded',
+                                tinycomments_author: 'Author name',
+                                mergetags_list: [
+                                    { value: 'First.Name', title: 'First Name' },
+                                    { value: 'Email', title: 'Email' },
+                                ],
+                            }" 
+                            v-model="newPostContent"
+                            />
+                        </v-card-text>
                     </v-card>
+
+
+
 
                 </div>
 
@@ -357,4 +390,27 @@ const chunkedFacilities = computed(() => {
 // Facilities
 
 
+
+
+// Rich text editor
+import Editor from '@tinymce/tinymce-vue';
+const EditorApiKey = ref(import.meta.env.VITE_TINYMCU_API_KEY);
+
+const newPostTitle = ref('');
+const newPostContent = ref('');
+// Rich text editor
+
+
 </script>
+
+
+<style scoped>
+@media (min-width: 1024px) {
+    #sample {
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        width: 100%;
+    }
+}
+</style>
