@@ -117,7 +117,7 @@
 
 
                     <v-carousel progress="success" hide-delimiters v-model="model" class="pt-10">
-                        <v-carousel-item v-for="(chunk, index) in chunkedFacilities" :key="index">
+                        <v-carousel-item v-if="facilities" v-for="(chunk, index) in chunkedFacilities" :key="index">
                             <v-row>
                                 <v-col cols="4" v-for="facility in chunk" :key="facility.name" align="center">
                                     <v-avatar size="400">
@@ -136,6 +136,27 @@
                                 </v-col>
                             </v-row>
                         </v-carousel-item>
+
+                        <!-- Skeleton loader -->
+                        <v-carousel-item v-else>
+                            <v-row>
+                                <v-col cols="4" v-for="item in 3" align="center">
+                                    <v-avatar size="400">
+
+                                        <div
+                                            class="d-flex flex-column fill-height justify-center align-center text-white">
+                                            <div
+                                                class="animate-pulse absolute inline-flex h-full w-full rounded-full bg-slate-800  opacity-75 ">
+                                                <div class="h-2 bg-slate-200 rounded col-span-2"></div>
+                                            </div>
+                                        </div>
+
+                                    </v-avatar>
+                                </v-col>
+                            </v-row>
+                        </v-carousel-item>
+                        <!-- Skeleton loader -->
+
                     </v-carousel>
 
                 </div>
@@ -196,55 +217,65 @@
                         </v-col>
                     </v-row>
 
-                    <!-- <v-card v-for="i in 5" :key="i" hover class="mx-4 my-4" :style="darkMode ? 'background-color:rgb(30 46 84)':'background-color:rgb(226 232 240)'">
+
+                    <v-row>
+                        <v-col cols="12" align="center">
+                            <v-btn v-if="userRole && userRole == 'Admin' && !addingPost" variant="text" text="Add post"
+                                append-icon="mdi-plus" class="font-weight-black hover:bg-green-500 text-2xl ma-2"
+                                @click="addPost"></v-btn>
+                            <v-btn v-if="userRole && userRole == 'Admin' && addingPost" variant="text" text="Close"
+                                append-icon="mdi-close" class="font-weight-black hover:bg-red-500 text-2xl ma-2"
+                                @click="closePost" :disabled="addingPostLoading"></v-btn>
+                        </v-col>
+                    </v-row>
+
+
+
+                    
+                    <v-card v-if="addingPost"
+                    :style="darkMode ? 'background-color:rgb(30 46 84)' : 'background-color:rgb(226 232 240)'">
+                    <v-card-title class="font-weight-black">
+                        <v-text-field label="Post title" variant="solo-filled" v-model=newPostTitle
+                        :disabled="addingPostLoading"></v-text-field>
+                    </v-card-title>
+                    
+                    <v-card-subtitle>
+                        <Editor :api-key="EditorApiKey" :init="{
+                            toolbar_mode: 'sliding',
+                            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                            tinycomments_mode: 'embedded',
+                            tinycomments_author: 'Author name',
+                            mergetags_list: [
+                                { value: 'First.Name', title: 'First Name' },
+                                { value: 'Email', title: 'Email' },
+                            ],
+                        }" v-model="newPostContent" :disabled="addingPostLoading" />
+                        </v-card-subtitle>
+                        
+                        <v-card-actions>
+                            <v-btn block @click="addNewPost" variant="tonal" text="Add post" append-icon="mdi-plus"
+                            class="font-weight-black text-xl ma-2" size="large" :disabled="addingPostLoading"></v-btn>
+                        </v-card-actions>
+                        
+                    </v-card>
+                    
+
+
+                    <v-card v-for="post in posts" :key="posts.date" hover class="mx-4 my-4" :style="darkMode ? 'background-color:rgb(30 46 84)':'background-color:rgb(226 232 240)'">
                         <v-card-title class="text-h6 font-weight-black">
-                            Post title
+                            {{ post.postTitle }}
                         </v-card-title>
 
                         <v-card-subtitle>
-                            2021-09-01, 12:00 - by Admin
+                            {{ post.date.toDate().toLocaleDateString() }}, by {{ post.user}}
                         </v-card-subtitle>
 
                         <v-card-text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
-                            fringilla
-                            nunc. Nullam
-                            nec
-                            nulla nec nulla
-                        </v-card-text>
-                    </v-card> -->
-
-                    {{newPostTitle}}
-                    {{ newPostContent }}
-                    <v-card :style="darkMode ? 'background-color:rgb(30 46 84)':'background-color:rgb(226 232 240)'">
-                        <v-card-title class="font-weight-black">
-                            <v-text-field label="Post title" variant="solo-filled" v-model=newPostTitle></v-text-field>
-                        </v-card-title>
-
-                        <v-card-subtitle>
-                            2021-09-01, 12:00 - by Admin
-                        </v-card-subtitle>
-
-                        <v-card-text>
-                            <Editor :api-key="EditorApiKey" :init="{
-                                toolbar_mode: 'sliding',
-                                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-                                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                                tinycomments_mode: 'embedded',
-                                tinycomments_author: 'Author name',
-                                mergetags_list: [
-                                    { value: 'First.Name', title: 'First Name' },
-                                    { value: 'Email', title: 'Email' },
-                                ],
-                            }" 
-                            v-model="newPostContent"
-                            />
+                            <div v-html="post.postContent"></div>
                         </v-card-text>
                     </v-card>
-
-
-
-
+                    
                 </div>
 
             </v-col>
@@ -367,6 +398,13 @@ const store = usePiniaStorage();
 const facilities = computed(() => store.facilities);
 // Pinia
 
+
+// User
+const userRole = computed(() => store.userData.role);
+const uid = computed(() => store.userUid);
+// User
+
+
 // Theme
 import { useTheme } from 'vuetify'
 const theme = useTheme();
@@ -399,6 +437,58 @@ const EditorApiKey = ref(import.meta.env.VITE_TINYMCU_API_KEY);
 const newPostTitle = ref('');
 const newPostContent = ref('');
 // Rich text editor
+
+
+// Get posts
+const posts = ref([]);
+
+const getPosts = async () => {
+    const postsCollection = collection(db, 'Posts');
+    const postsSnapshot = await getDocs(postsCollection);
+
+    posts.value = postsSnapshot.docs.map(doc => doc.data());
+}
+
+onMounted(() => {
+    getPosts();
+})
+// Get posts
+
+
+// Add new post
+import { createPost } from '../scripts/CreatePost'
+
+const addingPost = ref(false);
+const addingPostLoading = ref(false);
+
+const addPost = () => {
+    newPostTitle.value = '';
+    newPostContent.value = '';
+    addingPost.value = true;
+}
+
+
+const closePost = () => {
+    addingPost.value = false;
+    newPostTitle.value = '';
+    newPostContent.value = '';
+}
+
+
+const addNewPost = async () => {
+    addingPost.value = true;
+
+    const response = await createPost(uid.value, newPostTitle.value, newPostContent.value);
+
+    if (response) {
+        addingPost.value = false;
+        newPostTitle.value = '';
+        newPostContent.value = '';
+    }
+
+    addingPost.value = false;
+}
+// Add new post
 
 
 </script>
