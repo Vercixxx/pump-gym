@@ -33,11 +33,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, defineAsyncComponent } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 import ProfileComponent from './Dashboard/ProfileComponent.vue';
-import SubscriptionComponent from './Dashboard/SubscriptionComponent.vue';
-import ParametersComponent from './Dashboard/ParametersComponent.vue';
+
+const SubscriptionComponent = defineAsyncComponent(() => import('./Dashboard/SubscriptionComponent.vue'));
+const ParametersComponent = defineAsyncComponent(() => import('./Dashboard/ParametersComponent.vue'));
 
 // Pinia
 const storage = usePiniaStorage();

@@ -48,11 +48,12 @@
 <script setup lang="ts">
 
 // Imports
-import { onMounted, computed, ref, reactive } from 'vue';
+import { onMounted, computed, ref, defineAsyncComponent } from 'vue';
 import { usePiniaStorage } from '../../store/pinia';
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from '../../firebase.js';
-import FooterComponent from '../../components/Footer.vue'
+
+const FooterComponent = defineAsyncComponent(() => import('../../components/Footer.vue'));
 // Imports
 
 

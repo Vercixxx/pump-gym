@@ -47,23 +47,24 @@
 
 <script setup lang="ts">
 // Vue
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, defineAsyncComponent } from 'vue';
 
 // Components
-import LoginComponent from './components/LoginComponent.vue'
-import PasswordResetDialog from './components/PasswordResetDialog.vue'
-import SignUpComponent from './components/SignUp.vue'
-import SnackBarAlert from './components/SnackBarAlert.vue'
-import AppBar from './components/AppBar.vue'
-import ContactUsDialog from './components/ContactUsDialog.vue'
-import WorkWithUsDialog from './components/WorkWithUsDialog.vue'
-import BuySubscriptionDialog from './components/BuySubscriptionDialog.vue'
-import PaymentSuccessfullDialog from './components/PaymentSuccessfull.vue'
-import MyDrawer from './components/Drawer.vue'
-import Dialog from './components/Dialog.vue'
+const LoginComponent = defineAsyncComponent(() => import('./components/LoginComponent.vue'));
+const PasswordResetDialog = defineAsyncComponent(() => import('./components/PasswordResetDialog.vue'));
+const SignUpComponent = defineAsyncComponent(() => import('./components/SignUp.vue'));
+const SnackBarAlert = defineAsyncComponent(() => import('./components/SnackBarAlert.vue'));
+const AppBar = defineAsyncComponent(() => import('./components/AppBar.vue'));
+const ContactUsDialog = defineAsyncComponent(() => import('./components/ContactUsDialog.vue'));
+const WorkWithUsDialog = defineAsyncComponent(() => import('./components/WorkWithUsDialog.vue'));
+const BuySubscriptionDialog = defineAsyncComponent(() => import('./components/BuySubscriptionDialog.vue'));
+const PaymentSuccessfullDialog = defineAsyncComponent(() => import('./components/PaymentSuccessfull.vue'));
+const MyDrawer = defineAsyncComponent(() => import('./components/Drawer.vue'));
+const Dialog = defineAsyncComponent(() => import('./components/Dialog.vue'));
+
 
 // Component
-import MyOverlay from './components/MyOverlay.vue'
+const MyOverlay = defineAsyncComponent(() => import('./components/MyOverlay.vue'));
 
 // Storage
 import { db } from "./firebase.js";

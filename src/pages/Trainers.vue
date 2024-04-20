@@ -157,11 +157,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, defineAsyncComponent } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 
-import FooterComponent from '../components/Footer.vue'
-
+const FooterComponent = defineAsyncComponent(() => import('../components/Footer.vue'));
 
 const model = ref(0);
 const selectedFacility = ref(null);

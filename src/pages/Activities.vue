@@ -108,10 +108,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, defineAsyncComponent } from 'vue';
 
 
-import FooterComponent from '../components/Footer.vue'
+const FooterComponent = defineAsyncComponent(() => import('../components/Footer.vue'));
 
 // Theme
 import { useTheme } from 'vuetify'

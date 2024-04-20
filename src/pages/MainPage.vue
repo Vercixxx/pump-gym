@@ -306,11 +306,11 @@
 
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, defineAsyncComponent } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js'
-import FooterComponent from '../components/Footer.vue'
+const FooterComponent = defineAsyncComponent(() => import('../components/Footer.vue'));
 
 
 const model = ref(0);
@@ -400,8 +400,8 @@ const facilities = computed(() => store.facilities);
 
 
 // User
-const userRole = computed(() => store.userData.role);
-const uid = computed(() => store.userUid);
+const userRole = computed(() => store?.userData?.role ?? null);
+const uid = computed(() => store?.userUid?.uid ?? null);
 // User
 
 

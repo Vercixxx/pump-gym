@@ -27,7 +27,7 @@
                     <div class="rounded-3xl border-2 border-indigo-600 transform transition-all hover:-translate-y-2 duration-300 shadow-lxl hover:shadow-2xl hover:shadow-indigo-500/50"
                         :class="$vuetify.display.smAndDown ? 'w-100' : 'w-75'" max-width="374" rounded="xl">
 
-                        <v-img height="250" :src="subscription.image" cover class="brightness-75 rounded-t-3xl" ></v-img>
+                        <v-img height="250" :src="subscription.image" cover class="brightness-75 rounded-t-3xl"></v-img>
 
                         <v-card-item>
                             <v-card-title>{{ subscription.name }}</v-card-title>
@@ -133,7 +133,9 @@
 
         </v-container>
 
-
+        <!-- Footer -->
+        <FooterComponent />
+        <!-- Footer -->
 
 
         <!-- </v-parallax> -->
@@ -143,11 +145,12 @@
 
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, defineAsyncComponent } from 'vue';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js';
 import { usePiniaStorage } from '../store/pinia';
 
+const FooterComponent = defineAsyncComponent(() => import('../components/Footer.vue'));
 
 
 const loading = ref(true);
