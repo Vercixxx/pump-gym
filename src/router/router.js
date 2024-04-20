@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import { usePiniaStorage } from '../store/pinia'
 
@@ -20,7 +20,7 @@ import { PaymentSuccessfull } from '../scripts/PaymentSuccessfull'
 import { PaymentUnsuccessfull } from '../scripts/PaymentUnsuccessfull'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
