@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="contactUsDialog" persistent width="600" transition="dialog-top-transition">
+    <v-dialog v-model="contactUsDialog" width="600" transition="dialog-top-transition">
         <div class="rounded-xl pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
 
             <v-row>

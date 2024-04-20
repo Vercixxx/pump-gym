@@ -209,7 +209,7 @@ const basicFields = ref([
 ]);
 
 
-const genderValue = ref(null);
+const genderValue = ref('');
 const genderOptions = ref([
     'Rather not say',
     'Men',
@@ -254,9 +254,9 @@ const storage = usePiniaStorage();
 var signUpDialog = computed(() => storage.signUpDialog);
 
 function closeSignUpDialog() {
-    basicFields.value.every(field => field.value = '');
-    passwordFields.value.every(field => field.value = '');
-    genderValue.value = null;
+    basicFields.value.forEach(field => field.value = '');
+    passwordFields.value.forEach(field => field.value = '');
+    genderValue.value = '';
     storage.closeSignUpDialog();
 }
 
@@ -268,6 +268,8 @@ const stepsCompleted = computed(() => forms.value.every(form => form));
 
 
 // Sign up method
+import { createAccount } from '../scripts/CreateAccount';
+
 const signUp = async () => {
     loading.value = true;
 
@@ -280,32 +282,23 @@ const signUp = async () => {
         password: passwordFields.value[0].value,
     }
 
-    try {
-        const response = await createUserWithEmailAndPassword(auth, data.email, data.password);
+    const response = await createAccount(
+        data.first_name,
+        data.last_name,
+        data.email,
+        data.phone,
+        data.gender,
+        'Member',
+        true,
+        data.password,
+    );
 
-        // Set data for user
-        const userDocRef = doc(db, 'users', response.user.uid);
-
-        await setDoc(userDocRef, {
-            first_name: data.first_name,
-            last_name: data.last_name,
-            email: data.email,
-            phone: data.phone,
-            gender: genderValue.value,
-        });
-
-
-        await storage.setUserData(response.user);
-
-        storage.showAlert('success', 'Account successfully created, now go to dashboard and subscribe to a plan.');
-
-    } catch (error) {
-        console.log(error);
-        storage.showAlert('error', error.code);
+    if(response) {
+        closeSignUpDialog();
     }
 
+
     loading.value = false;
-    closeSignUpDialog();
 };
 // Sign up method
 

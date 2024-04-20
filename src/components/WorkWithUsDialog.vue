@@ -9,7 +9,7 @@
                 <v-row v-if="!$vuetify.display.smAndDown">
                     <v-col cols="2"></v-col>
                     <v-col cols="8" align="center">
-                        <span class="text-3xl font-weight-black">Join out team!</span>
+                        <span class="text-3xl font-weight-black">Join our team!</span>
                     </v-col>
                     <v-col cols="2" align="end">
                         <v-btn icon="mdi-close" variant="plain" class="text-xl" @click="closeWorkWithUsDialog"></v-btn>
@@ -21,7 +21,7 @@
                         <v-btn text="Back" @click="exitDialog" prepend-icon="mdi-arrow-left" variant="plain"></v-btn>
                     </v-col>
                     <v-col cols="8" align=center>
-                        <span class="text-3xl font-weight-black">Join out team!</span>
+                        <span class="text-3xl font-weight-black">Join our team!</span>
                     </v-col>
                     <v-col cols="2"></v-col>
                 </v-row>

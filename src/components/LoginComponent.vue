@@ -56,7 +56,8 @@
                             Fill required fields
                         </v-tooltip>
                         <span>
-                            <v-btn :class="darkMode ? '' : 'text-black'" class="loginButton w-50 hover:text-white" :disabled="!form" @click="login()">
+                            <v-btn :class="darkMode ? '' : 'text-black'" class="loginButton w-50 hover:text-white"
+                                :disabled="!form" @click="login()">
                                 Sign in
                                 <v-icon right>mdi-login</v-icon>
                             </v-btn>
@@ -145,54 +146,21 @@ const openSignUpDialog = () => {
 
 };
 
+
+// Login
+import { SignIn } from '../scripts/SignIn'
+
 const login = async () => {
+
     loading.value = true;
-    try {
-        const email = loginInput.value.trim();
-        const passwordValue = password.value.trim();
 
-        await setPersistence(auth, browserSessionPersistence);
+    const email = loginInput.value.trim();
+    const passwordValue = password.value.trim();
 
-        const user = await signInWithEmailAndPassword(auth, email, passwordValue);
+    const response = await SignIn(email, passwordValue);
 
-        // Get the user data from the database
-        const userDocRef = doc(db, "users", user.user.uid);
-        const userDocSnap = await getDoc(userDocRef);
-        const userDetailData = userDocSnap.data();
-
-        // Get subscription data if exists
-        try {
-            const subscriptionCollectionRef = collection(userDocRef, 'subscription');
-
-            const subscriptionSnapshot = await getDocs(subscriptionCollectionRef);
-
-            const subscriptionData = subscriptionSnapshot.docs.map(doc => doc.data())[0];
-            subscriptionData['endDate'] = subscriptionData.end_date.toDate().toISOString().split('T')[0];
-            subscriptionData['startDate'] = subscriptionData.start_date.toDate().toISOString().split('T')[0];
-
-            piniaStorage.setUserData({ ...userDetailData, subscription: subscriptionData }, user.user.uid);
-        }
-        catch (error) {
-            console.log('No subscription data found');
-            piniaStorage.setUserData({ ...userDetailData }, user.user.uid);
-        }
-
-
+    if (response) {
         closeLoginDialog();
-
-    } catch (error) {
-        console.log(error);
-        if (error.code === 'auth/invalid-credential') {
-            store.dispatch('triggerAlert', {
-                message: 'Wrong email or password',
-                type: 'error'
-            });
-        } else {
-            store.dispatch('triggerAlert', {
-                message: 'An error occurred',
-                type: 'error'
-            });
-        }
     }
 
     loading.value = false;

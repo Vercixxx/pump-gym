@@ -3,9 +3,10 @@ import { usePiniaStorage } from '../store/pinia';
 
 
 import { auth, db } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { collection, setDoc, doc, Timestamp } from "firebase/firestore";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, setPersistence } from 'firebase/auth';
+import { setDoc, doc } from "firebase/firestore";
 
+import { SignIn } from './SignIn'
 
 export const createAccount = async (first_name: string, last_name: string, email: string, phone: string, gender: string, role: string, signInAfter: boolean = false, password?: string) => {
 
@@ -33,7 +34,7 @@ export const createAccount = async (first_name: string, last_name: string, email
 
 
         if (signInAfter) {
-            await storage.setUserData(userCredential.user);
+            await SignIn(email, password);
         }
 
         storage.showAlert('success', 'Account successfully created, now go to dashboard and subscribe to a plan.');

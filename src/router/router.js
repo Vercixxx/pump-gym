@@ -15,6 +15,7 @@ import ErrorPage from '../pages/404.vue'
 // Admin
 import AdminDashboard from '../pages/admin/AdminDashboard.vue'
 
+
 // Scripts
 import { PaymentSuccessfull } from '../scripts/PaymentSuccessfull'
 import { PaymentUnsuccessfull } from '../scripts/PaymentUnsuccessfull'
@@ -59,7 +60,7 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const store = usePiniaStorage();
         const userRole = store.userData ? store.userData.role : undefined;
-        
+
         if (userRole && userRole == 'Admin') {
           next();
         } else {

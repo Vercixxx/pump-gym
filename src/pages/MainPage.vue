@@ -47,7 +47,7 @@
 
 
                     <v-col cols="12" sm="6" align="center">
-                        <v-avatar size="500" class="me-2 " image="src/images/logo.png">
+                        <v-avatar size="500" class="me-2 " image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
                         </v-avatar>
                     </v-col>
 
@@ -61,17 +61,17 @@
 
 
                     <v-row>
-                        <v-col class="align-self-center ms-5 font-black text-3xl ">
+                        <v-col class="align-self-center font-black text-xl text-wrap" cols="6" align=center>
                             Welcome to Pump Gym!
                         </v-col>
-                        <v-col cols="auto" align="center">
-                            <v-avatar size="200" class="me-2 " image="src/images/logo.png">
+                        <v-col cols="6" align="center">
+                            <v-avatar size="200" class="me-2 " image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
                             </v-avatar>
                         </v-col>
                     </v-row>
 
 
-                    <v-card-text class="backdrop-blur-xl rounded-xl text-white"
+                    <v-card-text class="backdrop-blur-xl rounded-xl text-white text-wrap"
                         :class="darkMode ? ' bg-black/70 ' : ' bg-indigo-500/25 '">
                         Do you dream of health, strength, and perfect fitness? If so, you've found
                         the

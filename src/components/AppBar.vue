@@ -53,7 +53,7 @@
             <v-col cols="3" align="start" justify="center" class="text-h3 font-weight-black"
                 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);" @click="goTo('/')" role="button">
 
-                <v-avatar class="mx-2" image="src/images/logo.png">
+                <v-avatar class="mx-2" image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
                 </v-avatar>
 
                 <span style="letter-spacing: 3px;" :class="darkMode ? 'text-white' : ''">
@@ -101,17 +101,17 @@
                 <input type="checkbox" id="drawer-toggle" class="relative sr-only peer" checked @click="useDrawer()">
                 <label for="drawer-toggle"
                     class="inline-block p-3 transition-all duration-500 rounded-pill peer-checked:rotate-180">
-                    <v-icon :color="darkMode ? 'white' : 'black'" size="45">mdi-menu-down</v-icon>
+                    <v-icon :color="darkMode ? 'white' : 'black'" size="45">mdi-menu-up</v-icon>
                 </label>
             </v-col>
 
-            <v-col align="center" class="text-4xl pt-6" @click="goTo('/')">
+            <v-col align="start" class="text-2xl pt-7" @click="goTo('/')">
                 Pump gym
             </v-col>
 
 
             <v-col cols="auto" align="end" class="pt-5">
-                <v-avatar size="50" image="src/images/logo.png" @click="goTo('/')">
+                <v-avatar size="50" image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d" @click="goTo('/')">
                 </v-avatar>
             </v-col>
         </v-row>
