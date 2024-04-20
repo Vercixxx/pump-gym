@@ -134,12 +134,6 @@
 import { ref, computed } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 
-import { auth } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { collection, setDoc, doc, Timestamp } from "firebase/firestore";
-import { db } from '../firebase.js';
-
-
 // Reactive data
 const form = ref(false);
 const loading = ref(false);
@@ -296,7 +290,6 @@ const signUp = async () => {
     if(response) {
         closeSignUpDialog();
     }
-
 
     loading.value = false;
 };

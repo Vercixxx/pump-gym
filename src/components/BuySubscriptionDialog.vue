@@ -1,9 +1,9 @@
 <template>
 
     <!-- Dialog buy -->
-    <v-dialog v-model="buyDialog" persistent max-width="850 " style="background-color: rgba(100, 100, 100, 0.9);">
-        <v-card :image="buyDialogData.image">
-            <v-card-title style="background-color: rgba(250, 250, 250, 0.8);">
+    <v-dialog v-model="buyDialog" persistent max-width="800" style="background-color: rgba(20, 20, 20, 0.9);">
+        <v-card>
+            <v-card-title>
                 <v-row>
 
                     <v-col cols="1"></v-col>
@@ -16,65 +16,71 @@
                 </v-row>
             </v-card-title>
 
-            <v-card-text style="background-color: rgba(250, 250, 250, 0.8);">
+            <v-card-text>
 
-                <v-card elevation="0" style="background-color: rgba(250, 250, 250, 0);">
+                <div class="backdrop-blur-3xl">
 
-                    <v-card-text>
+                    <v-row>
+                        <v-col align="start">
+                            <v-table hover>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-black text-xl">Type</td>
+                                        <td class="text-md">{{ buyDialogData.name }}</td>
+                                    </tr>
 
-                        <!-- Choosen subscription -->
-                        <v-row>
-                            <v-col cols="auto" class="font-weight-black">
-                                Choosen subscription
-                            </v-col>
+                                    <tr>
+                                        <td class="font-weight-black text-xl">Period</td>
+                                        <td class="text-md">
+                                            <span v-if="buyDialogData.period == 1">1 month</span>
+                                            <span v-else>
+                                                {{ buyDialogData.period }} months
+                                            </span>
+                                        </td>
+                                    </tr>
 
-                            <v-col align="start">
-                                {{ buyDialogData.name }}
-                            </v-col>
-                        </v-row>
-                        <!-- Choosen subscription -->
+                                    <tr>
+                                        <td class="font-weight-black text-xl">Description</td>
+                                        <td class="text-md">
 
-                        <!-- Subscription period -->
-                        <v-row>
-                            <v-col cols="auto" class="font-weight-black">
-                                Subscription period
-                            </v-col>
+                                            {{ buyDialogData.description }} ??
 
-                            <v-col align="start">
-                                <span v-if="buyDialogData.period == 1">1 month</span>
-                                <span v-else>
-                                    {{ buyDialogData.period }} months
-                                </span>
-                            </v-col>
-                        </v-row>
-                        <!-- Subscription period -->
+                                        </td>
+                                    </tr>
 
-                        <!-- Price -->
-                        <v-row>
-                            <v-col cols="auto" class="font-weight-black">
-                                Price
-                            </v-col>
+                                    <tr>
+                                        <td class="font-weight-black text-xl">Price</td>
+                                        <td class="text-md">{{ buyDialogData.price }}</td>
+                                    </tr>
+                                </tbody>
+                            </v-table>
 
-                            <v-col align="start">
-                                {{ buyDialogData.price }} zł
-                            </v-col>
-                        </v-row>
-                        <!-- Price -->
-                    </v-card-text>
+                        </v-col>
+
+
+                        <!-- Image -->
+                        <v-col align="center">
+                            <v-img :aspect-ratio="1" class="rounded-lg" :src="buyDialogData.image" width="300"
+                                cover></v-img>
+                        </v-col>
+                        <!-- Image -->
+                    </v-row>
+
+
+
 
                     <stripe-checkout ref="checkoutRef" mode="payment" :pk="publishableKey" :line-items="lineItems"
                         :success-url="successURL" :cancel-url="cancelURL" @loading="v => loading = v" />
 
                     <v-card-actions>
-                        <v-btn color="success" block size="large" @click="submit" variant="elevated"
-                            :loading="loading">Buy ({{
-        buyDialogData.price }} zł)</v-btn>
-
+                        <v-btn class="mt-4" color="success" block size="large" @click="submit" variant="elevated"
+                            :loading="loading">Buy for {{
+                                buyDialogData.price }} zł</v-btn>
 
 
                     </v-card-actions>
 
-                </v-card>
+                </div>
 
 
             </v-card-text>

@@ -6,8 +6,6 @@
         <v-container>
 
 
-
-
             <!-- Special subscriptions -->
             <v-row>
                 <v-col cols="12" align=center>
@@ -54,7 +52,7 @@
 
 
                         <div class="w-100 rounded-b-3xl cursor-pointer font-black text-xl tracking-wide pt-5 pb-5"
-                            :class="darkMode ? '' : 'bg-indigo-300/50'" @click="handleBuyClick(subscription)">
+                            :class="darkMode ? '' : 'bg-indigo-300/50'" @click="handleBuyClick(subscription)" v-if="!loggedUser.subscription">
                             <span v-if="loggedUser == null">
                                 Buy {{ subscription.name }} plan
                             </span>
@@ -90,8 +88,6 @@
 
                         <v-img height="250" :src="subscription.image" cover class="brightness-75 rounded-t-3xl"></v-img>
 
-                        <!-- <img class="" :src="subscription.image" alt="..."> -->
-
                         <v-card-item>
                             <v-card-title>{{ subscription.name }}</v-card-title>
 
@@ -117,10 +113,11 @@
 
 
                         <div class="w-100 rounded-b-3xl cursor-pointer font-black text-xl tracking-wide pt-5 pb-5"
-                            :class="darkMode ? '' : 'bg-indigo-300/50'" @click="handleBuyClick(subscription)">
+                            :class="darkMode ? '' : 'bg-indigo-300/50'" @click="handleBuyClick(subscription)" v-if="!loggedUser.subscription">
                             <span v-if="loggedUser == null">
                                 Buy {{ subscription.name }} plan
                             </span>
+
                             <span v-else>
                                 Select {{ subscription.name }} plan
                             </span>
@@ -184,7 +181,10 @@ const darkMode = computed(() => theme.name.value === 'dark');
 const handleBuyClick = (subscription) => {
     if (loggedUser.value == null) {
         openLoginDialog();
-    } else {
+    } 
+    else if (loggedUser.value.subscription) {
+    }
+    else {
         showBuyDialog(subscription);
     }
 };
