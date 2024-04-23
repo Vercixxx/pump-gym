@@ -1,12 +1,21 @@
 <template>
 
     <v-dialog v-model="loginDialog" persistent width="500" style="background-color: rgba(50, 50, 50, 0.8);">
-        <div class="rounded-xl pa-4 border-4 border-indigo-900 " :class="darkMode ? 'bg-slate-900' : 'bg-slate-200'">
+        <div class="rounded-xl pa-4 border-4 border-indigo-900 "
+            :class="darkMode ? 'bg-slate-900 text-white' : 'bg-slate-200'">
+
+            <div class="absolute inset-0" :style="{
+                backgroundImage: 'url(https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                opacity: 0.03
+            }"></div>
+
             <v-card-title>
 
                 <v-row>
                     <v-col cols="2"></v-col>
-                    <v-col cols="8" class="headline text-h4" align=center>
+                    <v-col cols="8" class="font-weight-black text-4xl mb-5" align=center>
                         Sign in
                     </v-col>
                     <v-col cols="2" align="end">
@@ -15,18 +24,21 @@
                 </v-row>
             </v-card-title>
 
+
             <div class="grid grid-flow-col justify-stretch" align="center">
 
                 <v-form v-model="form">
 
                     <!-- Login -->
-                    <v-text-field v-model="loginInput" label="Email" class="mb-7 w-75" variant="outlined"
+                    <v-text-field v-model="loginInput" label="Email" class="mb-7"
+                        :class="$vuetify.display.smAndDown ? 'w-100' : ' w-75'" variant="outlined"
                         prepend-icon="mdi-email" autocomplete="username" :rules="rules.emailRules"></v-text-field>
                     <!-- Login -->
 
 
                     <!-- Password -->
-                    <v-text-field v-model="password" class="w-75" label="Password" variant="outlined"
+                    <v-text-field v-model="password" class="w-75"
+                        :class="$vuetify.display.smAndDown ? 'w-100' : ' w-75'" label="Password" variant="outlined"
                         :type="passwordVisible ? 'text' : 'password'" prepend-icon="mdi-key"
                         :append-inner-icon="passwordVisible ? 'mdi-eye' : ' mdi-eye-off'"
                         @click:append-inner="passwordVisible = !passwordVisible"
@@ -56,8 +68,12 @@
                             Fill required fields
                         </v-tooltip>
                         <span>
-                            <v-btn :class="darkMode ? '' : 'text-black'" class="loginButton w-50 hover:text-white"
-                                :disabled="!form" @click="login()">
+                            <v-btn :class="[
+                                darkMode ? '' : 'text-black',
+                                'loginButton',
+                                'hover:text-white',
+                                $vuetify.display.smAndDown ? 'w-75' : 'w-50'
+                            ]" class="loginButton hover:text-white" :disabled="!form" @click="login()">
                                 Sign in
                                 <v-icon right>mdi-login</v-icon>
                             </v-btn>
@@ -72,7 +88,7 @@
 
 
             <v-row>
-                <v-col cols="12" align="center">
+                <v-col cols="12" align="center" class="font-weight-black">
                     Or
                 </v-col>
             </v-row>
@@ -82,7 +98,7 @@
                 <v-col cols="12" align="center">
                     <button
                         class="cursor-pointer text-white font-bold shadow-md hover:scale-[1.2] shadow-purple-400 rounded-full px-5 py-2 bg-gradient-to-bl from-purple-500 to-purple-800"
-                        @click="openSignUpDialog">
+                        @click="openSignUpDialog" :class="$vuetify.display.smAndDown ? 'w-75' : 'w-50'">
                         Sign up now
                         <v-icon right>mdi-account-plus</v-icon>
                     </button>

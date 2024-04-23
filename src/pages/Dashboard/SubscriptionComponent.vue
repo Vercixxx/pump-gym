@@ -1,100 +1,107 @@
 <template>
-    <div class="mt-3 rounded backdrop-blur-xl" :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
+    <div class=" min-h-screen">
 
-        <span v-if="!subscription">
-            <v-card-title class="font-weight-black text-h6">Subscription</v-card-title>
 
-            <v-card-text>
-                You don't have a subscription yet. Buy one to access all the features.
-                <v-btn color="success" @click="goTo('/subscriptions')" variant="pain" class="font-weight-black">Buy
-                    subscription
-                    now!</v-btn>
-            </v-card-text>
-        </span>
 
-        <span v-else>
 
-            <v-row>
-                <v-col cols="0" sm="3"></v-col>
-                <v-col align="center" class="font-weight-black text-3xl">
-                    Subscription
-                </v-col>
-                <v-col cols="12" sm="3" :align="$vuetify.display.smAndDown ? 'center' : 'end'">
-                    <v-btn size="large" text="Cancel subscription" @click="cancelSubscriptionDialog = true"
-                        class="font-weight-black hover:bg-orange-600" variant="tonal"></v-btn>
-                </v-col>
-            </v-row>
+        <div class="mt-3 rounded backdrop-blur-xl" :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
 
-            <v-card-text>
+            <span v-if="!subscription">
+                <v-card-title class="font-weight-black text-h6">Subscription</v-card-title>
 
                 <v-card-text>
-                    <v-table style="background-color: rgba(250, 250, 250, 0);">
-                        <thead>
-                            <tr>
-                                <th class="text-left" v-for="header in tableHeaders" :key="header.value">
-                                    {{ header.text }}
-                                </th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr
-                                :style="subscription['status'] == 'active' ? 'background-color: rgba(20, 250, 20, 0.2);' : 'background-color: rgba(250, 20, 20, 0.2);'">
-                                <td v-for="header in tableHeaders" :key="header.value">
-                                    {{ subscription[header.value] }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </v-table>
-
-
-                    <!-- Invoices -->
-                    <v-expansion-panels class="mt-5">
-
-                        <v-expansion-panel @click="getPaymentHistory">
-                            <v-expansion-panel-title disable-icon-rotate>
-                                <h3 class="my-3">History of payments</h3>
-                                <template v-slot:actions>
-                                    <v-icon color="info" icon="mdi-invoice-text-multiple">
-                                    </v-icon>
-                                </template>
-                            </v-expansion-panel-title>
-
-                            <v-expansion-panel-text>
-                                <v-data-table-server v-model:items-per-page="itemsPerPage" :headers="headers"
-                                    :items="serverItems" :items-length="totalItems" :loading="loading" item-value="name"
-                                    @update:options="loadItems"></v-data-table-server>
-                            </v-expansion-panel-text>
-                        </v-expansion-panel>
-
-                    </v-expansion-panels>
-                    <!-- Invoices -->
+                    You don't have a subscription yet. Buy one to access all the features.
+                    <v-btn color="success" @click="goTo('/subscriptions')" variant="pain" class="font-weight-black">Buy
+                        subscription
+                        now!</v-btn>
                 </v-card-text>
+            </span>
 
-            </v-card-text>
-        </span>
-
-
-        <!-- Cancel subscription dialog -->
-        <v-dialog v-model="cancelSubscriptionDialog" persistent transition="dialog-top-transition">
-            <div class="rounded-xl pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
+            <span v-else>
 
                 <v-row>
-                    <v-col cols="2"></v-col>
-                    <v-col cols="8" align="center">
-                        <span class="text-3xl font-weight-black">Cancel Subscription</span>
+                    <v-col cols="0" sm="3"></v-col>
+                    <v-col align="center" class="font-weight-black text-3xl">
+                        Subscription
                     </v-col>
-                    <v-col cols="2" align="end">
-                        <v-btn icon="mdi-close" variant="plain" class="text-xl" @click="cancelSubscriptionDialog = false"></v-btn>
+                    <v-col cols="12" sm="3" :align="$vuetify.display.smAndDown ? 'center' : 'end'">
+                        <v-btn size="large" text="Cancel subscription" @click="cancelSubscriptionDialog = true"
+                            class="font-weight-black hover:bg-red-500 me-2" variant="tonal"
+                            append-icon="mdi-cancel"></v-btn>
                     </v-col>
                 </v-row>
 
-
-
                 <v-card-text>
 
-                    {{ subscription }}
-                    <!-- <v-row v-for="(facility, index) in facilities" :key="index" @click="makeCall(facility.Phone)">
+                    <v-card-text>
+                        <v-table style="background-color: rgba(250, 250, 250, 0);">
+                            <thead>
+                                <tr>
+                                    <th class="text-left" v-for="header in tableHeaders" :key="header.value">
+                                        {{ header.text }}
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr
+                                    :style="subscription['status'] == 'active' ? 'background-color: rgba(20, 250, 20, 0.2);' : 'background-color: rgba(250, 20, 20, 0.2);'">
+                                    <td v-for="header in tableHeaders" :key="header.value">
+                                        {{ subscription[header.value] }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </v-table>
+
+
+                        <!-- Invoices -->
+                        <v-expansion-panels class="mt-5">
+
+                            <v-expansion-panel @click="getPaymentHistory">
+                                <v-expansion-panel-title disable-icon-rotate>
+                                    <h3 class="my-3">History of payments</h3>
+                                    <template v-slot:actions>
+                                        <v-icon color="info" icon="mdi-invoice-text-multiple">
+                                        </v-icon>
+                                    </template>
+                                </v-expansion-panel-title>
+
+                                <v-expansion-panel-text>
+                                    <v-data-table-server v-model:items-per-page="itemsPerPage" :headers="headers"
+                                        :items="serverItems" :items-length="totalItems" :loading="loading"
+                                        item-value="name" @update:options="loadItems"></v-data-table-server>
+                                </v-expansion-panel-text>
+                            </v-expansion-panel>
+
+                        </v-expansion-panels>
+                        <!-- Invoices -->
+                    </v-card-text>
+
+                </v-card-text>
+            </span>
+
+
+            <!-- Cancel subscription dialog -->
+            <v-dialog v-model="cancelSubscriptionDialog" persistent transition="dialog-top-transition">
+                <div class="rounded-xl pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
+
+                    <v-row>
+                        <v-col cols="2"></v-col>
+                        <v-col cols="8" align="center">
+                            <span class="text-3xl font-weight-black">Cancel Subscription</span>
+                        </v-col>
+                        <v-col cols="2" align="end">
+                            <v-btn icon="mdi-close" variant="plain" class="text-xl"
+                                @click="cancelSubscriptionDialog = false"></v-btn>
+                        </v-col>
+                    </v-row>
+
+
+
+                    <v-card-text>
+
+                        {{ subscription }}
+                        <!-- <v-row v-for="(facility, index) in facilities" :key="index" @click="makeCall(facility.Phone)">
                         <v-col cols="12" align=center>
                             <div class="w-100 buttonBuy py-5" :class="darkMode ? 'text-white' : 'text-black'">
                                 <v-icon class="me-2" :color="darkMode ? 'white' : 'black'" icon="mdi-phone"></v-icon>
@@ -105,11 +112,13 @@
 
 
 
-                </v-card-text>
-            </div>
-        </v-dialog>
-        <!-- Cancel subscription dialog -->
+                    </v-card-text>
+                </div>
+            </v-dialog>
+            <!-- Cancel subscription dialog -->
 
+
+        </div>
 
     </div>
 

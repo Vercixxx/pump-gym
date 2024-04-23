@@ -157,7 +157,7 @@ const selectedSubscription = ref(null);
 
 // Pinia
 const store = usePiniaStorage();
-const loggedUser = computed(() => store.userData);
+const loggedUser = computed(() => store.userData? store.userData : false);
 const regularSubscriptions = computed(() => store.subscriptions.regular);
 const specialSubscriptions = computed(() => store.subscriptions.special);
 

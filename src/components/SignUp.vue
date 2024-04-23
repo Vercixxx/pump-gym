@@ -1,127 +1,146 @@
 <template>
 
-    <v-dialog v-model="signUpDialog" persistent width="700" style="background-color: rgba(50, 50, 50, 0.8);">
-        <div class="rounded-xl pa-4 border-4 border-indigo-900 " :class="darkMode ? 'bg-slate-900' : 'bg-slate-200'">
-
-            <v-card-title>
-
-                <v-row>
-                    <v-col cols="2"></v-col>
-                    <v-col cols="8" class="headline text-h4" align=center>
-                        Sign up
-                    </v-col>
-                    <v-col cols="2" align="end">
-                        <v-btn icon="mdi-close" variant="plain" @click="closeSignUpDialog" :disabled="loading"></v-btn>
-                    </v-col>
-                </v-row>
-            </v-card-title>
-
-            <v-card-text>
+    <v-dialog v-model="signUpDialog" persistent width="600" transition="dialog-top-transition"
+        :fullscreen="$vuetify.display.smAndDown ? true : false">
 
 
-                <v-stepper v-model="step" :mobile="$vuetify.display.smAndDown" elevation="0"
-                    style="background-color: rgba(255, 255, 255, 0.2);">
+        <div class="pa-4" :class="[
+            darkMode ? 'bg-slate-800' : 'bg-slate-200',
+            $vuetify.display.smAndDown ? 'h-100' : 'rounded-xl',
+        ]">
+            <div class="absolute inset-0" :style="{
+                backgroundImage: 'url(https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                opacity: 0.03
+            }"></div>
 
-                    <v-stepper-header>
-                        <v-stepper-item :complete="forms[0]" :title="cards[0].text" value="1"></v-stepper-item>
+            <v-row v-if="!$vuetify.display.smAndDown">
+                <v-col cols="2"></v-col>
+                <v-col cols="8" align="center">
+                    <span class="text-3xl font-weight-black" :class="darkMode ? 'text-white' : ''">Sign up</span>
+                </v-col>
+                <v-col cols="2" align="end">
+                    <v-btn icon="mdi-close" variant="plain" class="text-xl" @click="closeSignUpDialog"></v-btn>
+                </v-col>
+            </v-row>
 
-                        <v-divider></v-divider>
-
-                        <v-stepper-item :complete="forms[1]" :title="cards[1].text" value="2"></v-stepper-item>
-
-
-                    </v-stepper-header>
-
-
-                    <!-- Content -->
-                    <v-stepper-window>
-
-                        <!-- Page 1 -->
-                        <v-window-item value="1">
-
-                            <v-form v-model="forms[0]">
-
-                                <v-row>
-                                    <v-col cols="12" md="6" v-for="field in basicFields" :key="name">
-                                        <v-text-field v-model="field.value" :label="field.label" :rules="field.rules"
-                                            :prepend-inner-icon="field.icon" variant="underlined"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" md="6">
-                                        <v-select v-model="genderValue" label="Gender" :items=genderOptions
-                                            prepend-inner-icon="mdi-family-tree" :rules="requiredRule"
-                                            variant="underlined"></v-select>
-                                    </v-col>
-                                </v-row>
-
-                            </v-form>
-
-                        </v-window-item>
-                        <!-- Page 1 -->
-
-                        <!-- Page 2 -->
-                        <v-window-item value="2">
-
-                            <v-form v-model="forms[1]">
-
-                                <v-row>
-                                    <v-col cols="12" md="6" v-for="field in passwordFields" :key="name">
-                                        <v-text-field v-model="field.value" :label="field.label" :rules="field.rules"
-                                            :prepend-inner-icon="field.icon" :type="field.visible ? 'text' : 'password'"
-                                            :append-inner-icon="field.visible ? 'mdi-eye' : ' mdi-eye-off'"
-                                            @click:append-inner="field.visible = !field.visible"
-                                            autocomplete="current-password" :disabled="loading"
-                                            variant="underlined"></v-text-field>
-                                    </v-col>
-                                </v-row>
-
-                            </v-form>
-
-                        </v-window-item>
-                        <!-- Page 2 -->
-
-                    </v-stepper-window>
-                    <!-- Content -->
+            <v-row v-else>
+                <v-col cols="2" align="start">
+                    <v-btn text="Back" @click="closeSignUpDialog" prepend-icon="mdi-arrow-left" variant="plain"></v-btn>
+                </v-col>
+                <v-col cols="8" align=center>
+                    <span class="text-3xl font-weight-black">Sign up</span>
+                </v-col>
+                <v-col cols="2"></v-col>
+            </v-row>
 
 
-                    <!-- Nav -->
-                    <v-stepper-actions>
-                        <template v-slot:next="">
 
-                            <v-col :cols="step == 0 ? '12' : '6'" :sm="step == 0 ? '12' : '6'">
-                                <v-btn v-if="step == 0" block @click="step++" :disabled="!forms[step]" text="Next"
-                                    append-icon="mdi-arrow-right" class="text-h5" color="success">
-                                </v-btn>
 
-                                <span v-else>
-                                    <v-tooltip v-if="!form" activator="parent" location="top" no-overflow>
-                                        Fill required fields
-                                    </v-tooltip>
-                                    <span>
-                                        <v-btn block color="green-darken-2" @click="signUp()" :loading="loading"
-                                            :disabled="!stepsCompleted">Sign up</v-btn>
-                                    </span>
+
+            <v-stepper v-model="step" :mobile="$vuetify.display.smAndDown" elevation="0" class="bg-transparent"
+                :class="darkMode ? 'text-white' : ''">
+
+                <v-stepper-header>
+                    <v-stepper-item :complete="forms[0]" :title="cards[0].text" value="1"></v-stepper-item>
+
+                    <v-divider></v-divider>
+
+                    <v-stepper-item :complete="forms[1]" :title="cards[1].text" value="2"></v-stepper-item>
+
+
+                </v-stepper-header>
+
+
+                <!-- Content -->
+                <v-stepper-window>
+
+                    <!-- Page 1 -->
+                    <v-window-item value="1">
+
+                        <v-form v-model="forms[0]">
+
+                            <v-row>
+                                <v-col cols="12" md="6" v-for="field in basicFields" :key="name">
+                                    <v-text-field v-model="field.value" :label="field.label" :rules="field.rules"
+                                        :prepend-inner-icon="field.icon" variant="underlined"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" md="6">
+                                    <v-select v-model="genderValue" label="Gender" :items=genderOptions
+                                        prepend-inner-icon="mdi-family-tree" :rules="requiredRule"
+                                        variant="underlined"></v-select>
+                                </v-col>
+                            </v-row>
+
+                        </v-form>
+
+                    </v-window-item>
+                    <!-- Page 1 -->
+
+                    <!-- Page 2 -->
+                    <v-window-item value="2">
+
+                        <v-form v-model="forms[1]">
+
+                            <v-row>
+                                <v-col cols="12" md="6" v-for="field in passwordFields" :key="name">
+                                    <v-text-field v-model="field.value" :label="field.label" :rules="field.rules"
+                                        :prepend-inner-icon="field.icon" :type="field.visible ? 'text' : 'password'"
+                                        :append-inner-icon="field.visible ? 'mdi-eye' : ' mdi-eye-off'"
+                                        @click:append-inner="field.visible = !field.visible"
+                                        autocomplete="current-password" :disabled="loading"
+                                        variant="underlined"></v-text-field>
+                                </v-col>
+                            </v-row>
+
+                        </v-form>
+
+                    </v-window-item>
+                    <!-- Page 2 -->
+
+                </v-stepper-window>
+                <!-- Content -->
+
+
+                <!-- Nav -->
+                <v-stepper-actions>
+                    <template v-slot:next="">
+
+                        <v-col :cols="step == 0 ? '12' : '6'" :sm="step == 0 ? '12' : '6'">
+                            <v-btn v-if="step == 0" block @click="step++" :disabled="!forms[step]" text="Next"
+                                append-icon="mdi-arrow-right" class="text-h5" color="success">
+                            </v-btn>
+
+                            <span v-else>
+                                <v-tooltip v-if="!form" activator="parent" location="top" no-overflow>
+                                    Fill required fields
+                                </v-tooltip>
+                                <span>
+                                    <v-btn block color="green-darken-2" @click="signUp()" :loading="loading"
+                                        :disabled="!stepsCompleted">Sign up</v-btn>
                                 </span>
-                            </v-col>
+                            </span>
+                        </v-col>
 
 
-                        </template>
+                    </template>
 
-                        <template v-slot:prev="">
+                    <template v-slot:prev="">
 
-                            <v-col cols="6" sm="6" v-if="step == 1">
-                                <v-btn block :disabled="loading" @click="step--" text="Previous"
-                                    prepend-icon="mdi-arrow-left" class="">
-                                </v-btn>
-                            </v-col>
+                        <v-col cols="6" sm="6" v-if="step == 1">
+                            <v-btn block :disabled="loading" @click="step--" text="Previous"
+                                prepend-icon="mdi-arrow-left" class="">
+                            </v-btn>
+                        </v-col>
 
 
-                        </template>
-                    </v-stepper-actions>
-                    <!-- Nav -->
+                    </template>
+                </v-stepper-actions>
+                <!-- Nav -->
 
-                </v-stepper>
+            </v-stepper>
 
-            </v-card-text>
 
 
         </div>
@@ -287,7 +306,7 @@ const signUp = async () => {
         data.password,
     );
 
-    if(response) {
+    if (response) {
         closeSignUpDialog();
     }
 

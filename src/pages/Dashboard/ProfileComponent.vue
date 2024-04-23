@@ -1,51 +1,50 @@
 <template>
 
-    <v-row>
-        <v-col cols="12" align="center" justify="center">
-
-            <div elevation="0" class="mt-3 pa-5 rounded backdrop-blur-xl"
-                :class="darkMode ? ' bg-black/75' : ' bg-white/75'">
-                <v-card-title class="font-weight-black text-h6">
-                    Profile
-                    <span v-if="editing">
-                        - Editing mode
-                        <v-icon color="error" class="text-h4">mdi-pencil</v-icon>
-                    </span>
-
-                </v-card-title>
-
-                <v-card-text>
-                    <v-row>
-                        <v-col cols="12" align="end">
-                            <v-btn prepend-icon="mdi-pencil" variant="text" color="error" @click="editing = true"
-                                text="Edit" v-if="!editing"></v-btn>
-                            <v-btn prepend-icon="mdi-content-save" variant="text" color="success" v-if="editing"
-                                @click="updateUserData()" text="Save" :disabled="loading"></v-btn>
-                            <v-btn prepend-icon="mdi-close" variant="text" color="error" @click="cancelEditing()"
-                                text="Cancel" v-if="editing"></v-btn>
-                        </v-col>
-                    </v-row>
+    <div class="ma-0 min-h-screen">
 
 
-                    <v-row>
-                        <v-col cols="12" sm="6" v-for="field in fields">
-                            <v-text-field variant="outlined" :label="field.label" v-model="field.value"
-                                :readonly="!editing" :disabled="loading"
-                                :base-color="editing ? 'error' : ''"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6">
-                            <v-select variant="outlined" label="Gender" :items="['Men', 'Woman', 'Rather not say']"
-                                v-model="gender" :readonly="!editing" :disabled="loading"
-                                :base-color="editing ? 'error' : ''"></v-select>
-                        </v-col>
-                    </v-row>
+        <div elevation="0" class="mt-3 pa-5 rounded backdrop-blur-xl"
+            :class="darkMode ? ' bg-black/75' : ' bg-white/75'">
+            <v-card-title class="font-weight-black text-h6">
+                Profile
+                <span v-if="editing">
+                    - Editing mode
+                    <v-icon color="error" class="text-h4">mdi-pencil</v-icon>
+                </span>
 
-                </v-card-text>
+            </v-card-title>
 
-            </div>
+            <v-card-text>
+                <v-row>
+                    <v-col cols="12" align="end">
+                        <v-btn prepend-icon="mdi-pencil" variant="text" color="error" @click="editing = true"
+                            text="Edit" v-if="!editing"></v-btn>
+                        <v-btn prepend-icon="mdi-content-save" variant="text" color="success" v-if="editing"
+                            @click="updateUserData()" text="Save" :disabled="loading"></v-btn>
+                        <v-btn prepend-icon="mdi-close" variant="text" color="error" @click="cancelEditing()"
+                            text="Cancel" v-if="editing"></v-btn>
+                    </v-col>
+                </v-row>
 
-        </v-col>
-    </v-row>
+
+                <v-row>
+                    <v-col cols="12" sm="6" v-for="field in fields">
+                        <v-text-field variant="outlined" :label="field.label" v-model="field.value" :readonly="!editing"
+                            :disabled="loading" :base-color="editing ? 'error' : ''"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                        <v-select variant="outlined" label="Gender" :items="['Men', 'Woman', 'Rather not say']"
+                            v-model="gender" :readonly="!editing" :disabled="loading"
+                            :base-color="editing ? 'error' : ''"></v-select>
+                    </v-col>
+                </v-row>
+
+            </v-card-text>
+
+        </div>
+
+    </div>
+
 
 </template>
 

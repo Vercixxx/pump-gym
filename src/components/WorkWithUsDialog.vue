@@ -69,7 +69,7 @@
                             Fill required fields
                         </v-tooltip>
                         <span>
-                            <v-btn block text="Join" :color="form ? 'success' : 'error'" :disabled="!form"
+                            <v-btn size="large" block text="Join" :color="form ? 'success' : 'error'" :disabled="!form"
                                 variant="elevated" :loading="loading" @click="sendApplication"></v-btn>
                         </span>
                     </v-col>

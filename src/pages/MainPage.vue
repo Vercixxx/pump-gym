@@ -47,7 +47,8 @@
 
 
                     <v-col cols="12" sm="6" align="center">
-                        <v-avatar size="500" class="me-2 " image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
+                        <v-avatar size="500" class="me-2 "
+                            image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
                         </v-avatar>
                     </v-col>
 
@@ -61,18 +62,19 @@
 
 
                     <v-row>
-                        <v-col class="align-self-center font-black text-xl text-wrap" cols="6" align=center>
+                        <v-col class="align-self-center font-black text-xl text-wrap text-black" cols="6" align=center>
                             Welcome to Pump Gym!
                         </v-col>
                         <v-col cols="6" align="center">
-                            <v-avatar size="200" class="me-2 " image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
+                            <v-avatar size="200" class="me-2 "
+                                image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
                             </v-avatar>
                         </v-col>
                     </v-row>
 
 
-                    <v-card-text class="backdrop-blur-xl rounded-xl text-white text-wrap"
-                        :class="darkMode ? ' bg-black/70 ' : ' bg-indigo-500/25 '">
+                    <div class="backdrop-blur-3xl rounded-xl text-black text-wrap pa-4"
+                        :class="darkMode ? ' ' : '  '" style="font-size: smaller;">
                         Do you dream of health, strength, and perfect fitness? If so, you've found
                         the
                         perfect
@@ -94,7 +96,7 @@
 
                         Don't wait any longer - start your journey to a better version of yourself
                         today!
-                    </v-card-text>
+                </div>
                 </div>
 
             </v-col>
@@ -103,6 +105,76 @@
             <!-- First row -->
 
             <!-- Second row -->
+            <v-col cols="12">
+
+                <div class=" text-white">
+
+                    <v-row>
+                        <v-col cols="12" align="center">
+                            <v-btn v-if="userRole && userRole == 'Admin' && !manipulatePost" variant="text" text="Add post"
+                                append-icon="mdi-plus" class="font-weight-black hover:bg-green-500 text-2xl ma-2"
+                                @click="addPost"></v-btn>
+                            <v-btn v-if="userRole && userRole == 'Admin' && manipulatePost" variant="text" text="Close"
+                                append-icon="mdi-close" class="font-weight-black hover:bg-red-500 text-2xl ma-2"
+                                @click="closePost" :disabled="addingPostLoading"></v-btn>
+                        </v-col>
+                    </v-row>
+
+
+
+
+                    <v-card v-if="manipulatePost"
+                        :style="darkMode ? 'background-color:rgb(30 46 84)' : 'background-color:rgb(226 232 240)'">
+                        <v-card-title class="font-weight-black">
+                            <v-text-field label="Post title" variant="solo-filled" v-model=newPostTitle
+                                :disabled="addingPostLoading"></v-text-field>
+                        </v-card-title>
+
+                    
+
+                        <v-card-actions>
+                            <v-btn block @click="addNewPost" variant="tonal" text="Add post" append-icon="mdi-plus"
+                                class="font-weight-black text-xl ma-2" size="large"
+                                :disabled="addingPostLoading"></v-btn>
+                        </v-card-actions>
+
+                    </v-card>
+
+                    <v-row>
+                        <v-col>
+
+                            <div class=" text-wrap pa-2 ma-5 rounded-lg backdrop-blur-xl" v-for="post in posts"
+                                :key="posts.date">
+
+                                <div v-if="userRole && userRole == 'Admin'" class="d-flex justify-evenly">
+                                        <v-btn text="Edit" class="font-weight-black text-xl" size="large" color="primary" append-icon="mdi-pencil" @click="editPost(post.postTitle, post.postContent)"></v-btn>
+                                        <v-btn text="Delete" class="font-weight-black text-xl" size="large" color="error" append-icon="mdi-delete"></v-btn>
+                                </div>
+                                
+
+                                <div class="pa-2 font-weight-black text-3xl">
+                                    {{ post.postTitle }}
+                                </div>
+
+                                <div v-html="post.postContent"></div>
+
+                            </div>
+
+                        </v-col>
+                    </v-row>
+
+
+                </div>
+
+            </v-col>
+            <!-- Second row-->
+
+            <!-- Spacer -->
+            <v-col cols="12" style="height: 3dvh;"></v-col>
+            <!-- Spacer -->
+
+
+            <!-- Third row -->
             <v-col cols="12">
 
                 <div v-if="!$vuetify.display.mobile" class=" backdrop-blur-lg"
@@ -173,7 +245,7 @@
                     </v-row>
 
 
-                    <v-carousel height="400" hide-delimiter-background show-arrows>
+                    <v-carousel v-if="facilities" height="400" hide-delimiters cycle continuous progress="success" show-arrows>
 
                         <v-carousel-item v-for="facility in facilities" :key="facility.name">
                             <v-sheet height="100%" class="bg-transparent backdrop-blur-xl"
@@ -196,88 +268,27 @@
                             </v-sheet>
                         </v-carousel-item>
                     </v-carousel>
+
+
+                    <!-- Skeleton loader -->
+
+                    <div v-else class="flex items-center justify-center" style="height: 100%;">
+                        <v-avatar size="300">
+                            <div class="d-flex flex-column fill-height justify-center align-center text-white">
+                                <div
+                                    class="animate-pulse absolute inline-flex h-full w-full rounded-full bg-slate-800  opacity-75 ">
+                                    <div class="h-2 bg-slate-200 rounded col-span-2"></div>
+                                </div>
+
+                                <v-skeleton-loader type="paragraph" class="bg-transparent"
+                                    style="width: 400%;"></v-skeleton-loader>
+
+                            </div>
+                        </v-avatar>
+                    </div>
+
+                    <!-- Skeleton loader -->
                 </span>
-            </v-col>
-            <!-- Second row-->
-
-            <!-- Spacer -->
-            <v-col cols="12" style="height: 3dvh;"></v-col>
-            <!-- Spacer -->
-
-
-            <!-- Third row -->
-            <v-col cols="12">
-
-                <div class=" backdrop-blur-xl font-weight-black text-white"
-                    :class="darkMode ? ' bg-black/70 ' : ' bg-white/30'">
-
-                    <v-row>
-                        <v-col cols="12" align="center" jusify="center" class="text-h4 py-6 font-weight-black">
-                            Latest posts
-                        </v-col>
-                    </v-row>
-
-
-                    <v-row>
-                        <v-col cols="12" align="center">
-                            <v-btn v-if="userRole && userRole == 'Admin' && !addingPost" variant="text" text="Add post"
-                                append-icon="mdi-plus" class="font-weight-black hover:bg-green-500 text-2xl ma-2"
-                                @click="addPost"></v-btn>
-                            <v-btn v-if="userRole && userRole == 'Admin' && addingPost" variant="text" text="Close"
-                                append-icon="mdi-close" class="font-weight-black hover:bg-red-500 text-2xl ma-2"
-                                @click="closePost" :disabled="addingPostLoading"></v-btn>
-                        </v-col>
-                    </v-row>
-
-
-
-                    
-                    <v-card v-if="addingPost"
-                    :style="darkMode ? 'background-color:rgb(30 46 84)' : 'background-color:rgb(226 232 240)'">
-                    <v-card-title class="font-weight-black">
-                        <v-text-field label="Post title" variant="solo-filled" v-model=newPostTitle
-                        :disabled="addingPostLoading"></v-text-field>
-                    </v-card-title>
-                    
-                    <v-card-subtitle>
-                        <Editor :api-key="EditorApiKey" :init="{
-                            toolbar_mode: 'sliding',
-                            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                            tinycomments_mode: 'embedded',
-                            tinycomments_author: 'Author name',
-                            mergetags_list: [
-                                { value: 'First.Name', title: 'First Name' },
-                                { value: 'Email', title: 'Email' },
-                            ],
-                        }" v-model="newPostContent" :disabled="addingPostLoading" />
-                        </v-card-subtitle>
-                        
-                        <v-card-actions>
-                            <v-btn block @click="addNewPost" variant="tonal" text="Add post" append-icon="mdi-plus"
-                            class="font-weight-black text-xl ma-2" size="large" :disabled="addingPostLoading"></v-btn>
-                        </v-card-actions>
-                        
-                    </v-card>
-                    
-
-
-                    <v-card v-for="post in posts" :key="posts.date" hover class="mx-4 my-4" :style="darkMode ? 'background-color:rgb(30 46 84)':'background-color:rgb(226 232 240)'">
-                        <v-card-title class="text-h6 font-weight-black">
-                            {{ post.postTitle }}
-                        </v-card-title>
-
-                        <v-card-subtitle>
-                            {{ post.date.toDate().toLocaleDateString() }}, by {{ post.user}}
-                        </v-card-subtitle>
-
-                        <v-card-text>
-                            <div v-html="post.postContent"></div>
-                        </v-card-text>
-                    </v-card>
-                    
-                </div>
-
             </v-col>
             <!-- Third row -->
 
@@ -291,7 +302,11 @@
         <!-- Body -->
 
 
+        <!-- Post dialog -->
+        <PostDialog v-if="userRole && userRole == 'Admin'" />
+        <!-- Post dialog -->
 
+  
         <!-- Footer -->
         <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
         <!-- Footer -->
@@ -311,6 +326,7 @@ import { usePiniaStorage } from '../store/pinia';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase.js'
 const FooterComponent = defineAsyncComponent(() => import('../components/Footer.vue'));
+
 
 
 const model = ref(0);
@@ -430,14 +446,6 @@ const chunkedFacilities = computed(() => {
 
 
 
-// Rich text editor
-import Editor from '@tinymce/tinymce-vue';
-const EditorApiKey = ref(import.meta.env.VITE_TINYMCU_API_KEY);
-
-const newPostTitle = ref('');
-const newPostContent = ref('');
-// Rich text editor
-
 
 // Get posts
 const posts = ref([]);
@@ -456,51 +464,52 @@ onMounted(() => {
 
 
 // Add new post
-import { createPost } from '../scripts/CreatePost'
+// import { createPost } from '../scripts/CreatePost'
 
-const addingPost = ref(false);
+const manipulatePost = ref(false);
 const addingPostLoading = ref(false);
 
-const addPost = () => {
-    newPostTitle.value = '';
-    newPostContent.value = '';
-    addingPost.value = true;
-}
-
-
-const closePost = () => {
-    addingPost.value = false;
-    newPostTitle.value = '';
-    newPostContent.value = '';
-}
 
 
 const addNewPost = async () => {
-    addingPost.value = true;
+    manipulatePost.value = true;
 
     const response = await createPost(uid.value, newPostTitle.value, newPostContent.value);
 
     if (response) {
-        addingPost.value = false;
+        manipulatePost.value = false;
         newPostTitle.value = '';
         newPostContent.value = '';
     }
 
-    addingPost.value = false;
+    manipulatePost.value = false;
 }
 // Add new post
+
+
+
+
+// Add/Edit/Remove post
+const PostDialog = defineAsyncComponent(() => import('./admin/components/ManagePost.vue'));
+// const addPost = () => store.openCreateNewPostDialog();
+
+import { useDialogsStore } from '../store/dialogsStore';
+const dialogsStore = useDialogsStore();
+
+const addPost = (): void => {
+    dialogsStore.openCreateNewPostDialog();
+} ;
+
+const editPost = (title, content): void => {
+    dialogsStore.openEditPostDialog(title, content);
+} ;
+// Add/Edit/Remove post
+
+
+
 
 
 </script>
 
 
-<style scoped>
-@media (min-width: 1024px) {
-    #sample {
-        display: flex;
-        flex-direction: column;
-        place-items: center;
-        width: 100%;
-    }
-}
-</style>
+

@@ -46,6 +46,8 @@ export const usePiniaStorage = defineStore('store', {
             type: '',
         },
         // Dialog
+
+
     }),
 
     actions: {
@@ -238,7 +240,7 @@ export const usePiniaStorage = defineStore('store', {
             this.dialog.cancelAction = cancelAction;
             this.dialog.confirmText = confirmText;
             this.dialog.confirmAction = confirmAction;
-        
+
             if (type) {
                 this.dialog.type = type;
             }
@@ -251,6 +253,10 @@ export const usePiniaStorage = defineStore('store', {
             this.dialog.show = false;
         },
         // Dialog
+
+
+
+
     },
 
     persist: {

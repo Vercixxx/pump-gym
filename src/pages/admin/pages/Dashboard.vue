@@ -6,7 +6,7 @@
         <v-row class="pa-3">
 
             <!-- Left pane -->
-            <v-col cols="3">
+            <v-col cols="12" sm="3">
 
                 <v-row
                     style="font-family: 'Share Tech Mono', monospace; text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);">
@@ -62,7 +62,7 @@
 
 
             <!-- Right pane -->
-            <v-col cols="9">
+            <v-col cols="12" sm="9">
 
                 <v-row>
 
