@@ -8,6 +8,7 @@ export const useDialogsStore = defineStore('dialogsStore', {
         dialogManagePosts: {
             show: false,
             adding: true,
+            id: '',
             title: '',
             content: '',
         },
@@ -25,11 +26,12 @@ export const useDialogsStore = defineStore('dialogsStore', {
         },
 
 
-        openEditPostDialog(title: string, content: string) {
+        openEditPostDialog(post: object) {
             this.dialogManagePosts.adding = false;
-            this.dialogManagePosts.title = title;
-            this.dialogManagePosts.content = content;
             this.dialogManagePosts.show = true;
+            this.dialogManagePosts.id = post.id;
+            this.dialogManagePosts.title = post.postTitle;
+            this.dialogManagePosts.content = post.postContent;
         },
 
         closePostDialog() {

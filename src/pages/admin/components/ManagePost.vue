@@ -1,7 +1,7 @@
 <template>
-    <v-dialog persistent v-model="dialogManagePosts" transition="dialog-top-transition">
+    <v-dialog persistent v-model="dialogManagePosts" transition="dialog-top-transition" attach="body">
 
-        <v-card class="pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
+        <div class="pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
 
 
             <!-- Header -->
@@ -31,6 +31,7 @@
                         { value: 'First.Name', title: 'First Name' },
                         { value: 'Email', title: 'Email' },
                     ],
+                    content_style: '.mce-contextmenu { z-index: 2000 !important; }',
                 }" v-model="postContent" :disabled="loading" />
             </div>
             <!-- Content -->
@@ -44,7 +45,7 @@
             <!-- Actions -->
 
 
-        </v-card>
+        </div>
 
     </v-dialog>
 </template>
@@ -135,4 +136,5 @@ const addNewPost = async () => {
         width: 100%;
     }
 }
+
 </style>

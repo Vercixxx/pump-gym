@@ -121,8 +121,6 @@
                     </v-row>
 
 
-
-
                     <v-card v-if="manipulatePost"
                         :style="darkMode ? 'background-color:rgb(30 46 84)' : 'background-color:rgb(226 232 240)'">
                         <v-card-title class="font-weight-black">
@@ -144,10 +142,10 @@
                         <v-col>
 
                             <div class=" text-wrap pa-2 ma-5 rounded-lg backdrop-blur-xl" v-for="post in posts"
-                                :key="posts.date">
+                                :key="posts.id">
 
                                 <div v-if="userRole && userRole == 'Admin'" class="d-flex justify-evenly">
-                                        <v-btn text="Edit" class="font-weight-black text-xl" size="large" color="primary" append-icon="mdi-pencil" @click="editPost(post.postTitle, post.postContent)"></v-btn>
+                                        <v-btn text="Edit" class="font-weight-black text-xl" size="large" color="primary" append-icon="mdi-pencil" @click="editPost(post)"></v-btn>
                                         <v-btn text="Delete" class="font-weight-black text-xl" size="large" color="error" append-icon="mdi-delete"></v-btn>
                                 </div>
                                 
@@ -448,43 +446,18 @@ const chunkedFacilities = computed(() => {
 
 
 // Get posts
+import { getPosts } from '../scripts/ManagePosts';
+
 const posts = ref([]);
 
-const getPosts = async () => {
-    const postsCollection = collection(db, 'Posts');
-    const postsSnapshot = await getDocs(postsCollection);
 
-    posts.value = postsSnapshot.docs.map(doc => doc.data());
-}
+onMounted( async ()  => {
 
-onMounted(() => {
-    getPosts();
+    const response = await getPosts();
+    posts.value = response;
+    
 })
 // Get posts
-
-
-// Add new post
-// import { createPost } from '../scripts/CreatePost'
-
-const manipulatePost = ref(false);
-const addingPostLoading = ref(false);
-
-
-
-const addNewPost = async () => {
-    manipulatePost.value = true;
-
-    const response = await createPost(uid.value, newPostTitle.value, newPostContent.value);
-
-    if (response) {
-        manipulatePost.value = false;
-        newPostTitle.value = '';
-        newPostContent.value = '';
-    }
-
-    manipulatePost.value = false;
-}
-// Add new post
 
 
 
@@ -500,8 +473,9 @@ const addPost = (): void => {
     dialogsStore.openCreateNewPostDialog();
 } ;
 
-const editPost = (title, content): void => {
-    dialogsStore.openEditPostDialog(title, content);
+const editPost = (post): void => {
+    console.log(post);
+    dialogsStore.openEditPostDialog(post);
 } ;
 // Add/Edit/Remove post
 
