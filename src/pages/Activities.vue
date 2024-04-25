@@ -1,110 +1,56 @@
 <template>
-    <div>
 
-        <v-parallax
-            src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
-            class="ma-0 pa-0" style="min-height: 100dvh;">
+    <v-parallax
+        src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
+        class="ma-0 pa-0 min-h-100">
 
-            <!-- Desktop -->
+        <!-- Desktop -->
 
-            <!-- <v-carousel v-if="!$vuetify.display.smAndDown" show-arrows="hover" cycle hide-delimiter-background
-                progress="success" class="mt-10">
-                <v-carousel-item v-for="zone in zones" :key="zone.name">
+        <v-expansion-panels class="my-4" variant="popout">
+            <v-expansion-panel v-for="zone in zones" :key="zone.name" elevation="1" class="mb-3 rounded-xl"
+                :style="darkMode ? 'background-color: rgba(20,20,20,0.7);' : 'background-color: rgba(200,200,200, 0.7);'">
 
-
-                    <div class="backdrop-blur-xl" :class="darkMode ? ' bg-black/50' : ' bg-white/30'">
-
-                        <v-col cols="12" align=center class="text-h5 py-6 font-weight-black">
-                            {{ zone.name }}
+                <template v-slot:title>
+                    <div class="d-flex flex-column align-start justify-start">
+                        <div class="font-weight-black mb-4" :class="$vuetify.display.smAndDown ? '' : 'text-3xl '">
                             <v-icon size="30">{{ zone.icon }}</v-icon>
-                        </v-col>
-                        <v-col cols="12" align=center class="font-weight-medium py-6">
+                            {{ zone.name }}
+                        </div>
+
+                        <!-- <img src="path_to_your_image" alt="description" />  -->
+
+                        <div class="font-weight-medium text-justify mb-6"
+                            :class="$vuetify.display.smAndDown ? '' : 'text-xl  '">
                             {{ zone.description }}
-                        </v-col>
-
-                        <v-list-item v-for="(content, title) in zone.items" :key="title" class="my-1">
-                            <v-list-item-title>{{ title }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ content }}</v-list-item-subtitle>
-                        </v-list-item>
-
+                        </div>
                     </div>
 
 
-                </v-carousel-item>
-            </v-carousel> -->
+                </template>
 
-            <v-row v-if="!$vuetify.display.smAndDown" class="pa-5">
-                <v-col cols="6" v-for="zone in zones" :key="zone.name">
+                <template v-slot:text>
+                    <v-list-item v-for="(content, title) in zone.items" :key="title"
+                        class="my-1  hover:translate-x-8 ease-in-out duration-300 cursor-pointer">
+                        <template v-slot:prepend>
+                            <v-icon icon="mdi-dots-circle"></v-icon>
+                        </template>
+                        <v-list-item-title>{{ title }}</v-list-item-title>
+                        <v-list-item-subtitle>{{ content }}</v-list-item-subtitle>
+                    </v-list-item>
+                </template>
 
-                    <v-card class="pa-4 backdrop-blur-xl rounded-xl" :class="darkMode ? 'bg-black/75' : ' bg-white/50'" :variant="darkMode ? '':''" :color="darkMode ? 'white':''">
-
-                        <div class="text-3xl font-weight-black mb-4" align="center">
-                            <v-icon size="30">{{ zone.icon }}</v-icon>
-                            {{ zone.name }}
-                        </div>
-
-                        <div class="text-xl font-weight-medium text-justify mb-6">
-                            {{ zone.description }}
-                        </div>
-
-
-                        <v-list-item v-for="(content, title) in zone.items" :key="title" class="my-1 hover:scale-105 hover:-skew-y-1 ease-in-out duration-300 cursor-pointer" >
-                            <template v-slot:prepend>
-                                <v-icon icon="mdi-dots-circle"></v-icon>
-                            </template>
-                            <v-list-item-title>{{ title }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ content }}</v-list-item-subtitle>
-                        </v-list-item>
-
-                    </v-card>
-
-                </v-col>
-            </v-row>
-
-            <!-- Dektop -->
+            </v-expansion-panel>
+        </v-expansion-panels>
 
 
 
-            <!-- Mobile -->
-            <v-row v-if="$vuetify.display.smAndDown">
-                <v-col cols="12" v-for="zone in zones" :key="zone.name">
-
-                    <div class="pa-4 backdrop-blur-xl" :class="darkMode ? 'bg-black/50' : ' bg-white/50'">
-
-                        <div class="text-3xl font-weight-black mb-4" align="center">
-                            <v-icon size="30">{{ zone.icon }}</v-icon>
-                            {{ zone.name }}
-                        </div>
-
-                        <div class="text-xl font-weight-medium text-justify mb-6">
-                            {{ zone.description }}
-                        </div>
+        <!-- Footer -->
+        <FooterComponent />
+        <!-- Footer -->
 
 
-                        <v-list-item v-for="(content, title) in zone.items" :key="title" class="my-1">
-                            <template v-slot:prepend>
-                                <v-icon icon="mdi-dots-circle"></v-icon>
-                            </template>
-                            <v-list-item-title>{{ title }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ content }}</v-list-item-subtitle>
-                        </v-list-item>
+    </v-parallax>
 
-                    </div>
-
-                </v-col>
-            </v-row>
-
-
-            <!-- Mobile -->
-
-
-            <!-- Footer -->
-            <FooterComponent />
-            <!-- Footer -->
-
-
-        </v-parallax>
-    </div>
 </template>
 
 <script setup lang="ts">
