@@ -87,11 +87,11 @@ const menu = ref([
     //     icon: 'mdi-package-variant-closed',
     //     component: ManageUsers,
     // },
-    {
-        title: 'Manage Posts',
-        icon: 'mdi-post',
-        component: ManageUsers,
-    },
+    // {
+    //     title: 'Manage Posts',
+    //     icon: 'mdi-post',
+    //     component: ManageUsers,
+    // },
 ]);
 // Menu 
 
