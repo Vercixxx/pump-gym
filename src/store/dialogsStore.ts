@@ -9,7 +9,6 @@ export const useDialogsStore = defineStore('dialogsStore', {
             show: false,
             adding: true,
             id: '',
-            title: '',
             content: '',
         },
         // Posts
@@ -30,13 +29,11 @@ export const useDialogsStore = defineStore('dialogsStore', {
             this.dialogManagePosts.adding = false;
             this.dialogManagePosts.show = true;
             this.dialogManagePosts.id = post.id;
-            this.dialogManagePosts.title = post.postTitle;
             this.dialogManagePosts.content = post.postContent;
         },
 
         closePostDialog() {
             this.dialogManagePosts.show = false;
-            this.dialogManagePosts.title = '';
             this.dialogManagePosts.content = '';
         }
 

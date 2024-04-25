@@ -109,34 +109,13 @@
 
                 <div class=" text-white">
 
-                    <v-row>
-                        <v-col cols="12" align="center">
-                            <v-btn v-if="userRole && userRole == 'Admin' && !manipulatePost" variant="text" text="Add post"
-                                append-icon="mdi-plus" class="font-weight-black hover:bg-green-500 text-2xl ma-2"
+                    <v-row v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown">
+                        <v-col align="start">
+                            <v-btn size="large" variant="text" text="Add post"
+                                append-icon="mdi-plus" class="font-weight-black hover:bg-green-800 bg-green-500 text-2xl ms-5"
                                 @click="addPost"></v-btn>
-                            <v-btn v-if="userRole && userRole == 'Admin' && manipulatePost" variant="text" text="Close"
-                                append-icon="mdi-close" class="font-weight-black hover:bg-red-500 text-2xl ma-2"
-                                @click="closePost" :disabled="addingPostLoading"></v-btn>
                         </v-col>
                     </v-row>
-
-
-                    <v-card v-if="manipulatePost"
-                        :style="darkMode ? 'background-color:rgb(30 46 84)' : 'background-color:rgb(226 232 240)'">
-                        <v-card-title class="font-weight-black">
-                            <v-text-field label="Post title" variant="solo-filled" v-model=newPostTitle
-                                :disabled="addingPostLoading"></v-text-field>
-                        </v-card-title>
-
-                    
-
-                        <v-card-actions>
-                            <v-btn block @click="addNewPost" variant="tonal" text="Add post" append-icon="mdi-plus"
-                                class="font-weight-black text-xl ma-2" size="large"
-                                :disabled="addingPostLoading"></v-btn>
-                        </v-card-actions>
-
-                    </v-card>
 
                     <v-row>
                         <v-col>
@@ -144,15 +123,10 @@
                             <div class=" text-wrap pa-2 ma-5 rounded-lg backdrop-blur-xl" v-for="post in posts"
                                 :key="posts.id">
 
-                                <div v-if="userRole && userRole == 'Admin'" class="d-flex justify-evenly">
-                                        <v-btn text="Edit" class="font-weight-black text-xl" size="large" color="primary" append-icon="mdi-pencil" @click="editPost(post)"></v-btn>
-                                        <v-btn text="Delete" class="font-weight-black text-xl" size="large" color="error" append-icon="mdi-delete"></v-btn>
+                                <div v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown" class="d-flex justify-evenly">
+                                        <v-btn text="Manage post" class="font-weight-black text-xl" size="large" color="success" append-icon="mdi-pencil" @click="editPost(post)"></v-btn>
                                 </div>
                                 
-
-                                <div class="pa-2 font-weight-black text-3xl">
-                                    {{ post.postTitle }}
-                                </div>
 
                                 <div v-html="post.postContent"></div>
 
@@ -474,7 +448,6 @@ const addPost = (): void => {
 } ;
 
 const editPost = (post): void => {
-    console.log(post);
     dialogsStore.openEditPostDialog(post);
 } ;
 // Add/Edit/Remove post

@@ -10,7 +10,7 @@ import { db } from '../firebase.js';
 
 
 // Create Post
-export const createPost = async (uid: string, postTitle: String, postContent: String) => {
+export const createPost = async (uid: string, postContent: String) => {
     const date = new Date();
 
     const storage = usePiniaStorage();
@@ -19,7 +19,6 @@ export const createPost = async (uid: string, postTitle: String, postContent: St
 
         await addDoc(collection(db, "Posts"), {
             user: uid,
-            postTitle: postTitle,
             postContent: postContent,
             date: date
         });
@@ -57,7 +56,7 @@ export const getPosts = async () => {
 
 
 // Edit Post
-export const editPost = async (postId: String, uid: string, postTitle: String, postContent: String) => {
+export const editPost = async (postId: String, uid: string, postContent: String) => {
     const date = new Date();
 
     const storage = usePiniaStorage();
@@ -66,7 +65,6 @@ export const editPost = async (postId: String, uid: string, postTitle: String, p
 
         await addDoc(collection(db, "Posts"), {
             user: uid,
-            postTitle: postTitle,
             postContent: postContent
         });
 
