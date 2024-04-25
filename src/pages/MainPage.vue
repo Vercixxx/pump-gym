@@ -73,8 +73,8 @@
                     </v-row>
 
 
-                    <div class="backdrop-blur-3xl rounded-xl text-black text-wrap pa-4"
-                        :class="darkMode ? ' ' : '  '" style="font-size: smaller;">
+                    <div class="backdrop-blur-3xl rounded-xl text-black text-wrap pa-4" :class="darkMode ? ' ' : '  '"
+                        style="font-size: smaller;">
                         Do you dream of health, strength, and perfect fitness? If so, you've found
                         the
                         perfect
@@ -96,7 +96,7 @@
 
                         Don't wait any longer - start your journey to a better version of yourself
                         today!
-                </div>
+                    </div>
                 </div>
 
             </v-col>
@@ -111,8 +111,8 @@
 
                     <v-row v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown">
                         <v-col align="start">
-                            <v-btn size="large" variant="text" text="Add post"
-                                append-icon="mdi-plus" class="font-weight-black hover:bg-green-800 bg-green-500 text-2xl ms-5"
+                            <v-btn size="large" variant="text" text="Add post" append-icon="mdi-plus"
+                                class="font-weight-black  bg-green-500 ms-5 transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-110"
                                 @click="addPost"></v-btn>
                         </v-col>
                     </v-row>
@@ -120,17 +120,27 @@
                     <v-row>
                         <v-col>
 
-                            <div class=" text-wrap pa-2 ma-5 rounded-lg backdrop-blur-xl" v-for="post in posts"
+                            <v-row class=" text-wrap pa-2 ma-5 rounded-lg backdrop-blur-lg"
+                                :class="darkMode ? ' bg-black/70' : ' bg-white/30'" v-for="post in posts"
                                 :key="posts.id">
 
-                                <div v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown" class="d-flex justify-evenly">
-                                        <v-btn text="Manage post" class="font-weight-black text-xl" size="large" color="success" append-icon="mdi-pencil" @click="editPost(post)"></v-btn>
-                                </div>
-                                
+                                <v-col :cols="userRole && userRole == 'Admin' ? '10' : '12'">
+                                    <div v-html="post.postContent"></div>
+                                </v-col>
 
-                                <div v-html="post.postContent"></div>
 
-                            </div>
+                                <v-col align="end"
+                                    v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown">
+
+                                    <v-btn text="Manage post"
+                                        class="font-weight-black  transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-110"
+                                        size="large" color="success" append-icon="mdi-pencil"
+                                        @click="editPost(post)"></v-btn>
+
+                                </v-col>
+
+
+                            </v-row>
 
                         </v-col>
                     </v-row>
@@ -217,7 +227,8 @@
                     </v-row>
 
 
-                    <v-carousel v-if="facilities" height="400" hide-delimiters cycle continuous progress="success" show-arrows>
+                    <v-carousel v-if="facilities" height="400" hide-delimiters cycle continuous progress="success"
+                        show-arrows>
 
                         <v-carousel-item v-for="facility in facilities" :key="facility.name">
                             <v-sheet height="100%" class="bg-transparent backdrop-blur-xl"
@@ -278,7 +289,7 @@
         <PostDialog v-if="userRole && userRole == 'Admin'" />
         <!-- Post dialog -->
 
-  
+
         <!-- Footer -->
         <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
         <!-- Footer -->
@@ -420,16 +431,13 @@ const chunkedFacilities = computed(() => {
 
 
 // Get posts
-import { getPosts } from '../scripts/ManagePosts';
+import { posts, getPosts } from '../scripts/ManagePosts';
 
-const posts = ref([]);
+// const posts = ref([]);
 
 
-onMounted( async ()  => {
-
-    const response = await getPosts();
-    posts.value = response;
-    
+onMounted(async () => {
+    await getPosts();
 })
 // Get posts
 
@@ -445,11 +453,11 @@ const dialogsStore = useDialogsStore();
 
 const addPost = (): void => {
     dialogsStore.openCreateNewPostDialog();
-} ;
+};
 
 const editPost = (post): void => {
     dialogsStore.openEditPostDialog(post);
-} ;
+};
 // Add/Edit/Remove post
 
 
@@ -457,6 +465,3 @@ const editPost = (post): void => {
 
 
 </script>
-
-
-

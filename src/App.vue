@@ -172,10 +172,6 @@ onMounted(() => {
 
 
 <style>
-body::-webkit-scrollbar {
-  display: none;
-}
-
 @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-calendars/styles/material.css';
@@ -184,6 +180,9 @@ body::-webkit-scrollbar {
 @import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-vue-schedule/styles/material.css';
-
 @import './assets/themeIcon.css';
+
+body::-webkit-scrollbar {
+  display: none;
+}
 </style>

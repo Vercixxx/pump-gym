@@ -3,10 +3,34 @@ import { ref, computed } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 
 // Firebase
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
 
+
+
 // Imports
+
+
+
+export const posts = ref([]);
+
+
+
+// Get Posts
+export const getPosts = async () => {
+    const postsCollection = collection(db, 'Posts')
+    const postsSnapshot = await getDocs(postsCollection)
+
+    posts.value = postsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }))
+
+    return posts.value
+}
+// Get Posts
+
+
 
 
 // Create Post
@@ -36,23 +60,6 @@ export const createPost = async (uid: string, postContent: String) => {
 // Create Post
 
 
-// Get Posts
-export const getPosts = async () => {
-    const postsCollection = collection(db, 'Posts');
-    const postsSnapshot = await getDocs(postsCollection);
-
-    const posts = ref([]);
-
-    posts.value = postsSnapshot.docs.map(doc => {
-        return {
-            id: doc.id,
-            ...doc.data()
-        }
-    });
-
-    return posts.value;
-}
-// Get Posts
 
 
 // Edit Post
@@ -63,9 +70,10 @@ export const editPost = async (postId: String, uid: string, postContent: String)
 
     try {
 
-        await addDoc(collection(db, "Posts"), {
+        await updateDoc(doc(db, "Posts", postId), {
             user: uid,
-            postContent: postContent
+            date: date,
+            postContent: postContent,
         });
 
         storage.showAlert('success', 'Post edited successfully')
@@ -81,14 +89,16 @@ export const editPost = async (postId: String, uid: string, postContent: String)
 // Edit Post
 
 
+
+
 // Delete Post
 export const deletePost = async (postId: String) => {
 
+    const storage = usePiniaStorage();
+
     try {
 
-        await addDoc(collection(db, "Posts"), {
-            postId: postId
-        });
+        await deleteDoc(doc(db, "Posts", postId));
 
         storage.showAlert('success', 'Post deleted successfully')
         return true;

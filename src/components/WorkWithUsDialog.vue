@@ -49,7 +49,7 @@
                     <!-- CV -->
                     <v-file-input v-model="file" label="Upload CV" placeholder="Upload your documents"
                         prepend-icon="mdi-paperclip" show-size variant="outlined" :disabled="loading"
-                        accept="application/pdf" :rules="fileRules">
+                        accept="application/pdf" :rules="fileRules" hint="Send file in PDF format" persistent-hint="">
                         <template v-slot:selection="{ fileNames }">
                             <template v-for="fileName in fileNames" :key="fileName">
                                 <v-chip class="me-2" color="primary" size="small" label>

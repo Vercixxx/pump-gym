@@ -28,7 +28,6 @@
             </v-row>
             <!-- Header -->
 
-
             <!-- Content -->
             <v-card-text>
                 <Editor :api-key="EditorApiKey" :init="{
@@ -41,9 +40,8 @@
                         { value: 'First.Name', title: 'First Name' },
                         { value: 'Email', title: 'Email' },
                     ],
-                    height: 500,
-                    content_css: dark,
-                }" v-model="postContent" :disabled="loading" />
+                    height: 650,
+                }" v-model="postContent" />
             </v-card-text>
             <!-- Content -->
 
@@ -52,10 +50,11 @@
             <div class="flex justify-evenly">
 
                 <v-btn size="large" text="Delete post" append-icon="mdi-delete" :loading="loading"
-                    class=" transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-110"
-                    color="error"></v-btn>
+                    class=" transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-110" color="error"
+                    @click=deletePostWithId></v-btn>
 
-                <v-btn size="large" text="Save post" append-icon="mdi-content-save" @click="savePost" :loading="loading"
+                <v-btn size="large" :text="addingPost ? 'Add post' : 'Save post'" append-icon="mdi-content-save"
+                    @click="handleAddSave" :loading="loading"
                     class=" transition ease-in-out hover:-translate-y-1 hover:scale-110" color="success"></v-btn>
 
             </div>
@@ -69,7 +68,7 @@
 
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, readonly } from 'vue'
 
 // Theme
 import { useTheme } from 'vuetify'
@@ -84,7 +83,9 @@ import { useDialogsStore } from '../../../store/dialogsStore'
 const dialogsStore = useDialogsStore()
 
 const dialogManagePosts = computed(() => dialogsStore.dialogManagePosts.show);
+
 const addingPost = computed(() => dialogsStore.dialogManagePosts.adding);
+const postID = computed(() => dialogsStore.dialogManagePosts.id);
 
 
 watch(dialogManagePosts, (newValue, oldValue) => {
@@ -107,27 +108,35 @@ const loading = ref(false);
 
 
 
+// User
+import { usePiniaStorage } from '../../../store/pinia';
+const pinia_store = usePiniaStorage();
+const uid = computed(() => pinia_store.userUid ?? null);
+// User
+
+
+
 
 // Rich editor
 import Editor from '@tinymce/tinymce-vue';
 const EditorApiKey = ref('8wml2uclegqkzmfs0pmceobfjpv9b0btdi05rj9lxbdp564k');
 
 const postContent = ref('');
-
-// onMounted(() => {
-//   const elements = document.querySelectorAll(".tox-tinymce-aux");
-//   elements.forEach(el => el.style.zIndex = "2500");
-// })
 // Rich editor
+
+
+const handleAddSave = () => {
+    if (addingPost.value) {
+        addNewPost();
+    } else {
+        savePost();
+    }
+}
 
 
 
 // Add post
-import { usePiniaStorage } from '../../../store/pinia';
-const pinia_store = usePiniaStorage();
-const uid = computed(() => pinia_store.userUid ?? null);
-
-import { createPost } from '../../../scripts/ManagePosts'
+import { createPost, getPosts } from '../../../scripts/ManagePosts'
 
 const addNewPost = async () => {
     loading.value = true;
@@ -136,13 +145,50 @@ const addNewPost = async () => {
 
     if (response) {
         closeDialog();
+        await getPosts();
     }
 
     loading.value = false;
 }
-
 // Add post
 
+
+
+// Save post
+import { editPost } from '../../../scripts/ManagePosts'
+
+const savePost = async () => {
+    loading.value = true;
+
+    const response = await editPost(postID.value, uid.value ?? '', postContent.value);
+
+    if (response) {
+        closeDialog();
+        await getPosts();
+    }
+
+    loading.value = false;
+}
+// Save post
+
+
+
+// Delete post
+import { deletePost } from '../../../scripts/ManagePosts'
+
+const deletePostWithId = async () => {
+    loading.value = true;
+
+    const response = await deletePost(postID.value);
+
+    if (response) {
+        closeDialog();
+        await getPosts();
+    }
+
+    loading.value = false;
+}
+// Delete post
 
 
 </script>
