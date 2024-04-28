@@ -1,35 +1,126 @@
 <template>
 
-    <v-parallax
-        src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
-        class="ma-0 pa-0 min-h-100">
+    <div class="min-h-screen">
 
-        <!-- Desktop -->
 
         <v-expansion-panels class="my-4" variant="popout">
-            <v-expansion-panel v-for="zone in zones" :key="zone.name" elevation="1" class="mb-3 rounded-xl"
-                :style="darkMode ? 'background-color: rgba(20,20,20,0.7);' : 'background-color: rgba(200,200,200, 0.7);'">
+            <v-expansion-panel v-for="activity in activities" :key="activity.name" elevation="0"
+                class="mb-3 bg-transparent">
 
-                <template v-slot:title>
-                    <div class="d-flex flex-column align-start justify-start">
-                        <div class="font-weight-black mb-4" :class="$vuetify.display.smAndDown ? '' : 'text-3xl '">
-                            <v-icon size="30">{{ zone.icon }}</v-icon>
-                            {{ zone.name }}
-                        </div>
+                <v-expansion-panel-title v-if="!$vuetify.display.smAndDown">
 
-                        <!-- <img src="path_to_your_image" alt="description" />  -->
+                    <v-row>
+                        <v-col cols="6">
+                            <div class="font-weight-black mb-4" :class="$vuetify.display.smAndDown ? '' : 'text-3xl '">
+                                <v-icon size="30">{{ activity.icon }}</v-icon>
+                                {{ activity.name }}
+                            </div>
 
-                        <div class="font-weight-medium text-justify mb-6"
-                            :class="$vuetify.display.smAndDown ? '' : 'text-xl  '">
-                            {{ zone.description }}
-                        </div>
+                            <div class="pa-5 rounded-xl text-justify text-base"
+                                :class="$vuetify.display.smAndDown ? '' : 'text-sm'"
+                                :style="darkMode ? 'background-color: rgba(20,20,20,0.7);' : 'background-color: rgba(200,200,200, 0.7);'">
+                                {{ activity.description }}
+                            </div>
+                        </v-col>
+
+                        <v-col cols="6" class="d-flex align-center justify-evenly">
+                            <div class="w-25" v-for="image in activity.images">
+                                <v-img cover :src="image"
+                                    class="rounded-xl hover:scale-110 transition-all duration-150 ease-in-out "></v-img>
+                            </div>
+                        </v-col>
+                    </v-row>
+
+                    <template v-slot:actions="{ expanded, collapseIcon, disabled, expandIcon, readonly }">
+                        <v-btn size="large" :text="expanded ? 'Show less' : 'Show more'"
+                            :append-icon="expanded ? 'mdi-chevron-up' : 'mdi-chevron-down'" variant="text"
+                            class="backdrop-blur-3xl text-white font-weight-black text-xl"></v-btn>
+                    </template>
+
+                </v-expansion-panel-title>
+
+
+
+                <!-- Mobile -->
+                <v-expansion-panel-title v-else>
+                    <v-icon size="30">{{ activity.icon }}</v-icon>
+                    {{ activity.name }}<br>
+                    {{ activity.description }}
+                </v-expansion-panel-title>
+                <!-- Mobile -->
+
+
+                <v-expansion-panel-text>
+                    <div class="pa-2 rounded-xl backdrop-blur-3xl text-white">
+
+                        <v-list-item v-for="(content, title) in activity.items" :key="title"
+                            class="my-1  hover:translate-x-8 ease-in-out duration-300 cursor-pointer">
+                            <template v-slot:prepend>
+                                <v-icon icon="mdi-dots-circle"></v-icon>
+                            </template>
+                            <v-list-item-title>{{ title }}</v-list-item-title>
+                            <v-list-item-subtitle>{{ content }}</v-list-item-subtitle>
+                        </v-list-item>
                     </div>
 
+                </v-expansion-panel-text>
 
-                </template>
 
-                <template v-slot:text>
-                    <v-list-item v-for="(content, title) in zone.items" :key="title"
+                <!-- <template v-slot:title> -->
+
+                <!-- Desktop -->
+                <!-- <v-row v-if="!$vuetify.display.smAndDown" >
+                        <v-col cols="6" >
+                            <div class="font-weight-black mb-4" :class="$vuetify.display.smAndDown ? '' : 'text-3xl '" >
+                                <v-icon size="30">{{ activity.icon }}</v-icon>
+                                {{ activity.name }}
+                            </div>
+
+                            <div class="pa-5 rounded-xl text-justify text-base" :class="$vuetify.display.smAndDown ? '' : 'text-sm'" :style="darkMode ? 'background-color: rgba(20,20,20,0.7);' : 'background-color: rgba(200,200,200, 0.7);'">
+                                {{ activity.description }}
+                            </div>
+                        </v-col>
+                        <v-col cols="2" class="d-flex align-center justify-center">
+                            <v-img cover :src="activity.image" class="rounded-xl"></v-img>
+                        </v-col>
+                    </v-row> -->
+
+                <!-- <div v-if="!$vuetify.display.smAndDown" class="flex gap-4">
+
+        
+                        <div class="flex flex-grow-7">
+
+                            <div class="font-weight-black" :class="$vuetify.display.smAndDown ? '' : 'text-3xl '">
+                                <v-icon size="30">{{ activity.icon }}</v-icon>
+                                {{ activity.name }}
+                            </div>
+
+                            <div class=" text-justify text-base" :class="$vuetify.display.smAndDown ? '' : 'text-sm'">
+                                {{ activity.description }}
+                            </div>
+
+                        </div>
+                     
+                        <div class="flex flex-grow-5 align-center justify-center ">
+                            <div style="width: 300px;">
+                                <v-img cover :src="activity.image" class="rounded-xl"></v-img>
+                            </div>
+                        </div>
+                       
+                    </div> -->
+                <!-- Desktop -->
+
+
+
+
+
+
+
+
+                <!-- </template> -->
+
+                <!-- <template v-slot:text>
+                    <v-list-item v-for="(content, title) in activity.items" :key="title"
                         class="my-1  hover:translate-x-8 ease-in-out duration-300 cursor-pointer">
                         <template v-slot:prepend>
                             <v-icon icon="mdi-dots-circle"></v-icon>
@@ -37,11 +128,10 @@
                         <v-list-item-title>{{ title }}</v-list-item-title>
                         <v-list-item-subtitle>{{ content }}</v-list-item-subtitle>
                     </v-list-item>
-                </template>
+                </template> -->
 
             </v-expansion-panel>
         </v-expansion-panels>
-
 
 
         <!-- Footer -->
@@ -49,12 +139,12 @@
         <!-- Footer -->
 
 
-    </v-parallax>
+    </div>
 
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineAsyncComponent } from 'vue';
+import { ref, computed, defineAsyncComponent, onMounted } from 'vue';
 
 
 const FooterComponent = defineAsyncComponent(() => import('../components/Footer.vue'));
@@ -65,85 +155,17 @@ const theme = useTheme();
 const darkMode = computed(() => theme.name.value === 'dark');
 // Theme
 
-const zones = ref([
-    {
-        name: 'Functional Zone',
-        icon: 'mdi-dumbbell',
-        description: ' The Functional Zone is designed for dynamic and functional movements that mimic real-life activities. It focuses on improving overall strength, flexibility, coordination, and balance.',
-        items: {
-            "Functional Training": "Incorporating exercises that utilize multiple muscle groups and movements.",
-            "TRX Suspension Training": "Utilizing suspension straps to perform bodyweight exercises.",
-            "Kettlebell Workouts": "Swinging kettlebells to build strength and endurance.",
-            "Plyometric Exercises": "Explosive movements to improve power and agility.",
-            "Agility Training": "Drills to enhance speed, coordination, and reaction time.",
-            "Core Strengthening": "Exercises targeting the muscles of the abdomen, lower back, and hips for stability and balance."
-        },
-    },
-    {
-        name: 'Machine Zone',
-        icon: 'mdi-dumbbell',
-        description: 'The Machine Zone houses a variety of cardiovascular and strength training machines, providing options for both aerobic and anaerobic workouts.',
-        items: {
-            "Treadmills": "Walking, jogging, or running at various speeds and inclines for cardiovascular endurance.",
-            "Stationary Bikes": "Cycling for low - impact cardio workouts.",
-            "Elliptical Trainers": "Simulating walking, running, or climbing stairs with minimal joint stress.",
-            "Rowing Machines": "Engaging in full - body workouts to improve cardiovascular fitness and strength.",
-            "Strength Training": "Machines: Targeting specific muscle groups with guided resistance exercises.",
-        },
-    },
-    {
-        name: 'Free Weight Zone',
-        icon: 'mdi-dumbbell',
-        description: 'The Free Weight Zone is dedicated to traditional strength training using free weights such as dumbbells, barbells, and weight plates.',
-        items: {
-            "Dumbbell Workouts": "Performing exercises like bicep curls, shoulder presses, and lunges with dumbbells.",
-            "Barbell Exercises": "Squats, deadlifts, bench presses, and overhead presses using barbells.",
-            "Bench Press": "Pressing weight while lying on a flat, incline, or decline bench.",
-            "Squats": "Lower body exercises for building leg and glute strength.",
-            "Deadlifts": "Lifting weight from the floor to strengthen the posterior chain.",
-            "Bicep Curls": "Isolating the biceps with curling movements.",
-        },
-    },
-    {
-        name: 'Group Exercise Zone',
-        icon: 'mdi-dumbbell',
-        description: 'The Group Exercise Zone offers a variety of instructor-led classes in a group setting, catering to different fitness levels and preferences.',
-        items: {
-            "Yoga Classes": "Practicing various yoga poses to improve flexibility, strength, and mental well- being.",
-            "Pilates Workouts": "Engaging in core - focused exercises to enhance stability and posture.",
-            "Zumba Dance": "Enjoying high- energy dance workouts inspired by Latin and international rhythms.",
-            "Spin Classes": "Indoor cycling sessions with music and motivational coaching.",
-            "Body Pump": "Full - body strength training workouts using barbells and adjustable weights.",
-            "HIIT(High - Intensity Interval Training)": "Alternating between intense bursts of activity and short rest periods for maximal calorie burn.",
-            "Kickboxing": "Combining martial arts techniques with cardiovascular exercises for a challenging workout.",
-        },
-    },
-    {
-        name: 'Cardio Zone',
-        icon: 'mdi-dumbbell',
-        description: 'The Cardio Zone provides a range of equipment and spaces for cardiovascular training, catering to individuals looking to improve their endurance and burn calories.',
-        items: {
-            "Interval Training": "Alternating between periods of high- intensity exercise and recovery for improved fitness.",
-            "Circuit Training": "Moving through a series of exercise stations to target different muscle groups and keep the heart rate elevated.",
-            "Stair Climber": "Climbing stairs on a machine to strengthen the lower body and boost cardiovascular fitness.",
-            "Jump Rope": "Skipping rope for a high- intensity, calorie - burning workout.",
-            "Sled Push / Pull": "Pushing or pulling weighted sleds to develop strength and power.",
-            "Battle Ropes": "Swinging heavy ropes in various patterns to engage the upper body and core.",
-        },
-    },
-    {
-        name: 'Flexibility and Recovery Zone',
-        icon: 'mdi-dumbbell',
-        description: 'The Flexibility and Recovery Zone is dedicated to promoting relaxation, mobility, and recovery after intense workouts.',
-        items: {
-            "Stretching Area": "Performing static and dynamic stretches to improve flexibility and prevent injury.",
-            "Foam Rolling": "Using foam rollers to release muscle tension and improve circulation.",
-            "Massage Therapy": "Receiving professional massages to alleviate muscle soreness and promote relaxation.",
-            "Sauna": "Relaxing in a dry sauna to induce sweating and detoxification while soothing muscles.",
-            "Steam Room": "Enjoying the moist heat of a steam room for relaxation and respiratory benefits.",
-            "Jacuzzi": "Soaking in a hot tub to ease muscle tension and promote relaxation.",
-        },
-    },
-]);
+
+// Activities
+import { getActivities, activities } from '../scripts/Activities';
+// const activities = ref();
+
+onMounted(async () => {
+    await getActivities();
+});
+
+// Activities
+
+const isOpen = ref(false);
 
 </script>

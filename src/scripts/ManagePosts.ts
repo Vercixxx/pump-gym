@@ -1,12 +1,10 @@
 // Imports
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 
 // Firebase
 import { addDoc, collection, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
-
-
 
 // Imports
 

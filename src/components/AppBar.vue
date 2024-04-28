@@ -1,59 +1,16 @@
 <template>
     <!-- Desktop -->
     <v-app-bar v-if="$vuetify.display.width > 1730" class=" pt-1 pb-1" elevation="0"
-        :color="darkMode ? 'rgb(30 46 84)' : 'rgb(226 232 240)'">
+        :style="darkMode ? 'background-color:rgba(20, 20, 20, 0.4)' : 'background-color:rgba(200, 200, 200, 0.4)'">
         <v-row>
 
-            <v-col cols="auto" justify="space-around">
-
-                <!-- User not logged in  -->
-                <span v-if="!loggedUser">
-
-                    <button :class="darkMode ? 'bg-slate-800 text-white' : ''" @click="invokeLoginDialog"
-                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
-                        Client panel
-                        <v-icon class="ps-3" size="30">mdi-account-circle</v-icon>
-                    </button>
 
 
-                </span>
-                <!-- User not logged in  -->
-
-
-                <!-- User logged in -->
-                <span v-else>
-
-                    <button :class="darkMode ? 'bg-slate-800 text-white border' : ''" @click="signOutUserDialog"
-                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
-                        Logout
-                        <v-icon class="ps-3" size="30">mdi-logout</v-icon>
-                    </button>
-
-
-                    <button v-if="loggedUser.role != 'Admin'" :class="darkMode ? 'bg-slate-800 text-white border' : ''"
-                        @click="goTo('/dashboard')"
-                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
-                        Client panel
-                        <v-icon class="ps-3" size="30">mdi-account-circle</v-icon>
-                    </button>
-
-                    <button v-else :class="darkMode ? 'bg-slate-800 text-white border' : ''"
-                        @click="goTo('/admin/dashboard')"
-                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-200 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
-                        Admin
-                        <v-icon class="ps-3" size="30">mdi-security</v-icon>
-                    </button>
-
-                </span>
-                <!-- User logged in -->
-
-            </v-col>
-
-
-            <v-col cols="3" align="start" justify="center" class="text-h3 font-weight-black"
+            <v-col cols="3" align="center" justify="center" class="text-h3 font-weight-black"
                 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);" @click="goTo('/')" role="button">
 
-                <v-avatar class="mx-2" image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
+                <v-avatar class="mx-2" size="70"
+                    image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
                 </v-avatar>
 
                 <span style="letter-spacing: 3px;" :class="darkMode ? 'text-white' : ''">
@@ -62,7 +19,7 @@
             </v-col>
 
 
-            <v-col align="end" justify="center">
+            <v-col align="end" justify="center" class="mt-3">
 
 
                 <v-btn size="large" v-for="button in menuButtons" :key="button.id"
@@ -81,6 +38,51 @@
                     Contact
                 </v-btn>
 
+
+            </v-col>
+
+            <v-col cols="auto" justify="space-around"  class="mt-3">
+
+                <!-- User not logged in  -->
+                <span v-if="!loggedUser">
+
+                    <button :class="darkMode ? 'bg-slate-800 text-white' : ''" @click="invokeLoginDialog"
+                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-300 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
+                        Client panel
+                        <v-icon class="ps-3" size="30">mdi-account-circle</v-icon>
+                    </button>
+
+
+                </span>
+                <!-- User not logged in  -->
+
+
+                <!-- User logged in -->
+                <span v-else>
+
+                    <button :class="darkMode ? 'bg-slate-800 text-white border' : ''" @click="signOutUserDialog"
+                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-300 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
+                        Logout
+                        <v-icon class="ps-3" size="30">mdi-logout</v-icon>
+                    </button>
+
+
+                    <button v-if="loggedUser.role != 'Admin'" :class="darkMode ? 'bg-slate-800 text-white border' : ''"
+                        @click="goTo('/dashboard')"
+                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-300 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
+                        Client panel
+                        <v-icon class="ps-3" size="30">mdi-account-circle</v-icon>
+                    </button>
+
+                    <button v-else :class="darkMode ? 'bg-slate-800 text-white border' : ''"
+                        @click="goTo('/admin/dashboard')"
+                        class="relative mx-3 py-2 px-8 text-black text-base font-bold nded-full overflow-hidden bg-slate-300 rounded-lg transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-indigo-500 before:to-indigo-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-lg hover:before:left-0">
+                        Admin
+                        <v-icon class="ps-3" size="30">mdi-security</v-icon>
+                    </button>
+
+                </span>
+                <!-- User logged in -->
 
             </v-col>
 
@@ -111,7 +113,9 @@
 
 
             <v-col cols="auto" align="end" class="pt-5">
-                <v-avatar size="50" image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d" @click="goTo('/')">
+                <v-avatar size="50"
+                    image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d"
+                    @click="goTo('/')">
                 </v-avatar>
             </v-col>
         </v-row>

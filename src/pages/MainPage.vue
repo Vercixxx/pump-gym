@@ -1,289 +1,252 @@
 <template>
-    <div class="bg-slate-600" :style="{
-        backgroundImage: `url('https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-    }">
-
-        <!-- Body -->
+    <div>
 
 
-        <v-row>
+        <!-- Scroll progress -->
+        <div class="fixed top-0 bg-indigo-600 rounded-xl" style="width: 0.5%;" :style="{ height: scrollPercent + '%' }">
 
-            <!-- First row -->
-            <v-col cols="12" v-if="!$vuetify.display.smAndDown">
-                <v-row>
-                    <v-col cols="12" sm="6" class="py-10 ps-10 d-flex justify-center align-center ">
-                        <div class="pa-4 rounded-xl font-weight-black text-h6 backdrop-blur-xl"
-                            :class="darkMode ? ' bg-black/70 font-black' : ' bg-white/30 font-white'">
-                            Welcome to Pump Gym!
+        </div>
+        <!-- Scroll progress -->
 
-                            <span class="text-wrap font-weight-thin text-justify ">
-                                Do you dream of health, strength, and perfect fitness? If so, you've found
-                                the
-                                perfect
-                                place! Our gym not only offers top-quality equipment but also an inspiring
-                                environment
-                                that motivates action.
 
-                                Our experienced instructors are here to help you achieve your fitness goals,
-                                whether
-                                you're just starting your fitness journey or you're an experienced athlete.
-                                Whether you
-                                want to build muscle, lose weight, or improve your endurance, we're ready to
-                                support you
-                                every step of the way.
 
-                                Come to our gym and join the community of people who actively care for their
-                                health and
-                                well-being. Together, we'll achieve more!
+        <div class="min-h-screen">
 
-                                Don't wait any longer - start your journey to a better version of yourself
-                                today!
-                            </span>
+            <div class="grid grid-cols-12 gap-4 mt-2 " id="About" style="min-height: 100dvh;"
+                :class="darkMode ? ' bg-black/70 font-black' : ' bg-white/30 font-white'">
 
+                <div class="flex col-span-2 items-center justify-center flex-column pe-5 ">
+
+
+
+
+                    <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 text-4xl font-black "
+                        v-scroll-to="'#About'">
+                        About
+                    </div>
+                    <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 hover:font-black  "
+                        v-scroll-to="'#News'">
+                        News
+                    </div>
+                    <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 hover:font-black "
+                        v-scroll-to="'#Clubs'">
+                        Clubs
+                    </div>
+
+
+
+                </div>
+
+                <!-- Content -->
+                <div class="col-span-10 flex">
+                    <div class=" flex items-center ">
+
+                        <div class="pa-4 rounded-xl font-weight-black  ">
+                            Do you dream of health, strength, and perfect fitness? If so, you've found
+                            the
+                            perfect
+                            place! Our gym not only offers top-quality equipment but also an inspiring
+                            environment
+                            that motivates action.
+
+                            Our experienced instructors are here to help you achieve your fitness goals,
+                            whether
+                            you're just starting your fitness journey or you're an experienced athlete.
+                            Whether you
+                            want to build muscle, lose weight, or improve your endurance, we're ready to
+                            support you
+                            every step of the way.
+
+                            Come to our gym and join the community of people who actively care for their
+                            health and
+                            well-being. Together, we'll achieve more!
+
+                            Don't wait any longer - start your journey to a better version of yourself
+                            today!
                         </div>
-                    </v-col>
 
+                    </div>
 
-                    <v-col cols="12" sm="6" align="center">
-                        <v-avatar size="500" class="me-2 "
+                    <div>
+                        <v-avatar size=" 500" class="me-2 "
                             image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
                         </v-avatar>
-                    </v-col>
-
-                </v-row>
-
-            </v-col>
-
-            <!-- Mobile -->
-            <v-col cols="12" v-else>
-                <div>
-
-
-                    <v-row>
-                        <v-col class="align-self-center font-black text-xl text-wrap text-black" cols="6" align=center>
-                            Welcome to Pump Gym!
-                        </v-col>
-                        <v-col cols="6" align="center">
-                            <v-avatar size="200" class="me-2 "
-                                image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
-                            </v-avatar>
-                        </v-col>
-                    </v-row>
-
-
-                    <div class="backdrop-blur-3xl rounded-xl text-black text-wrap pa-4" :class="darkMode ? ' ' : '  '"
-                        style="font-size: smaller;">
-                        Do you dream of health, strength, and perfect fitness? If so, you've found
-                        the
-                        perfect
-                        place! Our gym not only offers top-quality equipment but also an inspiring
-                        environment
-                        that motivates action.
-
-                        Our experienced instructors are here to help you achieve your fitness goals,
-                        whether
-                        you're just starting your fitness journey or you're an experienced athlete.
-                        Whether you
-                        want to build muscle, lose weight, or improve your endurance, we're ready to
-                        support you
-                        every step of the way.
-
-                        Come to our gym and join the community of people who actively care for their
-                        health and
-                        well-being. Together, we'll achieve more!
-
-                        Don't wait any longer - start your journey to a better version of yourself
-                        today!
                     </div>
                 </div>
-
-            </v-col>
-            <!-- Mobile -->
-
-            <!-- First row -->
-
-            <!-- Second row -->
-            <v-col cols="12">
-
-                <div class=" text-white">
-
-                    <v-row v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown">
-                        <v-col align="start">
-                            <v-btn size="large" variant="text" text="Add post" append-icon="mdi-plus"
-                                class="font-weight-black  bg-green-500 ms-5 transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-110"
-                                @click="addPost"></v-btn>
-                        </v-col>
-                    </v-row>
-
-                    <v-row>
-                        <v-col>
-
-                            <v-row class=" text-wrap pa-2 ma-5 rounded-lg backdrop-blur-lg"
-                                :class="darkMode ? ' bg-black/70' : ' bg-white/30'" v-for="post in posts"
-                                :key="posts.id">
-
-                                <v-col :cols="userRole && userRole == 'Admin' ? '10' : '12'">
-                                    <div v-html="post.postContent"></div>
-                                </v-col>
+                <!-- Content -->
+            </div>
 
 
-                                <v-col align="end"
-                                    v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown">
-
-                                    <v-btn text="Manage post"
-                                        class="font-weight-black  transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-110"
-                                        size="large" color="success" append-icon="mdi-pencil"
-                                        @click="editPost(post)"></v-btn>
-
-                                </v-col>
 
 
-                            </v-row>
-
-                        </v-col>
-                    </v-row>
 
 
-                </div>
-
-            </v-col>
-            <!-- Second row-->
-
-            <!-- Spacer -->
-            <v-col cols="12" style="height: 3dvh;"></v-col>
-            <!-- Spacer -->
 
 
-            <!-- Third row -->
-            <v-col cols="12">
+            <div class="grid grid-cols-12 gap-4 " id="News" style="min-height: 100dvh;"
+                :class="darkMode ? ' bg-black/70 font-black' : ' bg-white/30 font-white'">
 
-                <div v-if="!$vuetify.display.mobile" class=" backdrop-blur-lg"
-                    :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
-
-                    <v-row>
-                        <v-col cols="12" align="center" jusify="center"
-                            class="text-h4 py-6 font-weight-black text-white">
-                            Our clubs
-                        </v-col>
-                    </v-row>
+                <div class="flex col-span-2  items-center justify-center flex-column pe-5">
 
 
-                    <v-carousel progress="success" hide-delimiters v-model="model" class="pt-10">
-                        <v-carousel-item v-if="facilities" v-for="(chunk, index) in chunkedFacilities" :key="index">
-                            <v-row>
-                                <v-col cols="4" v-for="facility in chunk" :key="facility.name" align="center">
-                                    <v-avatar size="400">
-                                        <v-parallax :src="facility.Image" class="ma-0 pa-0" type="button">
-                                            <div
-                                                class="d-flex flex-column fill-height justify-center align-center text-white">
-                                                <h1 class="text-h5 font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
-                                                    style="background-color: rgba(0, 0, 0, 0.6);">
-                                                    {{ facility.Name }}, <br> {{ facility.City + ', ' +
-                                                        facility.Street
-                                                        + ' ' + facility.Home }}
-                                                </h1>
-                                            </div>
-                                        </v-parallax>
-                                    </v-avatar>
-                                </v-col>
-                            </v-row>
-                        </v-carousel-item>
 
-                        <!-- Skeleton loader -->
-                        <v-carousel-item v-else>
-                            <v-row>
-                                <v-col cols="4" v-for="item in 3" align="center">
-                                    <v-avatar size="400">
-
-                                        <div
-                                            class="d-flex flex-column fill-height justify-center align-center text-white">
-                                            <div
-                                                class="animate-pulse absolute inline-flex h-full w-full rounded-full bg-slate-800  opacity-75 ">
-                                                <div class="h-2 bg-slate-200 rounded col-span-2"></div>
-                                            </div>
-                                        </div>
-
-                                    </v-avatar>
-                                </v-col>
-                            </v-row>
-                        </v-carousel-item>
-                        <!-- Skeleton loader -->
-
-                    </v-carousel>
-
-                </div>
-
-
-                <!-- Mobile -->
-                <span v-else>
-                    <v-row>
-                        <v-col cols="12" align="center" jusify="center"
-                            class="text-h4 py-6 font-weight-black backdrop-blur-xl"
-                            :class="darkMode ? ' bg-black/70 ' : ' bg-white/30 '">
-                            Our clubs
-                        </v-col>
-                    </v-row>
-
-
-                    <v-carousel v-if="facilities" height="400" hide-delimiters cycle continuous progress="success"
-                        show-arrows>
-
-                        <v-carousel-item v-for="facility in facilities" :key="facility.name">
-                            <v-sheet height="100%" class="bg-transparent backdrop-blur-xl"
-                                :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
-                                <div class="d-flex fill-height justify-center align-center">
-                                    <v-avatar size="300">
-                                        <v-parallax :src="facility.Image" class="ma-0 pa-0" type="button">
-                                            <div
-                                                class="d-flex flex-column fill-height justify-center align-center text-white">
-                                                <span class="font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
-                                                    style="background-color: rgba(0, 0, 0, 0.6);">
-                                                    {{ facility.Name }}, <br> {{ facility.City + ', ' +
-                                                        facility.Street
-                                                        + ' ' + facility.Home }}
-                                                </span>
-                                            </div>
-                                        </v-parallax>
-                                    </v-avatar>
-                                </div>
-                            </v-sheet>
-                        </v-carousel-item>
-                    </v-carousel>
-
-
-                    <!-- Skeleton loader -->
-
-                    <div v-else class="flex items-center justify-center" style="height: 100%;">
-                        <v-avatar size="300">
-                            <div class="d-flex flex-column fill-height justify-center align-center text-white">
-                                <div
-                                    class="animate-pulse absolute inline-flex h-full w-full rounded-full bg-slate-800  opacity-75 ">
-                                    <div class="h-2 bg-slate-200 rounded col-span-2"></div>
-                                </div>
-
-                                <v-skeleton-loader type="paragraph" class="bg-transparent"
-                                    style="width: 400%;"></v-skeleton-loader>
-
-                            </div>
-                        </v-avatar>
+                    <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 hover:font-black"
+                        v-scroll-to="'#About'">
+                        About
+                    </div>
+                    <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 text-4xl font-black"
+                        v-scroll-to="'#News'">
+                        News
+                    </div>
+                    <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 hover:font-black"
+                        v-scroll-to="'#Clubs'">
+                        Clubs
                     </div>
 
-                    <!-- Skeleton loader -->
-                </span>
-            </v-col>
-            <!-- Third row -->
-
-            <!-- Spacer -->
-            <v-col cols="12" style="height: 20vh;"></v-col>
-            <!-- Spacer -->
-
-        </v-row>
 
 
-        <!-- Body -->
+                </div>
 
+                <!-- Content -->
+                <div class="col-span-10 flex">
+                    <div class="text-white w-100">
+
+                        <v-row v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown">
+                            <v-col align="start">
+                                <v-btn size="large" variant="text" text="Add post" append-icon="mdi-plus"
+                                    class="font-weight-black  bg-green-500 ms-5 transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-110"
+                                    @click="addPost"></v-btn>
+                            </v-col>
+                        </v-row>
+
+                        <v-row>
+                            <v-col>
+
+                                <v-row class=" text-wrap pa-2 ma-5 rounded-lg backdrop-blur-lg"
+                                    :class="darkMode ? ' bg-black/70' : ' bg-white/30'" v-for="post in posts"
+                                    :key="posts.id">
+
+                                    <v-col :cols="userRole && userRole == 'Admin' ? '10' : '12'">
+                                        <div v-html="post.postContent"></div>
+                                    </v-col>
+
+
+                                    <v-col align="end"
+                                        v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown">
+
+                                        <v-btn text="Manage post"
+                                            class="font-weight-black  transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-110"
+                                            size="large" color="success" append-icon="mdi-pencil"
+                                            @click="editPost(post)"></v-btn>
+
+                                    </v-col>
+
+
+                                </v-row>
+
+                            </v-col>
+                        </v-row>
+
+
+                    </div>
+                </div>
+                <!-- Content -->
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="grid grid-cols-12 gap-4" id="Clubs" style="min-height: 100dvh;"
+                :class="darkMode ? ' bg-black/70 font-black' : ' bg-white/30 font-white'">
+                <div class="flex col-span-2 items-center justify-center flex-column pe-5">
+
+
+                    <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 hover:font-black"
+                        v-scroll-to="'#About'">
+                        About
+                    </div>
+                    <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 hover:font-black"
+                        v-scroll-to="'#News'">
+                        News
+                    </div>
+                    <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 text-4xl font-black"
+                        v-scroll-to="'#Clubs'">
+                        Clubs
+                    </div>
+
+
+                </div>
+
+                <!-- Content -->
+                <div class="col-span-10 flex pe-7">
+                    <div class=" backdrop-blur-lg w-100 rounded-lg" :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
+
+                        <v-row>
+                            <v-col cols="12" align="center" jusify="center"
+                                class="text-h4 py-6 font-weight-black text-white">
+                                Our clubs
+                            </v-col>
+                        </v-row>
+
+
+                        <v-carousel progress="success" hide-delimiters v-model="model" class="pt-10">
+                            <v-carousel-item v-if="facilities" v-for="(chunk, index) in chunkedFacilities" :key="index">
+                                <v-row>
+                                    <v-col cols="4" v-for="facility in chunk" :key="facility.name" align="center">
+                                        <v-avatar size="400">
+                                            <v-parallax :src="facility.Image" class="ma-0 pa-0" type="button">
+                                                <div
+                                                    class="d-flex flex-column fill-height justify-center align-center text-white">
+                                                    <h1 class="text-h5 font-weight-black mb-0 text-no-wrap pa-4 rounded-pill"
+                                                        style="background-color: rgba(0, 0, 0, 0.6);">
+                                                        {{ facility.Name }}, <br> {{ facility.City + ', ' +
+                                                            facility.Street
+                                                            + ' ' + facility.Home }}
+                                                    </h1>
+                                                </div>
+                                            </v-parallax>
+                                        </v-avatar>
+                                    </v-col>
+                                </v-row>
+                            </v-carousel-item>
+
+
+                            <v-carousel-item v-else>
+                                <v-row>
+                                    <v-col cols="4" v-for="item in 3" align="center">
+                                        <v-avatar size="400">
+
+                                            <div
+                                                class="d-flex flex-column fill-height justify-center align-center text-white">
+                                                <div
+                                                    class="animate-pulse absolute inline-flex h-full w-full rounded-full bg-slate-800  opacity-75 ">
+                                                    <div class="h-2 bg-slate-200 rounded col-span-2"></div>
+                                                </div>
+                                            </div>
+
+                                        </v-avatar>
+                                    </v-col>
+                                </v-row>
+                            </v-carousel-item>
+
+
+                        </v-carousel>
+
+                    </div>
+                </div>
+                <!-- Content -->
+            </div>
+
+
+
+
+
+        </div>
 
         <!-- Post dialog -->
         <PostDialog v-if="userRole && userRole == 'Admin'" />
@@ -291,7 +254,7 @@
 
 
         <!-- Footer -->
-        <FooterComponent style="position: absolute; bottom: 0px; width: 100%;" />
+        <FooterComponent />
         <!-- Footer -->
 
 
@@ -304,93 +267,64 @@
 
 
 <script setup lang="ts">
-import { ref, computed, onMounted, defineAsyncComponent } from 'vue';
+import { ref, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
-import { collection, getDocs } from "firebase/firestore";
-import { db } from '../firebase.js'
 const FooterComponent = defineAsyncComponent(() => import('../components/Footer.vue'));
 
 
 
+// Scroll to section
+const sections = ref(['About', 'Posts', 'Clubs']);
+const section = ref('about');
+
+const scrollToSection = (section: string) => {
+    return `#${section}`;
+}
+// Scroll to section
+
+
+// Scroll control
+const scrollPercent = ref(0);
+
+const calculateScrollPercent = () => {
+    const scrollTop = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const docHeight = getDocHeight();
+
+    const totalDocScrollLength = docHeight - windowHeight;
+    const scrollPosition = Math.floor((scrollTop / totalDocScrollLength) * 100);
+
+    scrollPercent.value = scrollPosition;
+}
+
+const getDocHeight = () => {
+    return Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight,
+        document.body.clientHeight, document.documentElement.clientHeight
+    );
+}
+
+onMounted(() => {
+
+    calculateScrollPercent();
+
+    getDocHeight();
+
+
+    window.addEventListener('scroll', calculateScrollPercent);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', calculateScrollPercent);
+});
+// Scroll control
+
+
+
+
 const model = ref(0);
-const menuButtons = ref([
-    {
-        id: 1,
-        title: 'Activities',
-        icon: 'mdi-dumbbell',
-        options: [
-            {
-                id: 1,
-                title: 'a'
-            },
-            {
-                id: 2,
-                title: 'b'
-            },
-            {
-                id: 3,
-                title: 'c'
-            },
-        ],
-    },
-    {
-        id: 2,
-        title: 'Our Trainers',
-        icon: 'mdi-dumbbell',
-        options: [
-            {
-                id: 1,
-                title: 'b'
-            },
-            {
-                id: 2,
-                title: 'c'
-            },
-            {
-                id: 3,
-                title: 'd'
-            },
-        ],
-    },
-    {
-        id: 4,
-        title: 'Contact us',
-        icon: 'mdi-dumbbell',
-        options: [
-            {
-                id: 1,
-                title: 'b'
-            },
-            {
-                id: 2,
-                title: 'c'
-            },
-            {
-                id: 3,
-                title: 'd'
-            },
-        ],
-    },
-    {
-        id: 5,
-        title: 'Schedule',
-        icon: 'mdi-dumbbell',
-        options: [
-            {
-                id: 1,
-                title: 'b'
-            },
-            {
-                id: 2,
-                title: 'c'
-            },
-            {
-                id: 3,
-                title: 'd'
-            },
-        ],
-    },
-]);
+
 
 // Pinia
 const store = usePiniaStorage();
@@ -464,4 +398,9 @@ const editPost = (post): void => {
 
 
 
+
+
 </script>
+
+
+<style></style>

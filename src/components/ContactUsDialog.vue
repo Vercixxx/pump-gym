@@ -1,6 +1,6 @@
 <template>
-    <v-dialog v-model="contactUsDialog" width="600" transition="dialog-top-transition">
-        <div class="rounded-xl pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'">
+    <v-dialog v-model="contactUsDialog" width="600" transition="dialog-top-transition" close-on-content-click>
+        <div class="rounded-xl pa-4" :class="darkMode ? 'bg-slate-800' : 'bg-slate-200'"  @click="closeContactUsDialog">
 
             <v-row>
                 <v-col cols="2"></v-col>
@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import {  computed } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 
 // Pinia

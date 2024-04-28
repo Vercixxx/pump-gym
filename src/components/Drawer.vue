@@ -1,6 +1,6 @@
 <template>
     <!-- Drawer -->
-    <v-navigation-drawer v-model="drawer" location="top" temporary
+    <v-navigation-drawer v-if="$vuetify.display.smAndDown" v-model="drawer" location="top" temporary
         :color="darkMode ? 'rgb(15 23 42)' : 'rgb(226 232 240)'" :class="darkMode ? 'text-white' : ''"
         style="height: auto;">
 

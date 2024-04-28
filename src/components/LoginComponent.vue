@@ -32,7 +32,7 @@
                     <!-- Login -->
                     <v-text-field v-model="loginInput" label="Email" class="mb-7"
                         :class="$vuetify.display.smAndDown ? 'w-100' : ' w-75'" variant="outlined"
-                        prepend-icon="mdi-email" autocomplete="username" :rules="rules.emailRules"></v-text-field>
+                        prepend-icon="mdi-email" autocomplete="username" :rules="rules.emailRules" :disabled="loading"></v-text-field>
                     <!-- Login -->
 
 
@@ -42,7 +42,7 @@
                         :type="passwordVisible ? 'text' : 'password'" prepend-icon="mdi-key"
                         :append-inner-icon="passwordVisible ? 'mdi-eye' : ' mdi-eye-off'"
                         @click:append-inner="passwordVisible = !passwordVisible"
-                        autocomplete="current-password"></v-text-field>
+                        autocomplete="current-password" :disabled="loading"></v-text-field>
                     <!-- Password -->
 
                     <!-- Password recovery -->
@@ -50,7 +50,7 @@
                         <span></span>
 
                         <v-btn variant="plain" size="small" @click="openPasswordResetDialog"
-                            class="text-cyan-darken-4 font-weight-bold" prepend-icon="mdi-restore">
+                            class="text-cyan-darken-4 font-weight-bold" prepend-icon="mdi-restore" :disabled="loading">
                             Forgot password?
                         </v-btn>
                     </div>
@@ -114,13 +114,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
-
-// Firebase
-import { auth } from '../firebase';
-import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence, sendPasswordResetEmail } from 'firebase/auth';
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
-import { db } from '../firebase.js';
-
 
 
 const form = ref(false);

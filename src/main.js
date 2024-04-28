@@ -23,14 +23,22 @@ import * as directives from 'vuetify/directives'
 import { SchedulePlugin, Day, Week, WorkWeek, Month, Agenda } from '@syncfusion/ej2-vue-schedule';
 // Syncfusion
 
+// Scroll to
+import VueScrollTo from 'vue-scrollto'
+// Scroll to
+
 const vuetify = createVuetify({
-    components,
-    directives
-  })
+  components,
+  directives
+})
 
 createApp(App)
   .use(pinia)
   .use(router)
   .use(vuetify)
   .use(SchedulePlugin)
+  .use(VueScrollTo, {
+    duration: 1100 ,
+    easing: "ease",
+  })
   .mount('#app')
