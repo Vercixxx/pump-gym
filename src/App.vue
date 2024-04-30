@@ -134,35 +134,14 @@ const route = useRoute();
 // Route
 
 
-// Get data in background after rendering
-
 // Facilities
-const fetchFacilities = async () => {
-  try {
-    const facilitiesQuerySnapshot = await getDocs(collection(db, "Facilities"));
-    const fetchedFacilities = [];
-
-    for (let doc of facilitiesQuerySnapshot.docs) {
-      const facility = doc.data();
-      facility.id = doc.id;
-
-      const staffQuerySnapshot = await getDocs(collection(doc.ref, "Staff"));
-      facility.staff = staffQuerySnapshot.docs.map(doc => doc.data());
-
-      fetchedFacilities.push(facility);
-    }
-
-    store.setFacilities(fetchedFacilities);
-
-  } catch (error) {
-    store.showAlert('error', error)
-  }
-};
-
-onMounted(() => {
-  fetchFacilities();
-});
+import { fetchFacilities } from './scripts/Facilities';
+onMounted(async () => {
+    await fetchFacilities();
+})
 // Facilities
+
+
 
 
 // Subscriptions

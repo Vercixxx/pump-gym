@@ -146,12 +146,12 @@ const menuButtons = ref([
         icon: 'mdi-dumbbell',
         route: '/activities',
     },
-    {
-        id: 3,
-        title: 'Our Trainers',
-        icon: 'mdi-weight-lifter',
-        route: '/trainers',
-    },
+    // {
+    //     id: 3,
+    //     title: 'Our Trainers',
+    //     icon: 'mdi-weight-lifter',
+    //     route: '/trainers',
+    // },
     // {
     //     id: 4,
     //     title: 'Schedule',
