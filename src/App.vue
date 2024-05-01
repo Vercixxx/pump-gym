@@ -3,8 +3,8 @@
     <v-layout>
 
       <div class="w-100"
-        style="background-image: url('https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K'); min-height: 100vh; background-size: cover; background-repeat: no-repeat;">
-
+        >
+        <!-- style="background-image: url('https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K'); min-height: 100vh; background-size: cover; background-repeat: no-repeat;" -->
         <!-- Header -->
         <AppBar v-if="route.path != '/error'" />
         <!-- Header -->
@@ -20,8 +20,8 @@
           <!-- Theme toogler -->
 
 
-          <label class="theme-switch" style="position: fixed; bottom:2%; right:2%" >
-            <input type="checkbox" class="theme-switch__checkbox" @click="toogleTheme">
+          <label class="theme-switch" style="position: fixed; bottom:2%; right:2%">
+            <input type="checkbox" class="theme-switch__checkbox" @click="toogleTheme" checked>
             <div class="theme-switch__container">
               <div class="theme-switch__clouds"></div>
               <div class="theme-switch__stars-container">
@@ -110,6 +110,10 @@ const toogleTheme = () => {
   theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
 };
 const darkMode = computed(() => theme.name.value === 'dark');
+
+onMounted(() => {
+  theme.global.name.value = 'dark';
+})
 // Theme
 
 
@@ -137,7 +141,7 @@ const route = useRoute();
 // Facilities
 import { fetchFacilities } from './scripts/Facilities';
 onMounted(async () => {
-    await fetchFacilities();
+  await fetchFacilities();
 })
 // Facilities
 
@@ -153,8 +157,19 @@ const specialSubscriptions = ref([]);
 const fetchSubscriptionByTypeName = async (type, name, outputArray) => {
   try {
     const querySnapshot = await getDocs(collection(db, "Subscriptions", type, name));
-    querySnapshot.forEach((doc) => {
-      outputArray.value.push(doc.data());
+    
+    querySnapshot.forEach(async (doc) => {
+
+      const data = doc.data();
+
+      const description = await getDocs(collection(doc.ref, "Description"));
+
+      const descriptionData = description.docs.map(doc => doc.data())[0];
+
+      outputArray.value.push({
+        ...data,
+        description: descriptionData
+      });
     });
 
   } catch (error) {

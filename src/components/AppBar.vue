@@ -134,12 +134,12 @@ import { signOut } from 'firebase/auth';
 
 
 const menuButtons = ref([
-    {
-        id: 1,
-        title: 'Subscriptions',
-        icon: 'mdi-card-account-details',
-        route: '/subscriptions',
-    },
+    // {
+    //     id: 1,
+    //     title: 'Subscriptions',
+    //     icon: 'mdi-card-account-details',
+    //     route: '/subscriptions',
+    // },
     {
         id: 2,
         title: 'Activities',

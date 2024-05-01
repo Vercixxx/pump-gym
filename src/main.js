@@ -27,6 +27,7 @@ import { SchedulePlugin, Day, Week, WorkWeek, Month, Agenda } from '@syncfusion/
 import VueScrollTo from 'vue-scrollto'
 // Scroll to
 
+
 const vuetify = createVuetify({
   components,
   directives

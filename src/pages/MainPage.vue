@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class=" bg-black/70  text-white">
 
 
         <!-- Scroll progress -->
@@ -12,12 +12,17 @@
 
         <div class="min-h-screen">
 
-            <div class="grid grid-cols-12 gap-4 mt-2 " id="About" style="min-height: 100dvh;"
-                :class="darkMode ? ' bg-black/70 font-black' : ' bg-white/30 font-white'">
+
+
+
+            <div class="relative grid grid-cols-12 gap-4 mt-2 " id="About" style="min-height: 100vh;">
+                <span class="absolute inset-0 blur-sm bg-fixed "
+                    style="background-image: url('https://i1.wp.com/prestizkoszalin.pl/wp-content/uploads/2023/12/IMG_4111.jpg'); background-size: cover; background-position: center; z-index: -1;"></span>
+
 
                 <div class="flex col-span-2 items-center justify-center flex-column font-serif ">
 
-                    <v-btn class="fixed top-10" v-if="scrollPercent >= 2" variant="text" text="Show menu"
+                    <v-btn class="fixed top-10 text-2xl" v-if="scrollPercent >= 1" variant="text" text="Show menu"
                         @click="scrollToTop">
 
                         <template v-slot:append>
@@ -28,22 +33,12 @@
 
 
 
-                    <div class="fixed top-auto">
-                        <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 transition-all duration-500 ease-in-out " :class="currentSection == 'About' ? 'text-4xl font-black mb-4 transition-all duration-500 ease-in' : 'hover:font-black'"
-                            v-scroll-to="'#About'" @click="changeSection('About')">
-                            About
-                        </div>
-                        <div class="ms-5 w-100 cursor-pointer text-center  hover:scale-110 transition-all duration-500 ease-in-out  " :class="currentSection == 'News' ? 'text-4xl font-black my-4 transition-all duration-500 ease-in' : 'hover:font-black'"
-                            v-scroll-to="'#News'" @click="changeSection('News')">
-                            News
-                        </div>
-                        <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 transition-all duration-500 ease-in-out " :class="currentSection == 'Clubs' ? 'text-4xl font-black my-4 transition-all duration-500 ease-in' : 'hover:font-black'"
-                            v-scroll-to="'#Clubs'" @click="changeSection('Clubs')">
-                            Clubs
-                        </div>
-                        <div class="ms-5 w-100 cursor-pointer text-center hover:scale-110 transition-all duration-500 ease-in-out " :class="currentSection == 'Subscriptions' ? 'text-4xl font-black mt-4 transition-all duration-500 ease-in' : 'hover:font-black'"
-                            v-scroll-to="'#Subscriptions'" @click="changeSection('Subscriptions')">
-                            Subscriptions
+                    <div class="fixed top-auto select-none">
+                        <div v-for="section in sections"
+                            class="ms-5 w-100 cursor-pointer text-center hover:scale-125 transition-all duration-300 ease-in-out "
+                            @click="changeSection(section.name)"
+                            :class="section.current ? 'text-4xl font-black my-4 transition-all duration-300 ease-in ' : 'hover:font-black'">
+                            {{ section.name }}
                         </div>
                     </div>
 
@@ -53,15 +48,68 @@
                 </div>
 
                 <!-- Content -->
-                <div class="col-span-10 flex">
+                <div class="col-span-10 flex select-none">
+                    <div class="w-100">
 
-                    <v-row>
-                        <v-col cols=12 align="end" class="mt-3 ">
+
+                        <v-row>
+                            <v-col cols=12 align="center" class="mt-3 ">
+                                <v-avatar size=" 300" class="me-2"
+                                    image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
+                                </v-avatar>
+                            </v-col>
+                        </v-row>
+
+
+                        <v-row>
+                            <v-col>
+
+                                <div class="  ">
+
+                                    <div class="pa-4 rounded-xl font-weight-black  ">
+                                        Do you dream of health, strength, and perfect fitness? If so, you've found
+                                        the
+                                        perfect
+                                        place! Our gym not only offers top-quality equipment but also an inspiring
+                                        environment
+                                        that motivates action.
+
+                                        Our experienced instructors are here to help you achieve your fitness goals,
+                                        whether
+                                        you're just starting your fitness journey or you're an experienced athlete.
+                                        Whether you
+                                        want to build muscle, lose weight, or improve your endurance, we're ready to
+                                        support you
+                                        every step of the way.
+
+                                        Come to our gym and join the community of people who actively care for their
+                                        health and
+                                        well-being. Together, we'll achieve more!
+
+                                        Don't wait any longer - start your journey to a better version of yourself
+                                        today!
+                                    </div>
+
+                                </div>
+                            </v-col>
+
+
+                            <v-col align="center">
+                                <v-img
+                                    src="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2FFacilities%2FinviteImage.jpeg?alt=media&token=11bc967d-6089-46f9-b4be-02b2b65e3b30"
+                                    height="400" width="400" cover rounded="xl" />
+                            </v-col>
+                        </v-row>
+
+
+                    </div>
+                    <!-- <v-row>
+                        <v-col>
                             <v-img
                                 src="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2FFacilities%2FinviteImage.jpeg?alt=media&token=11bc967d-6089-46f9-b4be-02b2b65e3b30"
                                 height="300" />
                         </v-col>
-                    </v-row>
+                    </v-row> -->
 
                     <!-- <div class=" flex items-center ">
 
@@ -91,11 +139,7 @@
 
                     </div> -->
 
-                    <!-- <div>
-                        <v-avatar size=" 500" class="me-2 "
-                            image="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2Flogo.png?alt=media&token=8504510e-a373-4235-9811-da7abd576c0d">
-                        </v-avatar>
-                    </div> -->
+
                 </div>
                 <!-- Content -->
             </div>
@@ -103,12 +147,12 @@
 
 
 
+            <!-- <div style="height: 50dvh;"></div> -->
 
 
 
             <!-- News -->
-            <div class="grid grid-cols-12 gap-4 " id="News" style="min-height: 100dvh;"
-                :class="darkMode ? ' bg-black/70 font-black' : ' bg-white/30 font-white'">
+            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20" id="News" style="min-height: 100dvh;">
 
                 <div class="flex col-span-2  items-center justify-center flex-column font-serif">
                 </div>
@@ -128,8 +172,8 @@
                         <v-row>
                             <v-col>
 
-                                <v-row class="border-2 text-wrap pa-2 ma-5 rounded-lg backdrop-blur-lg"
-                                    v-for="post in posts" :key="posts.id">
+                                <v-row class="text-wrap pa-2 ma-5 backdrop-blur-lg" v-for="post in posts"
+                                    :key="posts.id">
 
                                     <v-col :cols="userRole && userRole == 'Admin' ? '10' : '12'">
                                         <div v-html="post.postContent"></div>
@@ -162,13 +206,12 @@
 
 
 
+            <!-- <div style="height: 50dvh;"></div> -->
 
 
 
-
-
-            <div class="grid grid-cols-12 gap-4" id="Clubs" style="min-height: 100dvh;"
-                :class="darkMode ? ' bg-black/70 font-black' : ' bg-white/30 font-white'">
+            <!-- Clubs -->
+            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20" id="Clubs" style="min-height: 100dvh;">
                 <div class="flex col-span-2 items-center justify-center flex-column font-serif">
                 </div>
 
@@ -319,16 +362,18 @@
                 </div>
                 <!-- Content -->
             </div>
+            <!-- Clubs -->
 
 
 
-
+            <!-- <div style="height: 50dvh;"></div> -->
 
 
 
             <!-- Subscriptions -->
-            <div class="grid grid-cols-12 gap-4 " id="Subscriptions" style="min-height: 100dvh;"
-                :class="darkMode ? ' bg-black/70 font-black' : ' bg-white/30 font-white'">
+            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20" id="Subscriptions" style="min-height: 100dvh;">
+
+                
 
                 <div class="flex col-span-2  items-center justify-center flex-column font-serif">
                 </div>
@@ -337,8 +382,7 @@
                 <div class="col-span-10 flex">
                     <div class=" w-100">
 
-                       
-
+                        <SubscriptionComponent />
 
                     </div>
                 </div>
@@ -349,6 +393,7 @@
 
 
         </div>
+
 
         <!-- Post dialog -->
         <PostDialog v-if="userRole && userRole == 'Admin'" />
@@ -375,17 +420,38 @@ const FooterComponent = defineAsyncComponent(() => import('../components/Footer.
 
 
 // Scroll to section
-const sections = ref(['About', 'Posts', 'Clubs']);
-const section = ref('about');
+import VueScrollTo from 'vue-scrollto';
 
-let currentSection = ref('About');
 
-const changeSection = (section) => {
-    currentSection.value = section;
+const sections = ref([
+    { name: 'About', begin: 0, end: 33, current: true },
+    { name: 'News', begin: 34, end: 65, current: false },
+    { name: 'Clubs', begin: 66, end: 96, current: false },
+    { name: 'Subscriptions', begin: 98, end: 100, current: false }
+]);
+
+
+const changeSection = (selectedSection) => {
+    sections.value.forEach((section) => {
+        section.current = false;
+    });
+    sections.value.find((section) => section.name == selectedSection).current = true;
+
+    scrollToElement(`#${selectedSection}`);
+}
+
+
+const scrollToElement = (element) => {
+    VueScrollTo.scrollTo(element, 1000);
 }
 
 const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    sections.value.forEach((section) => {
+        section.current = false;
+    });
+    sections.value.find((section) => section.name == 'About').current = true;
 }
 
 onMounted(() => {
@@ -430,6 +496,59 @@ onMounted(() => {
 onUnmounted(() => {
     window.removeEventListener('scroll', calculateScrollPercent);
 });
+
+
+let isScrolling = ref(false);
+
+
+
+const handleScroll = (event) => {
+    event.preventDefault();
+
+    if (isScrolling.value) {
+        return;
+    }
+
+    else {
+        const direction = event.deltaY > 0 ? 'down' : 'up';
+
+        const currentSectionIndex = sections.value.findIndex(section => section.current);
+
+        if (direction === 'up' && currentSectionIndex > 0) {
+            isScrolling.value = true;
+
+            VueScrollTo.scrollTo(`#${sections.value[currentSectionIndex - 1].name}`, 1000, {
+                cancelable: false,
+                onDone: () => {
+                    sections.value[currentSectionIndex].current = false;
+                    sections.value[currentSectionIndex - 1].current = true;
+                    isScrolling.value = false;
+                }
+            });
+        } else if (direction === 'down' && currentSectionIndex < sections.value.length - 1) {
+            isScrolling.value = true;
+            VueScrollTo.scrollTo(`#${sections.value[currentSectionIndex + 1].name}`, 1000, {
+                cancelable: false,
+                onDone: () => {
+                    sections.value[currentSectionIndex].current = false;
+                    sections.value[currentSectionIndex + 1].current = true;
+                    isScrolling.value = false;
+                }
+            });
+        }
+    }
+
+};
+
+onMounted(() => {
+    window.addEventListener('wheel', handleScroll, { passive: false });
+});
+
+onUnmounted(() => {
+    window.removeEventListener('wheel', handleScroll);
+});
+
+
 // Scroll control
 
 
@@ -464,6 +583,7 @@ watch(() => store.facilities, (newFacilities) => {
 onMounted(() => {
     console.log(facilities.value);
 });
+
 let tab = ref(0);
 
 
@@ -516,6 +636,9 @@ const editPost = (post): void => {
 
 
 
+// Subscriptions
+import SubscriptionComponent from '../pages/Subscriptions.vue';
+// Subscriptions
 
 
 
