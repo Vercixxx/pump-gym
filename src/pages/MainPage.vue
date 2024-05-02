@@ -30,9 +30,9 @@
 
                         <div class="fixed top-auto select-none">
                             <div v-for="section in sections"
-                                class="ms-5 w-100 cursor-pointer text-center hover:scale-125 transition-all duration-300 ease-in-out "
+                                class=" w-100 cursor-pointer text-center  "
                                 @click="changeSection(section.name)"
-                                :class="section.current ? 'text-4xl font-black my-4 transition-all duration-300 ease-in ' : 'hover:font-black'">
+                                :class="section.current ? 'text-4xl font-black my-4 transition-all duration-100 ease-in-out hover:scale-105 ' : 'hover:font-black transition-all duration-100 ease-in-out hover:scale-150'">
                                 {{ section.name }}
                             </div>
                         </div>

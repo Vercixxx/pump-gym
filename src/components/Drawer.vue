@@ -7,15 +7,15 @@
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-            <v-list-item v-if="!loggedUser" prepend-icon="mdi-card-account-details" title="Subscriptions" value="Subscriptions"
-                @click="goTo('/subscriptions')"></v-list-item>
+            <!-- <v-list-item v-if="!loggedUser" prepend-icon="mdi-card-account-details" title="Subscriptions" value="Subscriptions"
+                @click="goTo('/subscriptions')"></v-list-item> -->
 
             <!-- Admin -->
-            <v-list-item v-else-if="loggedUser.role == 'Admin'" prepend-icon="mdi-security" title="Admin panel" value="Admin panel"
+            <v-list-item v-if="loggedUser && loggedUser.role == 'Admin'" prepend-icon="mdi-security" title="Admin panel" value="Admin panel"
             @click="goTo('/admin/dashboard')" class="bg-success" ></v-list-item>
             <!-- Admin -->
 
-            <v-list-item v-else prepend-icon="mdi-account" title="My profile" value="My profile"
+            <v-list-item v-else-if="loggedUser" prepend-icon="mdi-account" title="My profile" value="My profile"
                 @click="goTo('/dashboard')" class="bg-success" ></v-list-item>
 
             <v-list-item v-for="button in menuButtons" :key="button.id" :prepend-icon="button.icon"
@@ -27,8 +27,8 @@
                 @click="openContactUsDialog"></v-list-item>
         </v-list>
 
-        <v-btn v-if="!loggedUser" block size="large" variant="tonal" text="Sign in" append-icon="mdi-login"
-            class="bg-indigo-500 text-white" @click="invokeLoginDialog"></v-btn>
+        <v-btn v-if="!loggedUser" block size="large" variant="outlined" text="Sign in" append-icon="mdi-login"
+            class="bg-green-500/75 text-white" @click="invokeLoginDialog"></v-btn>
 
         <v-btn v-else block size="large" variant="tonal" text="Logout" append-icon="mdi-logout"
             class="bg-indigo-500 text-white" @click="signOutUser"></v-btn>
@@ -80,12 +80,12 @@ const menuButtons = ref([
         icon: 'mdi-dumbbell',
         route: '/activities',
     },
-    {
-        id: 2,
-        title: 'Our Trainers',
-        icon: 'mdi-weight-lifter',
-        route: '/trainers',
-    },
+    // {
+    //     id: 2,
+    //     title: 'Our Trainers',
+    //     icon: 'mdi-weight-lifter',
+    //     route: '/trainers',
+    // },
     // {
     //     id: 4,
     //     title: 'Schedule',
