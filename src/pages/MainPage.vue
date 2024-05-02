@@ -169,11 +169,10 @@
 
 
 
-
                         <v-container class="fill-height" fluid>
                             <v-row align="center" justify="center">
                                 <v-col cols="12">
-                                    <v-carousel continuous :cycle="runCarousel" show-arrows="hover"
+                                    <v-carousel  v-model="postsItem" continuous :cycle="runCarousel" show-arrows="hover"
                                         delimiter-icon="mdi-square" hide-delimiter-background style="height: 85vh;">
                                         <v-carousel-item v-for="post in posts">
                                             <v-sheet height="100%" tile class="bg-transparent">
@@ -208,10 +207,6 @@
                                 </v-col>
                             </v-row>
                         </v-container>
-
-
-
-
 
 
 
@@ -591,8 +586,6 @@ const darkMode = computed(() => theme.name.value === 'dark');
 // Facilities
 import { facilities } from '../scripts/Facilities';
 
-
-
 let tab = ref(0);
 // Facilities
 
@@ -613,6 +606,8 @@ import { posts, getPosts } from '../scripts/ManagePosts';
 
 
 const runCarousel = ref(true);
+
+const postsItem = ref(0);
 
 
 onMounted(async () => {
