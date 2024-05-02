@@ -147,12 +147,9 @@
 
 
 
-            <!-- <div style="height: 50dvh;"></div> -->
-
-
-
             <!-- News -->
-            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20" id="News" style="min-height: 100dvh;">
+            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20" id="News"
+                style="min-height: 100dvh;">
 
                 <div class="flex col-span-2  items-center justify-center flex-column font-serif">
                 </div>
@@ -169,32 +166,53 @@
                             </v-col>
                         </v-row>
 
-                        <v-row>
-                            <v-col>
-
-                                <v-row class="text-wrap pa-2 ma-5 backdrop-blur-lg" v-for="post in posts"
-                                    :key="posts.id">
-
-                                    <v-col :cols="userRole && userRole == 'Admin' ? '10' : '12'">
-                                        <div v-html="post.postContent"></div>
-                                    </v-col>
 
 
-                                    <v-col align="end"
-                                        v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown">
-
-                                        <v-btn text="Manage post"
-                                            class="font-black transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-110"
-                                            size="large" color="success" append-icon="mdi-pencil"
-                                            @click="editPost(post)"></v-btn>
-
-                                    </v-col>
 
 
-                                </v-row>
+                        <v-container class="fill-height" fluid>
+                            <v-row align="center" justify="center">
+                                <v-col cols="12">
+                                    <v-carousel continuous :cycle="runCarousel" show-arrows="hover"
+                                        delimiter-icon="mdi-square" hide-delimiter-background style="height: 85vh;">
+                                        <v-carousel-item v-for="post in posts">
+                                            <v-sheet height="100%" tile class="bg-transparent">
+                                                <div class="d-flex fill-height justify-center align-center">
 
-                            </v-col>
-                        </v-row>
+                                                    <v-row class="text-wrap pa-2 ma-5" @mouseover="runCarousel = false"
+                                                        @mouseleave="runCarousel = true">
+
+                                                        <v-col :cols="userRole && userRole == 'Admin' ? '10' : '12'">
+                                                            <div v-html="post.postContent"></div>
+                                                        </v-col>
+
+
+                                                        <v-col align="end"
+                                                            v-if="userRole && userRole == 'Admin' && !$vuetify.display.smAndDown">
+
+                                                            <v-btn text="Manage post"
+                                                                class="font-black transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-110"
+                                                                size="large" color="success" append-icon="mdi-pencil"
+                                                                @click="editPost(post)"></v-btn>
+
+                                                        </v-col>
+
+
+                                                    </v-row>
+
+
+                                                </div>
+                                            </v-sheet>
+                                        </v-carousel-item>
+                                    </v-carousel>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+
+
+
+
+
 
 
                     </div>
@@ -206,12 +224,10 @@
 
 
 
-            <!-- <div style="height: 50dvh;"></div> -->
-
-
 
             <!-- Clubs -->
-            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20" id="Clubs" style="min-height: 100dvh;">
+            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20" id="Clubs"
+                style="min-height: 100dvh;">
                 <div class="flex col-span-2 items-center justify-center flex-column font-serif">
                 </div>
 
@@ -229,13 +245,13 @@
 
 
                         <v-tabs v-model="tab" bg-color="transparent" color="basil" grow>
-                            <v-tab v-for="facility in facilities" :key="item" :value="item">
+                            <v-tab v-for="facility in facilities" :key="facility.Name" :value="facility.Name">
                                 {{ facility.Name }}
                             </v-tab>
                         </v-tabs>
 
                         <v-window v-model="tab">
-                            <v-window-item v-for="facility in facilities" :key="item" :value="item">
+                            <v-window-item v-for="facility in facilities" :key="facility.Name" :value="facility.Name">
 
                                 <div style="min-height: 82dvh;">
 
@@ -366,14 +382,14 @@
 
 
 
-            <!-- <div style="height: 50dvh;"></div> -->
 
 
 
             <!-- Subscriptions -->
-            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20" id="Subscriptions" style="min-height: 100dvh;">
+            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20" id="Subscriptions"
+                style="min-height: 100dvh;">
 
-                
+
 
                 <div class="flex col-span-2  items-center justify-center flex-column font-serif">
                 </div>
@@ -573,22 +589,11 @@ const darkMode = computed(() => theme.name.value === 'dark');
 // Theme
 
 // Facilities
-const facilities = ref([]);
+import { facilities } from '../scripts/Facilities';
 
-watch(() => store.facilities, (newFacilities) => {
-    facilities.value = newFacilities;
-    console.log(facilities.value);
-});
 
-onMounted(() => {
-    console.log(facilities.value);
-});
 
 let tab = ref(0);
-
-
-
-
 // Facilities
 
 
@@ -606,7 +611,8 @@ const markerOptions = { position: center, label: 'Pump Gym', title: 'Pump Gym' }
 // Get posts
 import { posts, getPosts } from '../scripts/ManagePosts';
 
-// const posts = ref([]);
+
+const runCarousel = ref(true);
 
 
 onMounted(async () => {

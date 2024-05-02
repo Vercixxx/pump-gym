@@ -4,18 +4,17 @@ import { ref } from 'vue';
 import { addDoc, collection, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
 
-export const facilities = ref([]);
 
 // Pinia
 import { usePiniaStorage } from '../store/pinia.js';
 
 
+export const facilities = ref([]);
 
 
 // Facilities
 export const fetchFacilities = async () => {
     const storage = usePiniaStorage();
-    const facilities = ref([]);
 
     try {
 
@@ -24,18 +23,18 @@ export const fetchFacilities = async () => {
 
         for (let doc of facilitiesQuerySnapshot.docs) {
 
-            const facility = doc.data();
+            const facilityObj = doc.data();
 
             const staffQuerySnapshot = await getDocs(collection(doc.ref, "Staff"));
             const imagesQuerySnapshot = await getDocs(collection(doc.ref, "Images"));
 
-            facility.images = imagesQuerySnapshot.docs.map(doc => doc.data())[0];
-            facility.staff = staffQuerySnapshot.docs.map(doc => doc.data());
+            facilityObj.images = imagesQuerySnapshot.docs.map(doc => doc.data())[0];
+            facilityObj.staff = staffQuerySnapshot.docs.map(doc => doc.data());
 
-            facilities.value.push(facility);
+            facilities.value.push(facilityObj);
         }
 
-        storage.setFacilities(facilities.value);
+        // storage.setFacilities(facilities.value);
         return true
 
     } catch (error) {

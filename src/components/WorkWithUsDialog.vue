@@ -1,31 +1,31 @@
 <template>
-    <v-dialog v-model="workWithUsDialog" persistent width="600"  transition="dialog-top-transition"
+    <v-dialog v-model="workWithUsDialog" persistent width="600" transition="dialog-top-transition"
         :fullscreen="$vuetify.display.smAndDown ? true : false">
         <v-card class="pa-4" :class="[
             darkMode ? 'bg-slate-800' : 'bg-slate-200',
             $vuetify.display.smAndDown ? '' : 'rounded-xl',
         ]">
-           
-                <v-row v-if="!$vuetify.display.smAndDown">
-                    <v-col cols="2"></v-col>
-                    <v-col cols="8" align="center">
-                        <span class="text-3xl font-weight-black">Join our team!</span>
-                    </v-col>
-                    <v-col cols="2" align="end">
-                        <v-btn icon="mdi-close" variant="plain" class="text-xl" @click="closeWorkWithUsDialog"></v-btn>
-                    </v-col>
-                </v-row>
 
-                <v-row v-else>
-                    <v-col cols="2" align="start">
-                        <v-btn text="Back" @click="exitDialog" prepend-icon="mdi-arrow-left" variant="plain"></v-btn>
-                    </v-col>
-                    <v-col cols="8" align=center>
-                        <span class="text-3xl font-weight-black">Join our team!</span>
-                    </v-col>
-                    <v-col cols="2"></v-col>
-                </v-row>
-   
+            <v-row v-if="!$vuetify.display.smAndDown">
+                <v-col cols="2"></v-col>
+                <v-col cols="8" align="center">
+                    <span class="text-3xl font-weight-black">Join our team!</span>
+                </v-col>
+                <v-col cols="2" align="end">
+                    <v-btn icon="mdi-close" variant="plain" class="text-xl" @click="closeWorkWithUsDialog"></v-btn>
+                </v-col>
+            </v-row>
+
+            <v-row v-else>
+                <v-col cols="2" align="start">
+                    <v-btn text="Back" @click="exitDialog" prepend-icon="mdi-arrow-left" variant="plain"></v-btn>
+                </v-col>
+                <v-col cols="8" align=center>
+                    <span class="text-3xl font-weight-black">Join our team!</span>
+                </v-col>
+                <v-col cols="2"></v-col>
+            </v-row>
+
 
             <v-card-text>
                 <v-form v-model="form">
@@ -49,7 +49,7 @@
                     <!-- CV -->
                     <v-file-input v-model="file" label="Upload CV" placeholder="Upload your documents"
                         prepend-icon="mdi-paperclip" show-size variant="outlined" :disabled="loading"
-                        accept="application/pdf" :rules="fileRules" hint="Send file in PDF format" persistent-hint="">
+                        accept="application/pdf" :rules="fileRules" hint="In PDF format" persistent-hint>
                         <template v-slot:selection="{ fileNames }">
                             <template v-for="fileName in fileNames" :key="fileName">
                                 <v-chip class="me-2" color="primary" size="small" label>
@@ -102,7 +102,7 @@ const fileUrl = ref(null);
 // Pinia
 const store = usePiniaStorage();
 const workWithUsDialog = computed(() => store.workWithUsDialog);
-const facilities = computed(() => store.facilities);
+import { facilities } from '../scripts/Facilities'
 
 const closeWorkWithUsDialog = () => {
     store.closeWorkWithUsDialog();
@@ -143,6 +143,16 @@ const fields = ref([
         ]
     },
 ]);
+
+const requiredRule = [
+    v => !!v || 'Field is required'
+];
+
+const fileRules = [
+    v => !!v.length || 'File is required',
+    v => !v.value || !v.length || v[0].size < 2000000 || 'File size should be less than 2 MB!'
+
+];
 // Fields
 
 

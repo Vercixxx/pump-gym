@@ -40,7 +40,7 @@ import { usePiniaStorage } from '../store/pinia';
 // Pinia
 const store = usePiniaStorage();
 const contactUsDialog = computed(() => store.contactUsDialog);
-const facilities = computed(() => store.facilities);
+import { facilities } from '../scripts/Facilities'
 
 function closeContactUsDialog() {
     store.closeContactUsDialog();

@@ -1,7 +1,7 @@
 <template>
     <v-parallax
         src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
-        class="ma-0 pa-0">
+        class="min-h-screen mt-3">
 
 
         <v-row class="py-2 text-2xl ps-3" :style="darkMode ? 'background-color:rgb(30 46 84)':'background-color:rgb(226 232 240)'" >
@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineAsyncComponent } from 'vue';
+import { ref, computed, defineAsyncComponent, markRaw } from 'vue';
 import { usePiniaStorage } from '../store/pinia';
 import ProfileComponent from './Dashboard/ProfileComponent.vue';
 
@@ -57,12 +57,12 @@ const tab = ref('option-1')
 const items = ref([
     {
         title: 'Profile',
-        component: ProfileComponent,
+        component: markRaw(ProfileComponent),
         icon: 'mdi-account',
     },
     {
         title: 'Subscription',
-        component: SubscriptionComponent,
+        component: markRaw(SubscriptionComponent),
         icon: 'mdi-cash-sync',
     },
     // {

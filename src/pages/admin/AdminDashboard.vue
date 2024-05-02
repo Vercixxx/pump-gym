@@ -1,7 +1,7 @@
 <template>
     <v-parallax
         src="https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K"
-        class="ma-0 pa-0">
+        class="mt-3 min-h-screen">
 
 
         <v-row class="py-2 text-2xl ps-3"
@@ -48,7 +48,7 @@
 <script setup lang="ts">
 
 // Imports
-import { onMounted, computed, ref, defineAsyncComponent } from 'vue';
+import { markRaw, computed, ref, defineAsyncComponent } from 'vue';
 import { usePiniaStorage } from '../../store/pinia';
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from '../../firebase.js';
@@ -75,12 +75,12 @@ const menu = ref([
     {
         title: 'Dashboard',
         icon: 'mdi-view-dashboard',
-        component: DashboardComponent,
+        component: markRaw(DashboardComponent),
     },
     {
         title: 'Manage Users',
         icon: 'mdi-account-group',
-        component: ManageUsers,
+        component: markRaw(ManageUsers),
     },
     // {
     //     title: 'Manage Subscriptions',
