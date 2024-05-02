@@ -1,24 +1,25 @@
 <template>
   <v-app>
-    <v-layout>
 
-      <div class="w-100"
-        >
-        <!-- style="background-image: url('https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K'); min-height: 100vh; background-size: cover; background-repeat: no-repeat;" -->
-        <!-- Header -->
-        <AppBar v-if="route.path != '/error'" />
-        <!-- Header -->
 
-        <!-- Body -->
-        <v-main @click="closeDrawer">
-          <router-view />
+    <div class="w-100">
 
-          <!-- Drawer -->
-          <MyDrawer />
-          <!-- Drawer -->
+      <!-- Header -->
+      <AppBar v-if="route.path != '/error'" />
+      <!-- Header -->
 
-          <!-- Theme toogler -->
+      <!-- Body -->
+      <v-main @click="closeDrawer">
+        <router-view />
 
+        <!-- Drawer -->
+        <MyDrawer />
+        <!-- Drawer -->
+
+        <!-- Theme toogler -->
+
+
+        <v-layout>
 
           <label class="theme-switch" style="position: fixed; bottom:2%; right:2%">
             <input type="checkbox" class="theme-switch__checkbox" @click="toogleTheme" checked>
@@ -42,38 +43,31 @@
               </div>
             </div>
           </label>
+        </v-layout>
 
 
 
-          <!-- <button class="themeIcon" @click="toogleTheme" icon="mdi-theme-light-dark" size="large"
-            style="position: fixed; bottom:2%; right:2%">
-            <v-icon class="svgIcon" color="white">{{ theme.global.current.value.dark ? 'mdi-theme-light-dark' :
-              'mdi-theme-light-dark' }}</v-icon>
-          </button> -->
-          <!-- Theme toogler -->
+      </v-main>
+      <!-- Body -->
 
-        </v-main>
-        <!-- Body -->
-
-      </div>
+    </div>
 
 
-      <!-- Dialogs -->
-      <LoginComponent />
-      <PasswordResetDialog />
-      <SignUpComponent />
-      <SnackBarAlert />
-      <ContactUsDialog />
-      <WorkWithUsDialog />
-      <BuySubscriptionDialog />
-      <PaymentSuccessfullDialog />
-      <MyOverlay />
-      <Dialog />
-      <!-- Dialogs -->
+    <!-- Dialogs -->
+    <LoginComponent />
+    <PasswordResetDialog />
+    <SignUpComponent />
+    <SnackBarAlert />
+    <ContactUsDialog />
+    <WorkWithUsDialog />
+    <BuySubscriptionDialog />
+    <PaymentSuccessfullDialog />
+    <MyOverlay />
+    <Dialog />
+    <!-- Dialogs -->
 
 
 
-    </v-layout>
   </v-app>
 </template>
 
@@ -157,7 +151,7 @@ const specialSubscriptions = ref([]);
 const fetchSubscriptionByTypeName = async (type, name, outputArray) => {
   try {
     const querySnapshot = await getDocs(collection(db, "Subscriptions", type, name));
-    
+
     querySnapshot.forEach(async (doc) => {
 
       const data = doc.data();

@@ -1,7 +1,7 @@
 <template>
     <!-- Desktop -->
-    <v-app-bar v-if="$vuetify.display.width > 1730" class=" pt-1 pb-1" elevation="0"
-        :style="darkMode ? 'background-color:rgba(20, 20, 20, 0.4)' : 'background-color:rgba(200, 200, 200, 0.4)'">
+    <v-app-bar v-if="$vuetify.display.width > 1730" class="" elevation="0"
+        :style="darkMode ? 'background-color:rgba(20, 20, 20, 0.6)' : 'background-color:rgba(200, 200, 200, 0.6)'">
         <v-row>
 
 
@@ -96,8 +96,8 @@
     <!-- Desktop -->
 
     <!-- Mobile -->
-    <v-app-bar v-else density="compact" class="px-5 pb-2" elevation="0" :color="darkMode ? 'rgb(15 23 42)' : 'white'"
-        :class="darkMode ? 'text-white' : ''">
+    <v-app-bar v-else app density="compact" class="px-5 pb-2" elevation="0"
+        :color="darkMode ? 'rgb(15 23 42)' : 'rgb(215 223 242)'" :class="darkMode ? 'text-white' : ''" >
         <v-row>
             <v-col cols="auto" class="d-flex justify-center align-center mt-1">
 

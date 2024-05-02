@@ -1,218 +1,197 @@
 <template>
-    <div>
-        <v-container>
+    <!-- <v-row>
+        <v-col class="d-flex justify-center align-center">
+
+            <div class="pa-4 rounded-xl text-center backdrop-blur-md subpixel-antialiased text-xl tracking-wider ">
+
+            </div>
+
+
+        </v-col>
+
+    </v-row> -->
+
+    <div class="mt-20">
 
 
 
-            <!-- Regular subscriptions -->
-            <v-row>
-                <v-col cols="12" align=center>
-                    <h2 class="rounded-s text-3xl py-2 my-2 font-weight-black backdrop-blur-xl"
-                        :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
-                        Subscriptions
-                    </h2>
-                </v-col>
-            </v-row>
 
-            <v-row>
-                <v-col cols="12" sm="2" v-for="subscription in regularSubscriptions" :key="subscription.name"
-                    align="center" style="min-height: 60dvh">
+        <v-row>
+            <v-col cols="12" align="center" class="rounded-s text-3xl py-2 my-2 font-weight-black backdrop-blur-xl mb-8"
+                :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
+                Subscriptions
+            </v-col>
+        </v-row>
 
-
-                    <div class="rounded-3xl border border-indigo-600 transform transition-all hover:-translate-y-6 duration-300 shadow-lxl hover:shadow-2xl hover:shadow-indigo-500/50  backdrop-blur-3xl backdrop-brightness-50 text-white "
-                        :class="[
-                            $vuetify.display.smAndDown ? 'w-100' : 'w-60 h-100',
-                            { 'grayscale': hoveredSubscription && hoveredSubscription.name !== subscription.name },
-                            { 'brightness-125': hoveredSubscription && hoveredSubscription.name === subscription.name }
-                        ]" max-width="374" rounded="xl" @mouseover="handleMouseOver(subscription)"
-                        @mouseout="handleMouseOut">
-
-                        <v-img height="200" :src="subscription.image" cover class="brightness-75 rounded-t-3xl"></v-img>
-
-                        <v-card-item>
-                            <v-card-title>{{ subscription.name }}</v-card-title>
-
-                            <v-card-subtitle>
-                                <span class="me-1">Regular subscription</span>
-
-                                <v-icon color="success" icon="mdi-fire-circle" size="small"></v-icon>
-                            </v-card-subtitle>
-                        </v-card-item>
-
-                        
-                        
-                        <v-card-text>
-                            
-                            <div class=" text-subtitle-1">
-                                $ {{ subscription.price }}
-                            </div>
-
-                            <v-divider thickness="5"></v-divider>
-
-                            <div>
-                                <!-- {{ subscription.Description }} -->
-                                <v-list density="compact" class="bg-transparent" rounded="shaped">
-                                    <v-list-item v-for="item in subscription.description" class="">
-                                        <v-list-item-icon>
-                                            <v-icon>mdi-check</v-icon>
-                                        </v-list-item-icon>
-                                        {{ item }}
-                                    </v-list-item>
-                                </v-list>
-                            </div>
-                        </v-card-text>
+        <div class="d-flex justify-center align-center flex-column">
 
 
 
-                        <div class="w-100 rounded-b-3xl cursor-pointer font-black tracking-wide pt-5 pb-5 absolute bottom-0 bg-indigo-500/50"
-                            :class="darkMode ? '' : 'bg-indigo-300/50'" @click="handleBuyClick(subscription)"
-                            v-if="!loggedUser.subscription">
-                            <span v-if="loggedUser == null">
-                                Buy {{ subscription.name }} plan
-                            </span>
+            <div
+                class="pa-4 rounded-xl text-center  subpixel-antialiased text-xl align-center tracking-wider ">
 
-                            <span v-else>
-                                Select {{ subscription.name }} plan
-                            </span>
+
+
+
+                <!-- Regular subscriptions -->
+
+
+                <v-row>
+                    <v-col cols="6" sm="2" v-for="subscription in regularSubscriptions" :key="subscription.name"
+                        align="center" style="min-height: 75dvh">
+
+
+                        <div class="rounded-3xl border border-indigo-600 transform transition-all hover:-translate-y-6 duration-300 shadow-lxl hover:shadow-2xl hover:shadow-indigo-500/50  backdrop-blur-3xl backdrop-brightness-50 text-white "
+                            :class="[
+                                $vuetify.display.smAndDown ? 'w-100' : '',
+                                { 'grayscale': hoveredSubscription && hoveredSubscription.name !== subscription.name },
+                                { 'brightness-125': hoveredSubscription && hoveredSubscription.name === subscription.name }
+                            ]" max-width="374" rounded="xl" @mouseover="handleMouseOver(subscription)"
+                            @mouseout="handleMouseOut">
+
+                            <v-img height="200" :src="subscription.image" cover
+                                class="brightness-75 rounded-t-3xl"></v-img>
+
+                            <v-card-item>
+                                <v-card-title>{{ subscription.name }}</v-card-title>
+
+                                <v-card-subtitle>
+                                    <span class="me-1">Regular subscription</span>
+
+                                    <v-icon color="success" icon="mdi-fire-circle" size="small"></v-icon>
+                                </v-card-subtitle>
+                            </v-card-item>
+
+
+
+                            <v-card-text>
+
+                                <div class=" text-subtitle-1">
+                                    $ {{ subscription.price }}
+                                </div>
+
+                                <v-divider thickness="5"></v-divider>
+
+                                <div>
+                                    <v-list density="compact" class="bg-transparent" rounded="shaped">
+                                        <v-list-item v-for="item in subscription.description" class="">
+                                            <v-list-item-icon>
+                                                <v-icon>mdi-check</v-icon>
+                                            </v-list-item-icon>
+                                            {{ item }}
+                                        </v-list-item>
+                                    </v-list>
+                                </div>
+                            </v-card-text>
+
+
+                            <v-card-actions class="bg-indigo-600 rounded-b-3xl hover:font-black hover:bg-indigo-800"
+                                @click="handleBuyClick(subscription)">
+
+                                <v-row>
+                                    <v-col align="center">
+                                        <div v-if="!loggedUser.subscription" class="w-100 cursor-pointer">
+                                            <span v-if="loggedUser == null">
+                                                Buy {{ subscription.name }} plan
+                                            </span>
+
+                                            <span v-else>
+                                                Select {{ subscription.name }} plan
+                                            </span>
+                                        </div>
+
+                                        <div v-else class="font-light">
+                                            You already have a subscription
+                                        </div>
+                                    </v-col>
+                                </v-row>
+
+                            </v-card-actions>
                         </div>
-                    </div>
 
-                </v-col>
-
-
-                <v-col cols="12" sm="2" v-for="subscription in specialSubscriptions" :key="subscription.name"
-                    align="center">
+                    </v-col>
 
 
-                    <div class="rounded-3xl border-2 border-indigo-600 transform transition-all hover:-translate-y-6 duration-300 shadow-lxl hover:shadow-2xl hover:shadow-indigo-500/50 backdrop-blur-3xl backdrop-brightness-50 text-white"
-                        :class="[
-                            $vuetify.display.smAndDown ? 'w-100' : 'w-60 h-100',
-                            { 'grayscale': hoveredSubscription && hoveredSubscription.name !== subscription.name },
-                            { 'brightness-125': hoveredSubscription && hoveredSubscription.name === subscription.name }
-                        ]" max-width="374" rounded="xl" @mouseover="handleMouseOver(subscription)"
-                        @mouseout="handleMouseOut">
+                    <v-col cols="6" sm="2" v-for="subscription in specialSubscriptions" :key="subscription.name"
+                        align="center">
 
-                        <v-img height="200" :src="subscription.image" cover class="brightness-75 rounded-t-3xl"></v-img>
 
-                        <v-card-item>
-                            <v-card-title>{{ subscription.name }}</v-card-title>
+                        <div class="rounded-3xl border-2 border-indigo-600 transform transition-all hover:-translate-y-6 duration-300 shadow-lxl hover:shadow-2xl hover:shadow-indigo-500/50 backdrop-blur-3xl backdrop-brightness-50 text-white"
+                            :class="[
+                                $vuetify.display.smAndDown ? 'w-100' : '',
+                                { 'grayscale': hoveredSubscription && hoveredSubscription.name !== subscription.name },
+                                { 'brightness-125': hoveredSubscription && hoveredSubscription.name === subscription.name }
+                            ]" max-width="374" rounded="xl" @mouseover="handleMouseOver(subscription)"
+                            @mouseout="handleMouseOut">
 
-                            <v-card-subtitle>
-                                <span class="me-1">Special subscription</span>
+                            <v-img height="200" :src="subscription.image" cover
+                                class="brightness-75 rounded-t-3xl"></v-img>
 
-                                <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
-                            </v-card-subtitle>
-                        </v-card-item>
+                            <v-card-item>
+                                <v-card-title>{{ subscription.name }}</v-card-title>
 
-                        <v-card-text>
+                                <v-card-subtitle>
+                                    <span class="me-1">Regular subscription</span>
 
-                            <div class=" text-subtitle-1">
-                                $ {{ subscription.price }}
-                            </div>
-
-                            <v-divider thickness="5"></v-divider>
-
-                            <div>
-                                {{ subscription.description }}
-                            </div>
-                        </v-card-text>
+                                    <v-icon color="success" icon="mdi-fire-circle" size="small"></v-icon>
+                                </v-card-subtitle>
+                            </v-card-item>
 
 
 
-                        <div class="w-100 rounded-b-3xl cursor-pointer font-black tracking-wide pt-5 pb-5 absolute bottom-0 bg-indigo-500/50"
-                            :class="darkMode ? '' : 'bg-indigo-300/50'" @click="handleBuyClick(subscription)"
-                            v-if="!loggedUser.subscription">
-                            <span v-if="loggedUser == null">
-                                Buy {{ subscription.name }} plan
-                            </span>
-                            <span v-else>
-                                Select {{ subscription.name }} plan
-                            </span>
+                            <v-card-text>
+
+                                <div class=" text-subtitle-1">
+                                    $ {{ subscription.price }}
+                                </div>
+
+                                <v-divider thickness="5"></v-divider>
+
+                                <div>
+                                    <v-list density="compact" class="bg-transparent" rounded="shaped">
+                                        <v-list-item v-for="item in subscription.description" class="">
+                                            <v-list-item-icon>
+                                                <v-icon>mdi-check</v-icon>
+                                            </v-list-item-icon>
+                                            {{ item }}
+                                        </v-list-item>
+                                    </v-list>
+                                </div>
+                            </v-card-text>
+
+
+
+                            <v-card-actions class="bg-indigo-600 rounded-b-3xl hover:font-black hover:bg-indigo-800"
+                                @click="handleBuyClick(subscription)">
+
+                                <v-row>
+                                    <v-col align="center">
+                                        <div v-if="!loggedUser.subscription" class="w-100 cursor-pointer">
+                                            <span v-if="loggedUser == null">
+                                                Buy {{ subscription.name }} plan
+                                            </span>
+
+                                            <span v-else>
+                                                Select {{ subscription.name }} plan
+                                            </span>
+                                        </div>
+
+                                        <div v-else class="font-light">
+                                            You already have a subscription
+                                        </div>
+                                    </v-col>
+                                </v-row>
+
+                            </v-card-actions>
                         </div>
-                    </div>
 
-                </v-col>
-            </v-row>
-            <!-- Regular subscriptions -->
-
+                    </v-col>
+                </v-row>
+                <!-- Regular subscriptions -->
 
 
-
-
-            <!-- Special subscriptions -->
-            <!-- <v-row>
-                <v-col cols="12" align=center>
-                    <h2 class="rounded-s text-3xl py-2 font-weight-black backdrop-blur-xl"
-                        :class="darkMode ? ' bg-black/70' : ' bg-white/30'">
-                        Special subscriptions
-                    </h2>
-                </v-col>
-            </v-row> -->
-
-
-            <!-- <v-row>
-                <v-col cols="12" sm="6" v-for="subscription in specialSubscriptions" :key="subscription.name"
-                    align="center">
-
-
-                    <div class="rounded-3xl border-2 border-indigo-600 transform transition-all hover:-translate-y-6 duration-300 shadow-lxl hover:shadow-2xl hover:shadow-indigo-500/50 backdrop-blur-3xl backdrop-brightness-50 text-white"
-                        :class="[
-                            $vuetify.display.smAndDown ? 'w-100' : 'w-75',
-                            { 'grayscale': hoveredSubscription && hoveredSubscription.name !== subscription.name },
-                            { 'brightness-125': hoveredSubscription && hoveredSubscription.name === subscription.name }
-                        ]" max-width="374" rounded="xl" @mouseover="handleMouseOver(subscription)"
-                        @mouseout="handleMouseOut">
-
-                        <v-img height="250" :src="subscription.image" cover class="brightness-75 rounded-t-3xl"></v-img>
-
-                        <v-card-item>
-                            <v-card-title>{{ subscription.name }}</v-card-title>
-
-                            <v-card-subtitle>
-                                <span class="me-1">Special subscription</span>
-
-                                <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
-                            </v-card-subtitle>
-                        </v-card-item>
-
-                        <v-card-text>
-
-                            <div class=" text-subtitle-1">
-                                $ {{ subscription.price }}
-                            </div>
-
-                            <div>
-                                {{ subscription.description }}
-                            </div>
-                        </v-card-text>
-
-                        <v-divider class="mx-4" thickness="5"></v-divider>
-
-
-                        <div class="w-100 rounded-b-3xl cursor-pointer font-black text-xl tracking-wide pt-5 pb-5"
-                            :class="darkMode ? '' : 'bg-indigo-300/50'" @click="handleBuyClick(subscription)"
-                            v-if="!loggedUser.subscription">
-                            <span v-if="loggedUser == null">
-                                Buy {{ subscription.name }} plan
-                            </span>
-                            <span v-else>
-                                Select {{ subscription.name }} plan
-                            </span>
-                        </div>
-                    </div>
-
-                </v-col>
-            </v-row> -->
-            <!-- Special subscriptions -->
-
-
-
-
-
-        </v-container>
-
-
-
+            </div>
+        </div>
 
 
     </div>
@@ -254,7 +233,8 @@ const darkMode = computed(() => theme.name.value === 'dark');
 
 // Handle buy click
 const handleBuyClick = (subscription) => {
-    if (loggedUser.value == null) {
+
+    if (loggedUser.value == false) {
         openLoginDialog();
     }
     else if (loggedUser.value.subscription) {
