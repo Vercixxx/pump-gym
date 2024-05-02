@@ -41,7 +41,7 @@
 
             </v-col>
 
-            <v-col cols="auto" justify="space-around"  class="mt-3">
+            <v-col cols="auto" justify="space-around" class="mt-3">
 
                 <!-- User not logged in  -->
                 <span v-if="!loggedUser">
@@ -96,15 +96,29 @@
     <!-- Desktop -->
 
     <!-- Mobile -->
-    <v-app-bar v-else density="compact" class="px-5" elevation="0" :color="darkMode ? 'rgb(15 23 42)' : 'white'"
+    <v-app-bar v-else density="compact" class="px-5 pb-2" elevation="0" :color="darkMode ? 'rgb(15 23 42)' : 'white'"
         :class="darkMode ? 'text-white' : ''">
         <v-row>
-            <v-col cols="auto">
-                <input type="checkbox" id="drawer-toggle" class="relative sr-only peer" checked @click="useDrawer()">
-                <label for="drawer-toggle"
-                    class="inline-block p-3 transition-all duration-500 rounded-pill peer-checked:rotate-180">
-                    <v-icon :color="darkMode ? 'white' : 'black'" size="45">mdi-menu-up</v-icon>
-                </label>
+            <v-col cols="auto" class="d-flex justify-center align-center mt-1">
+
+                <div class="text-center subpixel-antialiased ">
+
+                    <label>
+                        <div class="w-9 h-10 cursor-pointer flex flex-col items-center justify-center">
+                            <input class="hidden peer" type="checkbox" @click="useDrawer()">
+                            <div class="w-[50%] h-[2px] rounded-sm transition-all duration-300 origin-left translate-y-[0.45rem] peer-checked:rotate-[-45deg]"
+                                :class="darkMode ? 'bg-white' : 'bg-black'">
+                            </div>
+                            <div class="w-[50%] h-[2px] rounded-md transition-all duration-300 origin-center peer-checked:hidden"
+                                :class="darkMode ? 'bg-white' : 'bg-black'">
+                            </div>
+                            <div class="w-[50%] h-[2px] rounded-md transition-all duration-300 origin-left -translate-y-[0.45rem] peer-checked:rotate-[45deg]"
+                                :class="darkMode ? 'bg-white' : 'bg-black'">
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
             </v-col>
 
             <v-col align="start" class="text-2xl pt-7" @click="goTo('/')">

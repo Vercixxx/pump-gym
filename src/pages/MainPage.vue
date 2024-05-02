@@ -62,39 +62,44 @@
 
 
                         <v-row>
-                            <v-col>
+                            <v-col class="d-flex justify-center align-center">
 
-                                <div class="  ">
-
-                                    <div class="pa-4 rounded-xl font-weight-black  ">
-                                        Do you dream of health, strength, and perfect fitness? If so, you've found
+                                <div
+                                    class="pa-4 rounded-xl text-center backdrop-blur-md subpixel-antialiased text-xl tracking-wider ">
+                                    <div class="font-black mb-2">
+                                        Do you dream of health, strength, and perfect fitness?
+                                    </div>
+                                    <div class="mb-2">
+                                        If so, you've found
                                         the
                                         perfect
-                                        place! Our gym not only offers top-quality equipment but also an inspiring
-                                        environment
-                                        that motivates action.
-
-                                        Our experienced instructors are here to help you achieve your fitness goals,
-                                        whether
-                                        you're just starting your fitness journey or you're an experienced athlete.
-                                        Whether you
-                                        want to build muscle, lose weight, or improve your endurance, we're ready to
-                                        support you
-                                        every step of the way.
-
-                                        Come to our gym and join the community of people who actively care for their
-                                        health and
-                                        well-being. Together, we'll achieve more!
-
-                                        Don't wait any longer - start your journey to a better version of yourself
-                                        today!
+                                        place!
                                     </div>
+                                    Our gym not only offers top-quality equipment but also an inspiring
+                                    environment
+                                    that motivates action.
 
+                                    Our experienced instructors are here to help you achieve your fitness goals,
+                                    whether
+                                    you're just starting your fitness journey or you're an experienced athlete.
+                                    Whether you
+                                    want to build muscle, lose weight, or improve your endurance, we're ready to
+                                    support you
+                                    every step of the way.
+
+                                    Come to our gym and join the community of people who actively care for their
+                                    health and
+                                    well-being. Together, we'll achieve more!
+
+                                    Don't wait any longer - start your journey to a better version of yourself
+                                    today!
                                 </div>
+
+
                             </v-col>
 
 
-                            <v-col align="center">
+                            <v-col align="center" cols="4">
                                 <v-img
                                     src="https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2FFacilities%2FinviteImage.jpeg?alt=media&token=11bc967d-6089-46f9-b4be-02b2b65e3b30"
                                     height="400" width="400" cover rounded="xl" />
@@ -148,7 +153,7 @@
 
 
             <!-- News -->
-            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20" id="News"
+            <div class="grid grid-cols-12 gap-4 bg-gradient-to-r from-indigo-500/20 " id="News"
                 style="min-height: 100dvh;">
 
                 <div class="flex col-span-2  items-center justify-center flex-column font-serif">
@@ -172,7 +177,7 @@
                         <v-container class="fill-height" fluid>
                             <v-row align="center" justify="center">
                                 <v-col cols="12">
-                                    <v-carousel  v-model="postsItem" continuous :cycle="runCarousel" show-arrows="hover"
+                                    <v-carousel v-model="postsItem" continuous :cycle="runCarousel" show-arrows="hover"
                                         delimiter-icon="mdi-square" hide-delimiter-background style="height: 85vh;">
                                         <v-carousel-item v-for="post in posts">
                                             <v-sheet height="100%" tile class="bg-transparent">
@@ -259,11 +264,20 @@
 
 
                                     <v-row>
-                                        <v-col>
+                                        <v-col class="d-flex justify-center align-center">
 
-                                            {{ facility.Description }}
+                                            <div
+                                                class="pa-4 rounded-xl text-center backdrop-blur-md subpixel-antialiased text-xl tracking-wider ">
+
+                                                {{ facility.Description }}
+
+                                            </div>
 
                                         </v-col>
+
+
+
+
 
                                         <v-col cols="4" align="end">
                                             <v-carousel hide-delimiters :show-arrows="false" cycle interval="5000"
@@ -282,61 +296,61 @@
                                         </v-col>
                                     </v-row>
 
-                                    <v-row>
-                                        <v-col align="center">
-                                            <div class="flex overflow-hidden space-x-16 group">
 
-                                                <div class="flex space-x-16 animate-loop-scroll group-hover:paused">
-                                                    <div v-for="user in facility.staff"
-                                                        class="w-64 h-6 m-2 cursor-pointer hover:scale-105 ">
-                                                        <div>
-                                                            <div class="flex flex-column">
-                                                                <div class="font-weight-black text-h5">
-                                                                    {{ user.FirstName + ' ' +
-                                                                        user.LastName }}
-                                                                </div>
-                                                                <div class="text-xl">{{ user.Role
-                                                                    }}</div>
 
-                                                            </div>
 
-                                                            <v-avatar size="200" rounded="1"
-                                                                :image="`https://picsum.photos/200?random=${Math.random()}`">
-                                                            </v-avatar>
+                                    <div class="flex overflow-hidden space-x-16 group rounded-md  ">
+
+                                        <div class="flex space-x-16 animate-loop-scroll group-hover:paused">
+                                            <div v-for="user in facility.staff"
+                                                class="w-64 h-6 m-2 cursor-pointer hover:scale-105 ">
+                                                <div>
+                                                    <div class="flex flex-column">
+                                                        <div class="font-weight-black text-h5">
+                                                            {{ user.FirstName + ' ' +
+                                                                user.LastName }}
                                                         </div>
+                                                        <div class="text-xl">{{ user.Role
+                                                            }}</div>
+
                                                     </div>
+
+                                                    <v-avatar size="200" rounded="1"
+                                                        :image="`https://picsum.photos/200?random=${Math.random()}`">
+                                                    </v-avatar>
                                                 </div>
+                                            </div>
+                                        </div>
 
-                                                <div class="flex space-x-16 animate-loop-scroll group-hover:paused"
-                                                    aria-hidden="true">
+                                        <div class="flex space-x-16 animate-loop-scroll group-hover:paused"
+                                            aria-hidden="true">
 
-                                                    <div v-for="user in facility.staff"
-                                                        class="w-64 h-64 m-2 cursor-pointer hover:scale-105">
-                                                        <div>
+                                            <div v-for="user in facility.staff"
+                                                class="w-64 h-64 m-2 cursor-pointer hover:scale-105">
+                                                <div>
 
-                                                            <div class="flex flex-column ">
-                                                                <div class="font-weight-black text-h5">
-                                                                    {{ user.FirstName + ' ' +
-                                                                        user.LastName }}
-                                                                </div>
-                                                                <div class="text-xl">{{ user.Role
-                                                                    }}</div>
-
-                                                            </div>
-                                                            <v-avatar size="200" rounded="1"
-                                                                :image="`https://picsum.photos/200?random=${Math.random()}`">
-                                                            </v-avatar>
+                                                    <div class="flex flex-column ">
+                                                        <div class="font-weight-black text-h5">
+                                                            {{ user.FirstName + ' ' +
+                                                                user.LastName }}
                                                         </div>
-                                                    </div>
+                                                        <div class="text-xl">{{ user.Role
+                                                            }}</div>
 
+                                                    </div>
+                                                    <v-avatar size="200" rounded="1"
+                                                        :image="`https://picsum.photos/200?random=${Math.random()}`">
+                                                    </v-avatar>
                                                 </div>
                                             </div>
 
-                                        </v-col>
-                                    </v-row>
+                                        </div>
+                                    </div>
 
 
-                                    <div class="flex justify-evenly mt-5 pb-4">
+
+
+                                    <div class="flex justify-evenly mt-10 pb-4">
 
 
                                         <v-btn :text="'Navigate to  ' + facility.Name" append-icon="mdi-navigation"
@@ -648,4 +662,22 @@ import SubscriptionComponent from '../pages/Subscriptions.vue';
 </script>
 
 
-<style></style>
+<style scoped>
+.animateFade {
+    animation: fade 1s linear both;
+
+}
+
+
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+</style>
