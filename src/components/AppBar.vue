@@ -154,12 +154,12 @@ const menuButtons = ref([
     //     icon: 'mdi-card-account-details',
     //     route: '/subscriptions',
     // },
-    {
-        id: 2,
-        title: 'Activities',
-        icon: 'mdi-dumbbell',
-        route: '/activities',
-    },
+    // {
+    //     id: 2,
+    //     title: 'Activities',
+    //     icon: 'mdi-dumbbell',
+    //     route: '/activities',
+    // },
     // {
     //     id: 3,
     //     title: 'Our Trainers',

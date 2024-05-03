@@ -74,12 +74,12 @@ const goTo = (route) => {
 
 // Data
 const menuButtons = ref([
-    {
-        id: 1,
-        title: 'Activities',
-        icon: 'mdi-dumbbell',
-        route: '/activities',
-    },
+    // {
+    //     id: 1,
+    //     title: 'Activities',
+    //     icon: 'mdi-dumbbell',
+    //     route: '/activities',
+    // },
     // {
     //     id: 2,
     //     title: 'Our Trainers',

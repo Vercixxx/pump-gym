@@ -29,8 +29,7 @@
 
 
                         <div class="fixed top-auto select-none">
-                            <div v-for="section in sections"
-                                class=" w-100 cursor-pointer text-center  "
+                            <div v-for="section in sections" class=" w-100 cursor-pointer text-center  "
                                 @click="changeSection(section.name)"
                                 :class="section.current ? 'text-4xl font-black my-4 transition-all duration-100 ease-in-out hover:scale-105 ' : 'hover:font-black transition-all duration-100 ease-in-out hover:scale-150'">
                                 {{ section.name }}
@@ -118,7 +117,7 @@
 
                 <div class="relative grid grid-cols-12 gap-4 " id="News" style="min-height: 100vh;">
                     <span class="absolute inset-0 blur-sm bg-fixed "
-                        style="background-image: url('https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2FSubsriptions.jpeg?alt=media&token=c0f78224-c29c-4892-84db-72cff3d78b57'); background-size: cover; background-position: center; z-index: -1;"></span>
+                        style="background-image: url('https://th.bing.com/th/id/OIG1.Pp6i7eTCetwLYSNmMLfr?pid=ImgGn'); background-size: cover; background-position: center; z-index: -1;"></span>
 
                     <div class="flex col-span-2  items-center justify-center flex-column font-serif"
                         v-if="!$vuetify.display.smAndDown">
@@ -194,12 +193,51 @@
 
 
 
+
+                <!-- Activities -->
+                <div class="relative grid grid-cols-12 gap-4 " id="Activities" style="min-height: 100vh;">
+                    <span class="absolute inset-0 blur-sm bg-fixed "
+                        style="background-image: url('https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2FFitness.jpeg?alt=media&token=d86aa39d-731a-473a-b7b0-06970ac2ac49'); background-size: cover; background-position: center; z-index: -1;"></span>
+
+                    <div class="flex col-span-2  items-center justify-center flex-column font-serif"
+                        v-if="!$vuetify.display.smAndDown">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex"
+                        :class="!$vuetify.display.smAndDown ? ' col-span-10 text-xl' : 'col-span-12 text-xs'">
+                        <div class=" w-100">
+
+
+                            <v-row>
+                                <v-col cols="12" align="center" jusify="center"
+                                    class="mt-20 font-weight-black text-white"
+                                    :class="$vuetify.display.smAndDown ? 'text-xl' : 'text-4xl'">
+                                    Activities
+                                </v-col>
+                            </v-row>
+
+                            <div class="overflow-y-auto">
+
+                                <ActivitiesComponent />
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Content -->
+                </div>
+                <!-- Activities -->
+
+
+
+
+
+
                 <!-- Clubs -->
-
-
                 <div class="relative grid grid-cols-12 gap-4 pt-20" id="Clubs" style="min-height: 100vh;">
                     <span class="absolute inset-0 blur-sm bg-fixed "
-                        style="background-image: url('https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2FSubsriptions.jpeg?alt=media&token=c0f78224-c29c-4892-84db-72cff3d78b57'); background-size: cover; background-position: center; z-index: -1;"></span>
+                        style="background-image: url('https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2FSubsriptions.jpeg?alt=media&token=c0f78224-c29c-4892-84db-72cff3d78b57'); background-size: cover; background-position: top; z-index: -1;"></span>
 
                     <div class="flex col-span-2 items-center justify-center flex-column font-serif"
                         v-if="!$vuetify.display.smAndDown">
@@ -339,7 +377,8 @@
                                         <v-col align="start">
                                             <v-btn :text="'Navigate to  ' + facility.Name" append-icon="mdi-navigation"
                                                 size="large" variant="outlined"
-                                                class="text-white backdrop-blur-3xl hover:scale-105" @click="openGoogleMaps(51.5074, -0.1278)"/>
+                                                class="text-white backdrop-blur-3xl hover:scale-105"
+                                                @click="openGoogleMaps(51.5074, -0.1278)" />
 
                                         </v-col>
                                         <v-col align="start">
@@ -384,8 +423,8 @@
 
                 <!-- Subscriptions -->
                 <div class="relative grid grid-cols-12 gap-4 " id="Subscriptions" style="min-height: 100vh;">
-                    <span class="absolute inset-0 blur-sm bg-fixed "
-                        style="background-image: url('https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2FSubsriptions.jpeg?alt=media&token=c0f78224-c29c-4892-84db-72cff3d78b57'); background-size: cover; background-position: center; z-index: -1;"></span>
+                    <span class="absolute inset-0 blur-sm bg-local "
+                        style="background-image: url('https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2FSubscriptionBG.jpeg?alt=media&token=b6ab7d5b-cbe0-4452-aaae-b03daa8ed66d'); background-size: cover; background-position: center; z-index: -1;"></span>
 
 
                     <div class="flex col-span-2  items-center justify-center flex-column font-serif"
@@ -395,6 +434,14 @@
                     <!-- Content -->
                     <div class=" flex" :class="!$vuetify.display.smAndDown ? ' col-span-10' : 'col-span-12'">
                         <div class=" w-100">
+
+                            <v-row>
+                                <v-col cols="12" align="center" jusify="center"
+                                    class="mt-20 font-weight-black text-white"
+                                    :class="$vuetify.display.smAndDown ? 'text-xl' : 'text-4xl'">
+                                    Subscriptions
+                                </v-col>
+                            </v-row>
 
                             <SubscriptionComponent />
 
@@ -406,6 +453,57 @@
 
 
 
+
+                <!-- Socials -->
+                <div class="relative grid grid-cols-12 gap-4 " id="Socials" style="min-height: 100vh;">
+                    <span class="absolute inset-0 blur-sm bg-fixed "
+                        style="background-image: url('https://firebasestorage.googleapis.com/v0/b/pump-gym-f72c7.appspot.com/o/Images%2FSocialBG.jpeg?alt=media&token=78301c6d-c623-4cc1-a464-f7e5128c6248'); background-size: cover; background-position: top; z-index: -1;"></span>
+
+                    <div class="flex col-span-2  items-center justify-center flex-column font-serif"
+                        v-if="!$vuetify.display.smAndDown">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex"
+                        :class="!$vuetify.display.smAndDown ? ' col-span-10 text-xl' : 'col-span-12 text-xs'">
+
+                        <div class="w-100">
+
+                            <v-row>
+                                <v-col cols="12" align="center" justify="center"
+                                    class="mt-20 font-weight-black text-white"
+                                    :class="$vuetify.display.smAndDown ? 'text-xl' : 'text-4xl'">
+                                    You can find us on social media
+                                </v-col>
+                            </v-row>
+
+                            <div class="d-flex justify-center align-center" style="height: 70vh;">
+                                <v-row class="d-flex justify-center align-center">
+                                    <v-col cols="6" sm="3" align="center" >
+                                        <v-icon size="150" color="indigo-darken-1" class="cursor-pointer hover:bg-indigo-600/25 rounded-pill transition-all ease-in-out hover:-translate-y-5 duration-300"> mdi-facebook </v-icon>
+                                    </v-col>
+                                    <v-col cols="6" sm="3" align="center">
+                                        <v-icon size="150" color="red" class="cursor-pointer hover:bg-red-600/25 rounded-pill transition-all ease-in-out hover:-translate-y-5 duration-300"> mdi-youtube </v-icon>
+                                    </v-col>
+                                    <v-col cols="6" sm="3" align="center">
+                                        <v-icon size="150" color="blue-lighten-1" class="cursor-pointer hover:bg-blue-600/25 rounded-pill transition-all ease-in-out hover:-translate-y-5 duration-300"> mdi-twitter </v-icon>
+                                    </v-col>
+                                    <v-col cols="6" sm="3" align="center">
+                                        <v-icon size="150" color="green-darken-1" class="cursor-pointer hover:bg-green-600/25 rounded-pill transition-all ease-in-out hover:-translate-y-5 duration-300"> mdi-google </v-icon>
+                                    </v-col>
+                                </v-row>
+                            </div>
+
+                            <!-- Footer -->
+                            <FooterComponent class="absolute bottom-0 left-0" style="width: 100vw;" />
+                            <!-- Footer -->
+
+                        </div>
+                    </div>
+                    <!-- Content -->
+                </div>
+                <!-- Socials -->
+
             </div>
 
 
@@ -414,9 +512,6 @@
             <!-- Post dialog -->
 
 
-            <!-- Footer -->
-            <FooterComponent />
-            <!-- Footer -->
 
         </div>
     </v-layout>
@@ -439,10 +534,12 @@ import VueScrollTo from 'vue-scrollto';
 
 
 const sections = ref([
-    { name: 'About', begin: 0, end: 33, current: true },
-    { name: 'News', begin: 34, end: 65, current: false },
-    { name: 'Clubs', begin: 66, end: 96, current: false },
-    { name: 'Subscriptions', begin: 98, end: 100, current: false }
+    { name: 'About', current: true },
+    { name: 'News', current: false },
+    { name: 'Activities', current: false },
+    { name: 'Clubs', current: false },
+    { name: 'Subscriptions', current: false },
+    { name: 'Socials', current: false }
 ]);
 
 
@@ -483,7 +580,6 @@ const scrollToTop = () => {
 }
 
 onMounted(() => {
-    ;
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 // Scroll to section
@@ -682,9 +778,26 @@ const editPost = (post): void => {
 
 
 // Subscriptions
-import SubscriptionComponent from '../pages/Subscriptions.vue';
+const SubscriptionComponent = defineAsyncComponent(() => import('../pages/Subscriptions.vue'));
 // Subscriptions
 
+
+
+// Activities
+const activitiesTab = ref(0);
+
+const ActivitiesComponent = defineAsyncComponent(() => import('../pages/Activities.vue'));
+
+// import { getActivities, activities } from '../scripts/Activities';
+
+// const activitiesList = ref([]);
+
+// onMounted(async () => {
+//     await getActivities();
+// activitiesList.value = activities.value;
+
+// });
+// Activities
 
 
 
