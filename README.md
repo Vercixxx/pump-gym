@@ -1,3 +1,6 @@
+## Check site at
+https://vercixxx.github.io/pump-gym/#/
+
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
